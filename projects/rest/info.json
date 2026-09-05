@@ -1,0 +1,15 @@
+{
+  "name": {
+    "ru": "Отдых",
+    "en": "rest"
+  },
+  "type": "render",
+  "weight": "5 MB",
+  "date": "2026-02-01",
+  "description": {
+    "ru": "Простой отдых в глубокой шахте. На рендере я уже и не вспомню кто находится.",
+    "en": "A simple rest in a deep mine."
+  },
+  "isVideo": false,
+  "noDownload": true
+}
