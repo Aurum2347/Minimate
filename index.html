@@ -2485,7 +2485,7 @@
         async function loadProjects() {
             try {
                 // Load manifest
-                const manifestResponse = await fetch('./projects/manifest.json');
+                const manifestResponse = await fetch('https://aurum2347.github.io/Minimate/projects/manifest.json');
                 const projectIds = await manifestResponse.json();
                 
                 // Load each project
