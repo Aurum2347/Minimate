@@ -2484,36 +2484,89 @@
         
         async function loadProjects() {
             try {
-                // Load manifest
-                const manifestResponse = await fetch('https://aurum2347.github.io/Minimate/projects/manifest.json');
+                // Определяем базовый путь (работает и на GitHub Pages, и локально)
+                const basePath = window.location.pathname.includes('Minimate') 
+                    ? '/Minimate' 
+                    : '';
+                
+                // Добавляем timestamp чтобы избежать кэширования
+                const timestamp = Date.now();
+                const manifestUrl = `${basePath}/projects/manifest.json?t=${timestamp}`;
+                
+                console.log('Loading manifest from:', manifestUrl);
+                
+                const manifestResponse = await fetch(manifestUrl);
+                
+                // Проверяем что ответ успешный
+                if (!manifestResponse.ok) {
+                    throw new Error(`HTTP error! status: ${manifestResponse.status}`);
+                }
+                
+                // Проверяем что это действительно JSON
+                const contentType = manifestResponse.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await manifestResponse.text();
+                    console.error('Received non-JSON response:', text.substring(0, 200));
+                    throw new Error('Received HTML instead of JSON. Check GitHub Pages settings.');
+                }
+                
                 const projectIds = await manifestResponse.json();
+                console.log('Loaded projects:', projectIds);
+                
+                if (!projectIds || projectIds.length === 0) {
+                    document.getElementById('projectsGrid').innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-title">Нет проектов</div>
+                            <div class="empty-state-text">Добавьте проекты в папку projects/</div>
+                        </div>
+                    `;
+                    return;
+                }
                 
                 // Load each project
                 allProjects = await Promise.all(
                     projectIds.map(async (id) => {
                         try {
-                            const infoRes = await fetch(`/projects/${id}/info.json`);
+                            const infoUrl = `${basePath}/projects/${id}/info.json?t=${timestamp}`;
+                            const infoRes = await fetch(infoUrl);
+                            
+                            if (!infoRes.ok) {
+                                console.error(`Failed to load ${id}: HTTP ${infoRes.status}`);
+                                return null;
+                            }
+                            
                             const info = await infoRes.json();
                             
                             // Get gallery files
                             const galleryFiles = [];
-                            const galleryDir = `/projects/${id}/gallery/`;
+                            const galleryDir = `${basePath}/projects/${id}/gallery/`;
                             
-                            // Try to load gallery manifest or scan files
+                            // Try to load gallery manifest
                             try {
-                                const galleryRes = await fetch(`${galleryDir}manifest.json`);
-                                const galleryList = await galleryRes.json();
-                                galleryFiles.push(...galleryList);
+                                const galleryManifestUrl = `${galleryDir}manifest.json?t=${timestamp}`;
+                                const galleryRes = await fetch(galleryManifestUrl);
+                                if (galleryRes.ok) {
+                                    const galleryList = await galleryRes.json();
+                                    galleryFiles.push(...galleryList);
+                                }
                             } catch (e) {
+                                console.log(`No gallery manifest for ${id}, scanning files...`);
+                                
                                 // Fallback: try common file names
-                                const commonFiles = ['01.png', '02.png', '03.png', '04.png', '05.png', '01.mp4', '02.mp4'];
+                                const commonFiles = [];
+                                for (let i = 1; i <= 20; i++) {
+                                    commonFiles.push(`${i.toString().padStart(2, '0')}.png`);
+                                    commonFiles.push(`${i.toString().padStart(2, '0')}.mp4`);
+                                }
+                                
                                 for (const file of commonFiles) {
                                     try {
-                                        const testRes = await fetch(`${galleryDir}${file}`, { method: 'HEAD' });
+                                        const testUrl = `${galleryDir}${file}?t=${timestamp}`;
+                                        const testRes = await fetch(testUrl, { method: 'HEAD' });
                                         if (testRes.ok) {
                                             galleryFiles.push({
                                                 type: file.endsWith('.mp4') ? 'video' : 'image',
-                                                src: `${galleryDir}${file}`
+                                                src: testUrl
                                             });
                                         }
                                     } catch (e) {}
@@ -2533,13 +2586,18 @@
                 );
                 
                 allProjects = allProjects.filter(p => p !== null);
+                console.log('Loaded projects:', allProjects.length);
                 renderProjects();
+                
             } catch (e) {
                 console.error('Error loading projects:', e);
                 document.getElementById('projectsGrid').innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-title">${t('no_results')}</div>
-                        <div class="empty-state-text">${t('no_results_text')}</div>
+                        <div class="empty-state-title">Ошибка загрузки</div>
+                        <div class="empty-state-text">
+                            Не удалось загрузить проекты.<br>
+                            Проверьте консоль разработчика (F12) для деталей.
+                        </div>
                     </div>
                 `;
             }
