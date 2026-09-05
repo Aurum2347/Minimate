@@ -13,21 +13,21 @@ jobs:
       
       - name: Generate Manifest
         run: |
-          # Create proper JSON array
-          echo '[' > projects/manifest.json
-          first=true
+          # Collect project directories
+          projects=()
           for dir in projects/*/; do
             dirname=$(basename "$dir")
             if [ -d "$dir" ] && [ "$dirname" != "manifest.json" ]; then
-              if [ "$first" = true ]; then
-                first=false
-              else
-                echo ',' >> projects/manifest.json
-              fi
-              echo "  \"$dirname\"" >> projects/manifest.json
+              projects+=("\"$dirname\"")
             fi
           done
-          echo ']' >> projects/manifest.json
+          
+          # Create proper JSON
+          if [ ${#projects[@]} -eq 0 ]; then
+            echo '[]' > projects/manifest.json
+          else
+            printf '[\n  %s\n]\n' "$(IFS=', '; echo "${projects[*]}")" > projects/manifest.json
+          fi
       
       - name: Commit Manifest
         run: |
