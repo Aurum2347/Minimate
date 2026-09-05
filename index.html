@@ -2484,30 +2484,38 @@
         
         async function loadProjects() {
             try {
-                // Определяем базовый путь (работает и на GitHub Pages, и локально)
-                const basePath = window.location.pathname.includes('Minimate') 
-                    ? '/Minimate' 
-                    : '';
+                // Определяем базовый путь более надёжно
+                const pathParts = window.location.pathname.split('/').filter(p => p.length > 0);
+                let basePath = '';
+                
+                // Если мы на GitHub Pages (aurum2347.github.io/Minimate/...)
+                if (window.location.hostname.includes('github.io')) {
+                    // Первый сегмент пути - это имя репозитория
+                    if (pathParts.length > 0 && pathParts[0] !== 'index.html') {
+                        basePath = '/' + pathParts[0];
+                    }
+                }
+                
+                console.log('Base path detected:', basePath);
                 
                 // Добавляем timestamp чтобы избежать кэширования
                 const timestamp = Date.now();
                 const manifestUrl = `${basePath}/projects/manifest.json?t=${timestamp}`;
                 
                 console.log('Loading manifest from:', manifestUrl);
+                console.log('Full URL:', window.location.origin + manifestUrl);
                 
                 const manifestResponse = await fetch(manifestUrl);
                 
-                // Проверяем что ответ успешный
                 if (!manifestResponse.ok) {
                     throw new Error(`HTTP error! status: ${manifestResponse.status}`);
                 }
                 
-                // Проверяем что это действительно JSON
                 const contentType = manifestResponse.headers.get('content-type');
                 if (!contentType || !contentType.includes('application/json')) {
                     const text = await manifestResponse.text();
                     console.error('Received non-JSON response:', text.substring(0, 200));
-                    throw new Error('Received HTML instead of JSON. Check GitHub Pages settings.');
+                    throw new Error('Received HTML instead of JSON');
                 }
                 
                 const projectIds = await manifestResponse.json();
@@ -2547,26 +2555,35 @@
                                 const galleryRes = await fetch(galleryManifestUrl);
                                 if (galleryRes.ok) {
                                     const galleryList = await galleryRes.json();
+                                    // Add basePath to each gallery item
                                     galleryFiles.push(...galleryList);
                                 }
                             } catch (e) {
                                 console.log(`No gallery manifest for ${id}, scanning files...`);
                                 
                                 // Fallback: try common file names
-                                const commonFiles = [];
                                 for (let i = 1; i <= 20; i++) {
-                                    commonFiles.push(`${i.toString().padStart(2, '0')}.png`);
-                                    commonFiles.push(`${i.toString().padStart(2, '0')}.mp4`);
-                                }
-                                
-                                for (const file of commonFiles) {
+                                    const num = i.toString().padStart(2, '0');
+                                    const pngUrl = `${galleryDir}${num}.png?t=${timestamp}`;
+                                    const mp4Url = `${galleryDir}${num}.mp4?t=${timestamp}`;
+                                    
                                     try {
-                                        const testUrl = `${galleryDir}${file}?t=${timestamp}`;
-                                        const testRes = await fetch(testUrl, { method: 'HEAD' });
-                                        if (testRes.ok) {
+                                        const pngRes = await fetch(pngUrl, { method: 'HEAD' });
+                                        if (pngRes.ok) {
                                             galleryFiles.push({
-                                                type: file.endsWith('.mp4') ? 'video' : 'image',
-                                                src: testUrl
+                                                type: 'image',
+                                                src: pngUrl
+                                            });
+                                            continue;
+                                        }
+                                    } catch (e) {}
+                                    
+                                    try {
+                                        const mp4Res = await fetch(mp4Url, { method: 'HEAD' });
+                                        if (mp4Res.ok) {
+                                            galleryFiles.push({
+                                                type: 'video',
+                                                src: mp4Url
                                             });
                                         }
                                     } catch (e) {}
@@ -2586,7 +2603,7 @@
                 );
                 
                 allProjects = allProjects.filter(p => p !== null);
-                console.log('Loaded projects:', allProjects.length);
+                console.log('Successfully loaded', allProjects.length, 'projects');
                 renderProjects();
                 
             } catch (e) {
