@@ -1,0 +1,3323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimate</title>
+    
+    <style>
+        @font-face {
+            font-family: 'MinecraftTitle';
+            src: url('fonts/minecrafttitle.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'MinecraftText';
+            src: url('fonts/minecrafttext.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-primary: #0e0e0e;
+            --bg-secondary: #181818;
+            --bg-card: #1f1f1f;
+            --bg-header: #0a0a0a;
+            --bg-modal: #161616;
+            --mc-green: #5B8731;
+            --mc-green-light: #7FB24A;
+            --mc-green-dark: #3D5C1F;
+            --mc-green-hover: #6B9B3A;
+            --mc-purple: #b091ff;
+            --mc-purple-light: #c9b3ff;
+            --mc-purple-dark: #8a6de0;
+            --mc-purple-hover: #c4a8ff;
+            --mc-blue: #3C85C7;
+            --mc-blue-light: #5AA3E0;
+            --mc-blue-dark: #2A6099;
+            --mc-blue-hover: #4A95D7;
+            --mc-gray: #666666;
+            --mc-gray-light: #888888;
+            --mc-gray-dark: #444444;
+            --mc-gray-hover: #777777;
+            --mc-danger: #932c2b;
+            --mc-danger-light: #b8403e;
+            --mc-danger-dark: #6b1f1e;
+            --mc-tg: #2AABEE;
+            --mc-tg-light: #5BC0F5;
+            --mc-tg-dark: #1E88C7;
+            --text-primary: #FFFFFF;
+            --text-secondary: #8a8a8a;
+            --text-muted: #a0a0a0;
+            --border-color: #2a2a2a;
+            --border-light: #3a3a3a;
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border-light); border: 2px solid var(--bg-primary); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--mc-green); }
+        
+        /* Minecraft Button */
+        .mc-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 22px;
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+            cursor: pointer;
+            border: 3px solid #000;
+            border-top-color: var(--btn-light, var(--mc-green-light));
+            border-left-color: var(--btn-light, var(--mc-green-light));
+            border-bottom-color: var(--btn-dark, var(--mc-green-dark));
+            border-right-color: var(--btn-dark, var(--mc-green-dark));
+            background: var(--btn-color, var(--mc-green));
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15), 0 4px 0 rgba(0,0,0,0.3);
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            width: 100%;
+            position: relative;
+            image-rendering: pixelated;
+            overflow: hidden;
+        }
+        
+        .mc-btn::before {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px; right: 2px;
+            height: 2px;
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .mc-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 2px; left: 2px; right: 2px;
+            height: 2px;
+            background: rgba(0,0,0,0.2);
+        }
+        
+        .mc-btn:hover {
+            background: var(--btn-hover, var(--mc-green-hover));
+            filter: brightness(1.15);
+            transform: translateY(-1px);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2), 0 6px 0 rgba(0,0,0,0.3);
+        }
+        
+        .mc-btn:active {
+            border-top-color: var(--btn-dark, var(--mc-green-dark));
+            border-left-color: var(--btn-dark, var(--mc-green-dark));
+            border-bottom-color: var(--btn-light, var(--mc-green-light));
+            border-right-color: var(--btn-light, var(--mc-green-light));
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+            transform: translateY(2px);
+        }
+        
+        .mc-btn svg {
+            width: 16px; height: 16px;
+            fill: currentColor;
+            filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.5));
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .mc-btn:hover svg { transform: scale(1.1); }
+        
+        .mc-btn-blue {
+            --btn-color: var(--mc-blue);
+            --btn-light: var(--mc-blue-light);
+            --btn-dark: var(--mc-blue-dark);
+            --btn-hover: var(--mc-blue-hover);
+        }
+        
+        .mc-btn-gray {
+            --btn-color: var(--mc-gray);
+            --btn-light: var(--mc-gray-light);
+            --btn-dark: var(--mc-gray-dark);
+            --btn-hover: var(--mc-gray-hover);
+        }
+        
+        .mc-btn-purple {
+            --btn-color: var(--mc-purple);
+            --btn-light: var(--mc-purple-light);
+            --btn-dark: var(--mc-purple-dark);
+            --btn-hover: var(--mc-purple-hover);
+            color: #fff;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+        }
+        
+        .mc-btn-tg {
+            --btn-color: #1a2a3a;
+            --btn-light: var(--mc-tg-light);
+            --btn-dark: var(--mc-tg-dark);
+            --btn-hover: #243850;
+            color: var(--mc-tg);
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.6), 0 0 8px rgba(42, 171, 238, 0.3);
+            border-top-color: var(--mc-tg-light) !important;
+            border-left-color: var(--mc-tg-light) !important;
+            border-bottom-color: var(--mc-tg-dark) !important;
+            border-right-color: var(--mc-tg-dark) !important;
+            box-shadow: inset 0 0 0 1px rgba(42, 171, 238, 0.15), 0 4px 0 rgba(0,0,0,0.3), 0 0 12px rgba(42, 171, 238, 0.15);
+        }
+        
+        .mc-btn-tg:hover {
+            color: var(--mc-tg-light);
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.6), 0 0 12px rgba(42, 171, 238, 0.5);
+            box-shadow: inset 0 0 0 1px rgba(42, 171, 238, 0.25), 0 6px 0 rgba(0,0,0,0.3), 0 0 20px rgba(42, 171, 238, 0.25);
+        }
+        
+        .mc-btn-secondary {
+            padding: 10px 16px;
+            font-size: 12px;
+            --btn-color: #2a2a2a;
+            --btn-light: #444;
+            --btn-dark: #111;
+            --btn-hover: #3a3a3a;
+        }
+        
+        .mc-btn-disabled {
+            --btn-color: #3a3a3a;
+            --btn-light: #555;
+            --btn-dark: #222;
+            --btn-hover: #3a3a3a;
+            cursor: not-allowed;
+            border-top-color: #555 !important;
+            border-left-color: #555 !important;
+            border-bottom-color: var(--mc-danger) !important;
+            border-right-color: var(--mc-danger) !important;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 4px 0 rgba(0,0,0,0.3), 0 0 0 2px var(--mc-danger);
+        }
+        
+        .mc-btn-disabled:hover {
+            filter: none;
+            transform: none;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 4px 0 rgba(0,0,0,0.3), 0 0 0 2px var(--mc-danger), 0 0 12px rgba(147, 44, 43, 0.4);
+        }
+        
+        /* Tooltip */
+        .tooltip-wrapper { position: relative; width: 100%; }
+        
+        .tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) translateY(4px);
+            background: #1a1a1a;
+            border: 2px solid var(--mc-danger);
+            border-top-color: #6b1f1e;
+            border-left-color: #6b1f1e;
+            border-bottom-color: #b8403e;
+            border-right-color: #b8403e;
+            color: #fff;
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 11px;
+            padding: 10px 14px;
+            border-radius: 2px;
+            max-width: 280px;
+            white-space: normal;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            pointer-events: none;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            line-height: 1.5;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--mc-danger);
+        }
+        
+        .tooltip-wrapper:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 60px;
+            background: var(--bg-header);
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            padding: 0 24px;
+            gap: 20px;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            padding: 6px 12px;
+            border-radius: 3px;
+        }
+        
+        .github-link:hover {
+            color: var(--mc-purple-light);
+            background: rgba(176, 145, 255, 0.08);
+        }
+        
+        .github-link svg {
+            width: 22px; height: 22px;
+            fill: currentColor;
+        }
+        
+        .header-center {
+            display: flex;
+            justify-content: center;
+            flex: 1;
+            max-width: 420px;
+        }
+        
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            background: var(--bg-card);
+            border: 2px solid #000;
+            border-top-color: #3a3a3a;
+            border-left-color: #3a3a3a;
+            border-bottom-color: #111;
+            border-right-color: #111;
+            border-radius: 2px;
+            color: var(--text-primary);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .search-input:focus {
+            border-top-color: var(--mc-green-light);
+            border-left-color: var(--mc-green-light);
+            box-shadow: 0 0 0 2px rgba(91, 135, 49, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px; height: 16px;
+            fill: var(--text-secondary);
+            pointer-events: none;
+        }
+        
+        .search-clear {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px; height: 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        
+        .search-clear.visible { display: flex; }
+        
+        .search-clear svg {
+            width: 14px; height: 14px;
+            fill: currentColor;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        
+        /* Language Switcher */
+        .lang-switcher {
+            position: relative;
+        }
+        
+        .lang-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: var(--bg-card);
+            border: 2px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #1a1a1a;
+            border-right-color: #1a1a1a;
+            color: var(--text-primary);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 3px 0 rgba(0,0,0,0.3);
+        }
+        
+        .lang-btn:hover {
+            background: #2a2a2a;
+        }
+        
+        .lang-btn svg {
+            width: 14px; height: 14px;
+            fill: currentColor;
+            transition: transform 0.3s;
+        }
+        
+        .lang-btn.open svg.lang-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--bg-card);
+            border: 2px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #1a1a1a;
+            border-right-color: #1a1a1a;
+            border-radius: 2px;
+            overflow: hidden;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px) scale(0.95);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 100;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+        
+        .lang-dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+        
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 14px;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+        }
+        
+        .lang-option:hover {
+            background: #2a2a2a;
+        }
+        
+        .lang-option.active {
+            background: var(--mc-green);
+            color: #fff;
+        }
+        
+        .lang-option svg {
+            width: 14px; height: 14px;
+            fill: currentColor;
+        }
+        
+        .lang-option .check {
+            margin-left: auto;
+            opacity: 0;
+        }
+        
+        .lang-option.active .check {
+            opacity: 1;
+        }
+        
+        /* Language transition */
+        .lang-transitioning {
+            animation: langFade 0.3s ease;
+        }
+        
+        @keyframes langFade {
+            0% { opacity: 1; transform: translateY(0); }
+            50% { opacity: 0; transform: translateY(-4px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-top: 60px;
+            padding: 48px 40px 60px;
+            max-width: 1240px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Section Header */
+        .section-header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-family: 'MinecraftTitle', sans-serif;
+            font-size: 44px;
+            text-shadow: 3px 3px 0 #000;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: default;
+        }
+        
+        /* Filters & Sort */
+        .controls-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .filters {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 14px;
+            background: var(--bg-card);
+            border: 2px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #1a1a1a;
+            border-right-color: #1a1a1a;
+            color: var(--text-secondary);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 2px 0 rgba(0,0,0,0.3);
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background: #2a2a2a;
+            color: var(--text-primary);
+        }
+        
+        .filter-btn.active {
+            background: var(--mc-green);
+            border-top-color: var(--mc-green-light);
+            border-left-color: var(--mc-green-light);
+            border-bottom-color: var(--mc-green-dark);
+            border-right-color: var(--mc-green-dark);
+            color: #fff;
+        }
+        
+        .filter-btn:active:not(.active) {
+            border-top-color: #1a1a1a;
+            border-left-color: #1a1a1a;
+            border-bottom-color: #444;
+            border-right-color: #444;
+            transform: translateY(1px);
+        }
+        
+        .sort-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sort-label {
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Custom Sort Dropdown */
+        .sort-dropdown {
+            position: relative;
+        }
+        
+        .sort-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 32px 8px 12px;
+            background: var(--bg-card);
+            border: 2px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #1a1a1a;
+            border-right-color: #1a1a1a;
+            color: var(--text-primary);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 2px 0 rgba(0,0,0,0.3);
+            min-width: 180px;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        .sort-trigger:hover {
+            background: #2a2a2a;
+        }
+        
+        .sort-trigger::after {
+            content: '';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid var(--text-secondary);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .sort-trigger.open::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
+        .sort-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: var(--bg-card);
+            border: 2px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #1a1a1a;
+            border-right-color: #1a1a1a;
+            border-radius: 2px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px) scale(0.95);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 100;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+        
+        .sort-dropdown-menu.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+        
+        .sort-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 14px;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+        }
+        
+        .sort-option:hover {
+            background: #2a2a2a;
+        }
+        
+        .sort-option.active {
+            background: var(--mc-green);
+            color: #fff;
+        }
+        
+        .sort-option svg {
+            width: 14px; height: 14px;
+            fill: currentColor;
+            margin-left: auto;
+            opacity: 0;
+        }
+        
+        .sort-option.active svg {
+            opacity: 1;
+        }
+        
+        /* Results info */
+        .results-info {
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            min-height: 18px;
+            transition: opacity 0.3s;
+        }
+        
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 48px;
+            min-height: 200px;
+        }
+        
+        .project-card {
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid #000;
+            border-top-color: #3a3a3a;
+            border-left-color: #3a3a3a;
+            border-bottom-color: #111;
+            border-right-color: #111;
+            background: var(--bg-card);
+            transition: all 0.3s ease;
+            aspect-ratio: 16 / 9;
+            animation: cardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+        
+        .project-card:nth-child(1) { animation-delay: 0.05s; }
+        .project-card:nth-child(2) { animation-delay: 0.1s; }
+        .project-card:nth-child(3) { animation-delay: 0.15s; }
+        .project-card:nth-child(4) { animation-delay: 0.2s; }
+        .project-card:nth-child(5) { animation-delay: 0.25s; }
+        .project-card:nth-child(6) { animation-delay: 0.3s; }
+        
+        .project-card.card-exit {
+            animation: cardExit 0.3s ease forwards;
+        }
+        
+        @keyframes cardEnter {
+            from { opacity: 0; transform: translateY(24px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        @keyframes cardExit {
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to { opacity: 0; transform: translateY(-16px) scale(0.95); }
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 45%, transparent 100%);
+            z-index: 1;
+            transition: all 0.3s;
+        }
+        
+        .project-card:hover {
+            border-top-color: var(--mc-green-light);
+            border-left-color: var(--mc-green-light);
+            border-bottom-color: var(--mc-green-dark);
+            border-right-color: var(--mc-green-dark);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 0 rgba(0,0,0,0.3), 0 0 24px rgba(91, 135, 49, 0.25);
+        }
+        
+        .project-card:hover::before {
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 45%, transparent 100%);
+        }
+        
+        .project-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+        
+        .project-card:hover .project-card-image {
+            transform: scale(1.05);
+        }
+        
+        .project-card-content {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 18px 20px;
+            z-index: 2;
+        }
+        
+        .project-card-title {
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            text-shadow: 2px 2px 0 #000;
+            letter-spacing: 0.5px;
+        }
+        
+        .project-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .project-card-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 9px;
+            background: rgba(255,255,255,0.08);
+            border: 2px solid #000;
+            border-top-color: #555;
+            border-left-color: #555;
+            border-bottom-color: #222;
+            border-right-color: #222;
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 10px;
+            color: #ccc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+        }
+        
+        .project-card-type svg {
+            width: 10px; height: 10px;
+            fill: currentColor;
+        }
+        
+        .project-card-weight {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .project-card-weight svg {
+            width: 12px; height: 12px;
+            fill: currentColor;
+        }
+        
+        .project-card-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 9px;
+            background: rgba(147, 44, 43, 0.2);
+            border: 2px solid #000;
+            border-top-color: var(--mc-danger-light);
+            border-left-color: var(--mc-danger-light);
+            border-bottom-color: var(--mc-danger-dark);
+            border-right-color: var(--mc-danger-dark);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 10px;
+            color: #e8a0a0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+        }
+        
+        .project-card-tag svg {
+            width: 10px; height: 10px;
+            fill: currentColor;
+        }
+        
+        .video-badge {
+            position: absolute;
+            top: 12px; right: 12px;
+            z-index: 3;
+            padding: 4px 10px;
+            background: rgba(0,0,0,0.7);
+            border: 2px solid #000;
+            border-top-color: #555;
+            border-left-color: #555;
+            border-bottom-color: #222;
+            border-right-color: #222;
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 10px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .video-badge svg {
+            width: 12px; height: 12px;
+            fill: currentColor;
+        }
+        
+        /* Empty state */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .empty-state-icon {
+            width: 64px; height: 64px;
+            margin: 0 auto 16px;
+            fill: var(--text-secondary);
+            opacity: 0.5;
+        }
+        
+        .empty-state-title {
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+        
+        .empty-state-text {
+            font-size: 14px;
+        }
+        
+        /* Loading state */
+        .loading-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--mc-green);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Parallax Placeholder */
+        .parallax-placeholder {
+            grid-column: 1 / -1;
+            aspect-ratio: 21 / 9;
+            background: linear-gradient(135deg, #141414 0%, #1a1a1a 100%);
+            border: 3px solid #000;
+            border-top-color: #333;
+            border-left-color: #333;
+            border-bottom-color: #111;
+            border-right-color: #111;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            animation: cardEnter 0.5s ease 0.2s forwards;
+            opacity: 0;
+        }
+        
+        .parallax-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridScroll 30s linear infinite;
+        }
+        
+        @keyframes gridScroll {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
+        }
+        
+        .parallax-placeholder-text {
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            z-index: 1;
+            opacity: 0.6;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .page-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ccc;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+            cursor: pointer;
+            border: 3px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #1a1a1a;
+            border-right-color: #1a1a1a;
+            background: var(--bg-card);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 3px 0 rgba(0,0,0,0.3);
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            min-width: 42px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-btn:hover:not(:disabled) {
+            background: #2a2a2a;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+        
+        .page-btn:active:not(:disabled) {
+            border-top-color: #1a1a1a;
+            border-left-color: #1a1a1a;
+            border-bottom-color: #444;
+            border-right-color: #444;
+            transform: translateY(2px);
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+        }
+        
+        .page-btn.active {
+            background: var(--mc-green);
+            border-top-color: var(--mc-green-light);
+            border-left-color: var(--mc-green-light);
+            border-bottom-color: var(--mc-green-dark);
+            border-right-color: var(--mc-green-dark);
+            color: #fff;
+        }
+        
+        .page-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+        
+        .page-btn svg {
+            width: 14px; height: 14px;
+            fill: currentColor;
+            transition: transform 0.2s;
+        }
+        
+        .page-btn:hover:not(:disabled) svg { transform: translateX(2px); }
+        .page-btn.prev-btn:hover:not(:disabled) svg { transform: translateX(-2px); }
+        
+        .pagination-progress {
+            width: 100%;
+            max-width: 220px;
+            height: 26px;
+            background: var(--bg-card);
+            border: 2px solid #000;
+            border-top-color: #3a3a3a;
+            border-left-color: #3a3a3a;
+            border-bottom-color: #111;
+            border-right-color: #111;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pagination-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--mc-green-dark), var(--mc-green), var(--mc-green-light));
+            background-size: 200% 100%;
+            animation: progressShimmer 3s ease infinite;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .pagination-progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: rgba(255,255,255,0.3);
+        }
+        
+        @keyframes progressShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .pagination-progress-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 11px;
+            color: #fff;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.8), -1px -1px 0 rgba(0,0,0,0.8);
+            letter-spacing: 1px;
+            white-space: nowrap;
+            z-index: 2;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: var(--bg-modal);
+            border: 3px solid #000;
+            border-top-color: #3a3a3a;
+            border-left-color: #3a3a3a;
+            border-bottom-color: #0a0a0a;
+            border-right-color: #0a0a0a;
+            border-radius: 4px;
+            max-width: 1100px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            position: relative;
+            transform: scale(0.92);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+            box-shadow: 0 0 0 1px #000, 0 20px 60px rgba(0,0,0,0.8);
+        }
+        
+        .modal-overlay.active .modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 12px; right: 12px;
+            width: 36px; height: 36px;
+            background: var(--mc-gray);
+            border: 2px solid #000;
+            border-top-color: var(--mc-gray-light);
+            border-left-color: var(--mc-gray-light);
+            border-bottom-color: var(--mc-gray-dark);
+            border-right-color: var(--mc-gray-dark);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 18px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15), 0 3px 0 rgba(0,0,0,0.3);
+        }
+        
+        .modal-close::before {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px; right: 2px;
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .modal-close:hover {
+            background: var(--mc-gray-hover);
+            filter: brightness(1.15);
+            transform: translateY(-1px);
+        }
+        
+        .modal-close:active {
+            border-top-color: var(--mc-gray-dark);
+            border-left-color: var(--mc-gray-dark);
+            border-bottom-color: var(--mc-gray-light);
+            border-right-color: var(--mc-gray-light);
+            transform: translateY(1px);
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+        }
+        
+        .modal-close svg {
+            width: 16px; height: 16px;
+            fill: currentColor;
+        }
+        
+        /* Carousel */
+        .modal-carousel {
+            position: relative;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 480px;
+            overflow: hidden;
+        }
+        
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            cursor: grab;
+        }
+        
+        .carousel-container.dragging { cursor: grabbing; }
+        .carousel-container.zoomed { cursor: grab; }
+        .carousel-container.zoomed.dragging { cursor: grabbing; }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+        }
+        
+        .carousel-track.no-transition { transition: none; }
+        
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+            user-select: none;
+        }
+        
+        .carousel-slide-bg-top,
+        .carousel-slide-bg-bottom {
+            position: absolute;
+            left: 0; right: 0;
+            height: 35%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(30px) brightness(0.4);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .carousel-slide-bg-top { top: 0; transform: scaleY(-1); }
+        .carousel-slide-bg-bottom { bottom: 0; }
+        
+        .carousel-slide img,
+        .carousel-slide video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center center;
+        }
+        
+        .carousel-slide img.zoomed { cursor: grab; }
+        .carousel-slide img.zoomed.dragging { cursor: grabbing; }
+        
+        /* Gallery Action Buttons */
+        .gallery-actions {
+            position: absolute;
+            bottom: 60px;
+            right: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 6;
+        }
+        
+        .gallery-action-btn {
+            width: 40px; height: 40px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .gallery-action-btn:hover {
+            background: rgba(91, 135, 49, 0.8);
+            border-color: var(--mc-green-light);
+            transform: scale(1.1);
+        }
+        
+        .gallery-action-btn:active { transform: scale(0.95); }
+        
+        .gallery-action-btn svg {
+            width: 18px; height: 18px;
+            fill: currentColor;
+        }
+        
+        .gallery-action-btn .action-tooltip {
+            position: absolute;
+            right: calc(100% + 8px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 11px;
+            padding: 6px 10px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+            pointer-events: none;
+        }
+        
+        .gallery-action-btn:hover .action-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .zoom-indicator {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: rgba(0,0,0,0.8);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 4px;
+            padding: 6px 14px;
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 12px;
+            color: #fff;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 7;
+            pointer-events: none;
+        }
+        
+        .zoom-indicator.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        /* Video Player */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+        
+        .video-container video {
+            max-width: 100%;
+            max-height: calc(100% - 50px);
+            object-fit: contain;
+            cursor: pointer;
+        }
+        
+        .video-thumbnail {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            cursor: pointer;
+            background: #000;
+            transition: opacity 0.3s;
+        }
+        
+        .video-thumbnail img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: brightness(0.7);
+            transition: filter 0.3s, transform 0.3s;
+        }
+        
+        .video-thumbnail:hover img {
+            filter: brightness(0.85);
+            transform: scale(1.02);
+        }
+        
+        .video-play-overlay {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 72px; height: 72px;
+            background: rgba(0,0,0,0.7);
+            border: 3px solid #000;
+            border-top-color: #666;
+            border-left-color: #666;
+            border-bottom-color: #222;
+            border-right-color: #222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        
+        .video-play-overlay svg {
+            width: 32px; height: 32px;
+            fill: #fff;
+            margin-left: 4px;
+        }
+        
+        .video-thumbnail:hover .video-play-overlay {
+            background: rgba(91, 135, 49, 0.9);
+            border-top-color: var(--mc-green-light);
+            border-left-color: var(--mc-green-light);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .video-loader {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px; height: 48px;
+            border: 4px solid rgba(255,255,255,0.15);
+            border-top-color: var(--mc-green-light);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            z-index: 3;
+            display: none;
+        }
+        
+        .video-loader.active { display: block; }
+        
+        .video-controls {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 56px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 10px;
+            z-index: 4;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .video-container:hover .video-controls,
+        .video-controls.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .video-btn {
+            width: 32px; height: 32px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .video-btn:hover {
+            color: var(--mc-green-light);
+            transform: scale(1.15);
+        }
+        
+        .video-btn:active { transform: scale(0.95); }
+        
+        .video-btn svg {
+            width: 20px; height: 20px;
+            fill: currentColor;
+        }
+        
+        .video-btn.active-loop {
+            color: var(--mc-green-light);
+        }
+        
+        .video-btn.active-loop::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px; height: 4px;
+            background: var(--mc-green-light);
+            border-radius: 50%;
+        }
+        
+        .video-progress-container {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            overflow: visible;
+            transition: height 0.2s;
+        }
+        
+        .video-progress-container:hover { height: 10px; }
+        
+        .video-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--mc-green-dark), var(--mc-green), var(--mc-green-light));
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s linear;
+            position: relative;
+        }
+        
+        .video-progress-fill::after {
+            content: '';
+            position: absolute;
+            right: -7px;
+            top: 50%;
+            transform: translateY(-50%) scale(0);
+            width: 14px;
+            height: 14px;
+            background: var(--mc-green-light);
+            border: 2px solid #000;
+            border-radius: 2px;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 8px rgba(91, 135, 49, 0.5);
+        }
+        
+        .video-progress-container:hover .video-progress-fill::after {
+            transform: translateY(-50%) scale(1);
+        }
+        
+        .video-progress-buffer {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            background: rgba(255,255,255,0.15);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .video-time {
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 11px;
+            color: #ccc;
+            white-space: nowrap;
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        .volume-control {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .volume-slider-container {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            background: rgba(0,0,0,0.9);
+            border: 2px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #111;
+            border-right-color: #111;
+            border-radius: 2px;
+            padding: 8px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 8px;
+        }
+        
+        .volume-control:hover .volume-slider-container {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+        
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 4px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            outline: none;
+            cursor: pointer;
+            writing-mode: vertical-lr;
+            direction: rtl;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px; height: 14px;
+            background: var(--mc-green);
+            border: 2px solid #000;
+            border-top-color: var(--mc-green-light);
+            border-left-color: var(--mc-green-light);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        
+        .volume-slider::-webkit-slider-thumb:hover {
+            background: var(--mc-green-hover);
+            transform: scale(1.1);
+        }
+        
+        .volume-slider::-moz-range-thumb {
+            width: 14px; height: 14px;
+            background: var(--mc-green);
+            border: 2px solid #000;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px; height: 40px;
+            background: rgba(0,0,0,0.7);
+            border: 2px solid #000;
+            border-top-color: #555;
+            border-left-color: #555;
+            border-bottom-color: #222;
+            border-right-color: #222;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.1s;
+            z-index: 5;
+        }
+        
+        .carousel-btn:hover { background: #333; }
+        
+        .carousel-btn:active {
+            border-top-color: #222;
+            border-left-color: #222;
+            border-bottom-color: #555;
+            border-right-color: #555;
+            transform: translateY(calc(-50% + 2px));
+        }
+        
+        .carousel-btn svg {
+            width: 18px; height: 18px;
+            fill: currentColor;
+        }
+        
+        .carousel-btn.prev { left: 12px; }
+        .carousel-btn.next { right: 12px; }
+        
+        .carousel-dots {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 5;
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.7);
+            border: 2px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #111;
+            border-right-color: #111;
+            border-radius: 2px;
+        }
+        
+        .carousel-dot {
+            width: 10px; height: 10px;
+            background: #555;
+            border: 2px solid #000;
+            border-top-color: #777;
+            border-left-color: #777;
+            border-bottom-color: #333;
+            border-right-color: #333;
+            cursor: pointer;
+            transition: all 0.15s;
+            padding: 0;
+        }
+        
+        .carousel-dot.active {
+            background: var(--mc-green);
+            border-top-color: var(--mc-green-light);
+            border-left-color: var(--mc-green-light);
+        }
+        
+        .carousel-dot:hover:not(.active) { background: #777; }
+        
+        /* Modal Content */
+        .modal-content {
+            padding: 40px 32px 32px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        
+        .modal-content::-webkit-scrollbar { width: 6px; }
+        .modal-content::-webkit-scrollbar-thumb { background: var(--border-light); border: 1px solid var(--bg-modal); }
+        
+        .modal-title {
+            font-family: 'MinecraftTitle', sans-serif;
+            font-size: clamp(24px, 3vw, 34px);
+            font-weight: normal;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 #000;
+            letter-spacing: 1px;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        .modal-description {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.75;
+            margin-bottom: 28px;
+            flex-grow: 1;
+        }
+        
+        .modal-tech {
+            background: var(--bg-card);
+            border: 2px solid #000;
+            border-top-color: #3a3a3a;
+            border-left-color: #3a3a3a;
+            border-bottom-color: #0a0a0a;
+            border-right-color: #0a0a0a;
+            border-radius: 2px;
+            padding: 18px 20px;
+            margin-bottom: 24px;
+        }
+        
+        .modal-tech-title {
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 14px;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 1px 1px 0 #000;
+        }
+        
+        .tech-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tech-row:last-child { border-bottom: none; }
+        
+        .tech-label {
+            color: var(--text-secondary);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tech-label svg {
+            width: 14px; height: 14px;
+            fill: var(--text-secondary);
+        }
+        
+        .tech-value {
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .modal-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .modal-actions-row {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .modal-actions-row .mc-btn { flex: 1; }
+        
+        /* Mine-imator Download Modal */
+        .mi-modal {
+            background: var(--bg-modal);
+            border: 3px solid #000;
+            border-top-color: #3a3a3a;
+            border-left-color: #3a3a3a;
+            border-bottom-color: #0a0a0a;
+            border-right-color: #0a0a0a;
+            border-radius: 4px;
+            max-width: 480px;
+            width: 100%;
+            position: relative;
+            transform: scale(0.92);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+            box-shadow: 0 0 0 1px #000, 0 20px 60px rgba(0,0,0,0.8);
+            overflow: hidden;
+        }
+        
+        .modal-overlay.active .mi-modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .mi-modal-gif {
+            width: 100%;
+            height: 180px;
+            background: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 3px solid #000;
+            border-bottom-color: #0a0a0a;
+        }
+        
+        .mi-modal-gif img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+        
+        .mi-modal-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        
+        .mi-modal-title {
+            font-family: 'MinecraftTitle', sans-serif;
+            font-size: 22px;
+            font-weight: normal;
+            text-align: center;
+            text-shadow: 2px 2px 0 #000;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+        
+        .mi-modal-text {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .mi-modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .mi-modal-actions .mc-btn {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 13px;
+            line-height: 1.2;
+            white-space: normal;
+            word-break: break-word;
+        }
+        
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        
+        .toast {
+            background: var(--bg-card);
+            border: 2px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #111;
+            border-right-color: #111;
+            color: var(--text-primary);
+            font-family: 'MinecraftText', sans-serif;
+            font-size: 13px;
+            padding: 12px 18px;
+            border-radius: 2px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: auto;
+            max-width: 320px;
+        }
+        
+        .toast.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            border-bottom-color: var(--mc-green);
+            border-right-color: var(--mc-green);
+        }
+        
+        .toast.error {
+            border-bottom-color: var(--mc-danger);
+            border-right-color: var(--mc-danger);
+        }
+        
+        .toast svg {
+            width: 18px; height: 18px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+        
+        .toast.success svg { color: var(--mc-green-light); }
+        .toast.error svg { color: var(--mc-danger-light); }
+        
+        /* Footer */
+        .footer {
+            background: var(--bg-header);
+            border-top: 1px solid var(--border-color);
+            padding: 28px 40px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-family: 'MinecraftText', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            .header {
+                grid-template-columns: 1fr;
+                height: auto;
+                padding: 12px 20px;
+                gap: 12px;
+            }
+            
+            .header-center { order: 3; max-width: 100%; }
+            .header-right { order: 2; }
+            
+            .modal {
+                grid-template-columns: 1fr;
+                max-height: 95vh;
+            }
+            
+            .modal-carousel { min-height: 280px; }
+            
+            .projects-grid { grid-template-columns: 1fr; }
+            
+            .main-content { padding: 32px 20px 48px; }
+            
+            .section-title { font-size: 32px; }
+            
+            .modal-content { padding: 28px 20px 24px; }
+            
+            .controls-bar { flex-direction: column; align-items: stretch; }
+        }
+        
+        @media (max-width: 600px) {
+            .mc-btn { font-size: 12px; padding: 10px 16px; }
+            .pagination-controls { flex-wrap: wrap; justify-content: center; }
+            .modal-actions-row { flex-direction: column; }
+            .mi-modal-actions { flex-direction: column; }
+            .filters { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <a href="https://github.com/Aurum2347" target="_blank" class="github-link">
+                <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                Github
+            </a>
+        </div>
+        
+        <div class="header-center">
+            <div class="search-container">
+                <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" class="search-input" id="searchInput" placeholder="Поиск проектов...">
+                <button class="search-clear" id="searchClear">
+                    <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langBtn">
+                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
+                    <span id="langBtnText">RU</span>
+                    <svg class="lang-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="ru">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
+                        Русский
+                        <svg class="check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    </button>
+                    <button class="lang-option" data-lang="en">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
+                        English
+                        <svg class="check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    </button>
+                </div>
+            </div>
+            
+            <a href="https://t.me/aurums2347" target="_blank" class="mc-btn mc-btn-small mc-btn-tg">
+                <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+                Telegram
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" id="projects">
+        <div class="section-header">
+            <h2 class="section-title" data-i18n="projects_title">Мои проекты</h2>
+            <div class="section-subtitle" data-i18n="all_works">Все работы</div>
+        </div>
+        
+        <div class="controls-bar">
+            <div class="filters" id="filters">
+                <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Все</button>
+                <button class="filter-btn" data-filter="render" data-i18n="filter_renders">Рендеры</button>
+                <button class="filter-btn" data-filter="animation" data-i18n="filter_animations">Анимации</button>
+                <button class="filter-btn" data-filter="available" data-i18n="filter_available">Доступные</button>
+                <button class="filter-btn" data-filter="unavailable" data-i18n="filter_unavailable">Недоступные</button>
+            </div>
+            
+            <div class="sort-container">
+                <span class="sort-label" data-i18n="sort_label">Сортировка:</span>
+                <div class="sort-dropdown" id="sortDropdown">
+                    <button class="sort-trigger" id="sortTrigger">
+                        <span id="sortTriggerText">По дате (новые)</span>
+                    </button>
+                    <div class="sort-dropdown-menu" id="sortDropdownMenu">
+                        <button class="sort-option active" data-sort="date-desc" data-i18n="sort_date_new">
+                            По дате (новые)
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        </button>
+                        <button class="sort-option" data-sort="date-asc" data-i18n="sort_date_old">
+                            По дате (старые)
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        </button>
+                        <button class="sort-option" data-sort="name-asc" data-i18n="sort_name_az">
+                            По названию (А-Я)
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        </button>
+                        <button class="sort-option" data-sort="name-desc" data-i18n="sort_name_za">
+                            По названию (Я-А)
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="results-info" id="resultsInfo"></div>
+        
+        <div class="projects-grid" id="projectsGrid">
+            <div class="loading-state">
+                <div class="loading-spinner"></div>
+                <div>Загрузка проектов...</div>
+            </div>
+        </div>
+        
+        <div class="pagination" id="pagination"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Minimate &copy; 2026. <span data-i18n="footer_text">Все работы созданы в Mine-imator.</span></p>
+    </footer>
+
+    <!-- Main Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+            
+            <div class="modal-carousel">
+                <div class="carousel-container" id="carouselContainer">
+                    <div class="carousel-track" id="carouselTrack"></div>
+                </div>
+                <button class="carousel-btn prev" id="carouselPrev" style="display: none;">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+                </button>
+                <button class="carousel-btn next" id="carouselNext" style="display: none;">
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                </button>
+                <div class="carousel-dots" id="carouselDots" style="display: none;"></div>
+                
+                <div class="zoom-indicator" id="zoomIndicator">100%</div>
+                
+                <div class="gallery-actions" id="galleryActions" style="display: none;">
+                    <button class="gallery-action-btn" id="btnDownloadImage" title="Скачать">
+                        <span class="action-tooltip" data-i18n="download_image">Скачать картинку</span>
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    </button>
+                    <button class="gallery-action-btn" id="btnCopyImage" title="Копировать">
+                        <span class="action-tooltip" data-i18n="copy_image">Копировать картинку</span>
+                        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="modal-content">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <p class="modal-description" id="modalDescription"></p>
+                
+                <div class="modal-tech">
+                    <h3 class="modal-tech-title" data-i18n="tech_info">Техническая информация</h3>
+                    <div class="tech-row">
+                        <span class="tech-label">
+                            <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                            <span data-i18n="tech_type">Тип</span>
+                        </span>
+                        <span class="tech-value" id="modalType"></span>
+                    </div>
+                    <div class="tech-row">
+                        <span class="tech-label">
+                            <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+                            <span data-i18n="tech_size">Размер файла</span>
+                        </span>
+                        <span class="tech-value" id="modalWeight"></span>
+                    </div>
+                    <div class="tech-row">
+                        <span class="tech-label">
+                            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                            <span data-i18n="tech_date">Дата создания</span>
+                        </span>
+                        <span class="tech-value" id="modalDate"></span>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <div id="downloadButtonContainer"></div>
+                    <div class="modal-actions-row">
+                        <button class="mc-btn mc-btn-secondary" id="btnMineImator">
+                            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                            Mine-imator
+                        </button>
+                        <a href="https://t.me/aurums2347" target="_blank" class="mc-btn mc-btn-blue mc-btn-secondary">
+                            <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+                            Telegram
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mine-imator Download Modal -->
+    <div class="modal-overlay" id="miModalOverlay">
+        <div class="mi-modal">
+            <button class="modal-close" id="miModalClose">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+            
+            <div class="mi-modal-gif">
+                <img src="https://cdn.discordapp.com/attachments/1375733747063722037/1545551916715479070/bdp1k9k.gif?ex=6a9c8ee3&is=6a9b3d63&hm=7daa086ad1aa0f24151e30a94cef06865e2b352778f1446437af400aaa2f8a12&" alt="Mine-imator character">
+            </div>
+            
+            <div class="mi-modal-content">
+                <h3 class="mi-modal-title" data-i18n="mi_title">Скачать Mine-imator CB</h3>
+                <p class="mi-modal-text" data-i18n="mi_text">Не грузит сайт? Тогда можешь попробовать скачать с нашего личного архива, не бойся, тут вирусов нет.</p>
+                
+                <div class="mi-modal-actions">
+                    <a href="https://communitybuild.netlify.app/mineimator" target="_blank" class="mc-btn mc-btn-purple">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                        <span data-i18n="mi_official">Официальный сайт</span>
+                    </a>
+                    <a href="#" target="_blank" class="mc-btn mc-btn-blue">
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                        <span data-i18n="mi_archive">Личный архив</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Translations
+        const translations = {
+            ru: {
+                projects_title: 'Мои проекты',
+                all_works: 'Все работы',
+                filter_all: 'Все',
+                filter_renders: 'Рендеры',
+                filter_animations: 'Анимации',
+                filter_available: 'Доступные',
+                filter_unavailable: 'Недоступные',
+                sort_label: 'Сортировка:',
+                sort_date_new: 'По дате (новые)',
+                sort_date_old: 'По дате (старые)',
+                sort_name_az: 'По названию (А-Я)',
+                sort_name_za: 'По названию (Я-А)',
+                tech_info: 'Техническая информация',
+                tech_type: 'Тип',
+                tech_size: 'Размер файла',
+                tech_date: 'Дата создания',
+                download_project: 'Скачать проект',
+                unavailable: 'Недоступно',
+                unavailable_tooltip: 'Данный проект утерян в виде файлов, увы это просто картинка',
+                mi_title: 'Скачать Mine-imator CB',
+                mi_text: 'Не грузит сайт? Тогда можешь попробовать скачать с нашего личного архива, не бойся, тут вирусов нет.',
+                mi_official: 'Официальный сайт',
+                mi_archive: 'Личный архив',
+                download_image: 'Скачать картинку',
+                copy_image: 'Копировать картинку',
+                footer_text: 'Все работы созданы в Mine-imator.',
+                search_placeholder: 'Поиск проектов...',
+                no_results: 'Ничего не найдено',
+                no_results_text: 'Попробуйте изменить запрос или фильтры',
+                results_count: 'Найдено: {count}',
+                toast_downloaded: 'Изображение скачано',
+                toast_copied: 'Изображение скопировано в буфер',
+                toast_copy_error: 'Не удалось скопировать',
+                toast_loop_on: 'Повтор включён',
+                toast_loop_off: 'Повтор выключен',
+                toast_screenshot: 'Скриншот сохранён',
+                type_render: 'Рендер',
+                type_animation: 'Анимация',
+                video: 'Видео',
+                days_ago: '{n} дн. назад',
+                months_ago: '{n} мес. назад',
+                years_ago: '{n} г. назад',
+                today: 'Сегодня',
+                yesterday: 'Вчера',
+                loading: 'Загрузка проектов...'
+            },
+            en: {
+                projects_title: 'My Projects',
+                all_works: 'All works',
+                filter_all: 'All',
+                filter_renders: 'Renders',
+                filter_animations: 'Animations',
+                filter_available: 'Available',
+                filter_unavailable: 'Unavailable',
+                sort_label: 'Sort:',
+                sort_date_new: 'By date (newest)',
+                sort_date_old: 'By date (oldest)',
+                sort_name_az: 'By name (A-Z)',
+                sort_name_za: 'By name (Z-A)',
+                tech_info: 'Technical info',
+                tech_type: 'Type',
+                tech_size: 'File size',
+                tech_date: 'Created',
+                download_project: 'Download project',
+                unavailable: 'Unavailable',
+                unavailable_tooltip: 'This project is lost as files, unfortunately it\'s just a picture',
+                mi_title: 'Download Mine-imator CB',
+                mi_text: 'Site not loading? Try downloading from our personal archive, don\'t worry, no viruses here.',
+                mi_official: 'Official site',
+                mi_archive: 'Personal archive',
+                download_image: 'Download image',
+                copy_image: 'Copy image',
+                footer_text: 'All works created in Mine-imator.',
+                search_placeholder: 'Search projects...',
+                no_results: 'Nothing found',
+                no_results_text: 'Try changing your query or filters',
+                results_count: 'Found: {count}',
+                toast_downloaded: 'Image downloaded',
+                toast_copied: 'Image copied to clipboard',
+                toast_copy_error: 'Failed to copy',
+                toast_loop_on: 'Loop enabled',
+                toast_loop_off: 'Loop disabled',
+                toast_screenshot: 'Screenshot saved',
+                type_render: 'Render',
+                type_animation: 'Animation',
+                video: 'Video',
+                days_ago: '{n}d ago',
+                months_ago: '{n}mo ago',
+                years_ago: '{n}y ago',
+                today: 'Today',
+                yesterday: 'Yesterday',
+                loading: 'Loading projects...'
+            }
+        };
+        
+        let currentLang = 'ru';
+        let allProjects = [];
+        let currentFilter = 'all';
+        let currentSort = 'date-desc';
+        let searchQuery = '';
+        let currentPage = 1;
+        const ITEMS_PER_PAGE = 4;
+        
+        function t(key, params = {}) {
+            let text = translations[currentLang][key] || key;
+            Object.keys(params).forEach(p => {
+                text = text.replace(`{${p}}`, params[p]);
+            });
+            return text;
+        }
+        
+        function updateTranslations() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.textContent = t(key);
+            });
+            document.getElementById('searchInput').placeholder = t('search_placeholder');
+            document.getElementById('langBtnText').textContent = currentLang.toUpperCase();
+            
+            document.querySelectorAll('.sort-option').forEach(opt => {
+                const key = opt.getAttribute('data-i18n');
+                if (key) {
+                    const textNode = opt.childNodes[0];
+                    if (textNode.nodeType === 3) {
+                        textNode.textContent = t(key) + ' ';
+                    }
+                }
+            });
+            
+            const activeSort = document.querySelector('.sort-option.active');
+            if (activeSort) {
+                const key = activeSort.getAttribute('data-i18n');
+                if (key) {
+                    document.getElementById('sortTriggerText').textContent = t(key);
+                }
+            }
+        }
+        
+        function setLang(lang) {
+            if (lang === currentLang) return;
+            
+            const content = document.querySelector('.main-content');
+            content.classList.add('lang-transitioning');
+            
+            setTimeout(() => {
+                currentLang = lang;
+                updateTranslations();
+                renderProjects();
+                content.classList.remove('lang-transitioning');
+            }, 150);
+            
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.lang === lang);
+            });
+            
+            document.getElementById('langDropdown').classList.remove('open');
+            document.getElementById('langBtn').classList.remove('open');
+        }
+        
+        function formatDate(dateStr) {
+            const now = new Date();
+            const date = new Date(dateStr);
+            const diffMs = now - date;
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 0) return t('today');
+            if (diffDays === 1) return t('yesterday');
+            if (diffDays < 30) return t('days_ago', { n: diffDays });
+            
+            const diffMonths = Math.floor(diffDays / 30);
+            if (diffMonths < 12) return t('months_ago', { n: diffMonths });
+            
+            const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+            const monthsEn = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+            const m = currentLang === 'ru' ? months : monthsEn;
+            return `${date.getDate()} ${m[date.getMonth()]} ${date.getFullYear()}`;
+        }
+        
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icon = type === 'success' 
+                ? '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>'
+                : '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>';
+            
+            toast.innerHTML = `${icon}<span>${message}</span>`;
+            container.appendChild(toast);
+            
+            requestAnimationFrame(() => {
+                toast.classList.add('visible');
+            });
+            
+            setTimeout(() => {
+                toast.classList.remove('visible');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+        
+        async function loadProjects() {
+            try {
+                // Load manifest
+                const manifestResponse = await fetch('/projects/manifest.json');
+                const projectIds = await manifestResponse.json();
+                
+                // Load each project
+                allProjects = await Promise.all(
+                    projectIds.map(async (id) => {
+                        try {
+                            const infoRes = await fetch(`/projects/${id}/info.json`);
+                            const info = await infoRes.json();
+                            
+                            // Get gallery files
+                            const galleryFiles = [];
+                            const galleryDir = `/projects/${id}/gallery/`;
+                            
+                            // Try to load gallery manifest or scan files
+                            try {
+                                const galleryRes = await fetch(`${galleryDir}manifest.json`);
+                                const galleryList = await galleryRes.json();
+                                galleryFiles.push(...galleryList);
+                            } catch (e) {
+                                // Fallback: try common file names
+                                const commonFiles = ['01.png', '02.png', '03.png', '04.png', '05.png', '01.mp4', '02.mp4'];
+                                for (const file of commonFiles) {
+                                    try {
+                                        const testRes = await fetch(`${galleryDir}${file}`, { method: 'HEAD' });
+                                        if (testRes.ok) {
+                                            galleryFiles.push({
+                                                type: file.endsWith('.mp4') ? 'video' : 'image',
+                                                src: `${galleryDir}${file}`
+                                            });
+                                        }
+                                    } catch (e) {}
+                                }
+                            }
+                            
+                            return {
+                                id,
+                                ...info,
+                                gallery: galleryFiles
+                            };
+                        } catch (e) {
+                            console.error(`Error loading project ${id}:`, e);
+                            return null;
+                        }
+                    })
+                );
+                
+                allProjects = allProjects.filter(p => p !== null);
+                renderProjects();
+            } catch (e) {
+                console.error('Error loading projects:', e);
+                document.getElementById('projectsGrid').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-title">${t('no_results')}</div>
+                        <div class="empty-state-text">${t('no_results_text')}</div>
+                    </div>
+                `;
+            }
+        }
+        
+        function getFilteredProjects() {
+            let filtered = [...allProjects];
+            
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                filtered = filtered.filter(p => {
+                    const name = typeof p.name === 'object' ? (p.name[currentLang] || p.name.ru || '') : p.name;
+                    return name.toLowerCase().includes(q);
+                });
+            }
+            
+            if (currentFilter === 'render') filtered = filtered.filter(p => p.type === 'render');
+            else if (currentFilter === 'animation') filtered = filtered.filter(p => p.type === 'animation');
+            else if (currentFilter === 'available') filtered = filtered.filter(p => !p.noDownload);
+            else if (currentFilter === 'unavailable') filtered = filtered.filter(p => p.noDownload);
+            
+            if (currentSort === 'date-desc') filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+            else if (currentSort === 'date-asc') filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+            else if (currentSort === 'name-asc') {
+                filtered.sort((a, b) => {
+                    const nameA = typeof a.name === 'object' ? (a.name[currentLang] || a.name.ru || '') : a.name;
+                    const nameB = typeof b.name === 'object' ? (b.name[currentLang] || b.name.ru || '') : b.name;
+                    return nameA.localeCompare(nameB, currentLang === 'ru' ? 'ru' : 'en');
+                });
+            }
+            else if (currentSort === 'name-desc') {
+                filtered.sort((a, b) => {
+                    const nameA = typeof a.name === 'object' ? (a.name[currentLang] || a.name.ru || '') : a.name;
+                    const nameB = typeof b.name === 'object' ? (b.name[currentLang] || b.name.ru || '') : b.name;
+                    return nameB.localeCompare(nameA, currentLang === 'ru' ? 'ru' : 'en');
+                });
+            }
+            
+            return filtered;
+        }
+        
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            const filtered = getFilteredProjects();
+            const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+            
+            if (currentPage > totalPages) currentPage = totalPages;
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <svg class="empty-state-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                        <div class="empty-state-title">${t('no_results')}</div>
+                        <div class="empty-state-text">${t('no_results_text')}</div>
+                    </div>
+                `;
+                renderPagination(0);
+                return;
+            }
+            
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            const pageProjects = filtered.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+            
+            const resultsInfo = document.getElementById('resultsInfo');
+            if (searchQuery || currentFilter !== 'all') {
+                resultsInfo.textContent = t('results_count', { count: filtered.length });
+            } else {
+                resultsInfo.textContent = '';
+            }
+            
+            grid.innerHTML = '';
+            pageProjects.forEach((project, index) => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.onclick = () => openModal(project);
+                
+                const name = typeof project.name === 'object' ? (project.name[currentLang] || project.name.ru || project.id) : project.name;
+                const description = typeof project.description === 'object' ? (project.description[currentLang] || project.description.ru || '') : project.description;
+                
+                const typeIcon = project.type === 'animation' 
+                    ? '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'
+                    : '<svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>';
+                
+                const typeLabel = project.type === 'animation' ? t('type_animation') : t('type_render');
+                
+                let badges = '';
+                if (project.isVideo) {
+                    badges += `<div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>${t('video')}</div>`;
+                }
+                
+                let tagHtml = '';
+                if (project.noDownload) {
+                    tagHtml = `<span class="project-card-tag"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>${t('filter_unavailable')}</span>`;
+                }
+                
+                const previewUrl = `/projects/${project.id}/preview.png`;
+                
+                card.innerHTML = `
+                    ${badges}
+                    <img src="${previewUrl}" alt="${name}" class="project-card-image" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22225%22%3E%3Crect fill=%22%231f1f1f%22 width=%22400%22 height=%22225%22/%3E%3Ctext fill=%22%23666%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22%3ENo Preview%3C/text%3E%3C/svg%3E'">
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">${name}</h3>
+                        <div class="project-card-meta">
+                            <span class="project-card-type">${typeIcon}${typeLabel}</span>
+                            <span class="project-card-weight"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>${project.weight}</span>
+                            ${tagHtml}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+                
+                if (index === 1 && currentPage < totalPages) {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'parallax-placeholder';
+                    placeholder.innerHTML = '<span class="parallax-placeholder-text">Parallax Section</span>';
+                    grid.appendChild(placeholder);
+                }
+            });
+            
+            renderPagination(totalPages);
+        }
+        
+        function renderPagination(totalPages) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            const controls = document.createElement('div');
+            controls.className = 'pagination-controls';
+            
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'page-btn prev-btn';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>';
+            prevBtn.onclick = () => goToPage(currentPage - 1);
+            controls.appendChild(prevBtn);
+            
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+                pageBtn.textContent = i;
+                pageBtn.onclick = () => goToPage(i);
+                controls.appendChild(pageBtn);
+            }
+            
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'page-btn next-btn';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>';
+            nextBtn.onclick = () => goToPage(currentPage + 1);
+            controls.appendChild(nextBtn);
+            
+            pagination.appendChild(controls);
+            
+            const progressContainer = document.createElement('div');
+            progressContainer.className = 'pagination-progress';
+            const progressFill = document.createElement('div');
+            progressFill.className = 'pagination-progress-fill';
+            progressFill.style.width = '0%';
+            const progressText = document.createElement('div');
+            progressText.className = 'pagination-progress-text';
+            progressText.textContent = `${currentPage} / ${totalPages}`;
+            progressContainer.appendChild(progressFill);
+            progressContainer.appendChild(progressText);
+            pagination.appendChild(progressContainer);
+            
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    progressFill.style.width = ((currentPage / totalPages) * 100) + '%';
+                });
+            });
+        }
+        
+        function goToPage(page) {
+            const filtered = getFilteredProjects();
+            const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderProjects();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Modal Logic
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const carouselTrack = document.getElementById('carouselTrack');
+        const carouselDots = document.getElementById('carouselDots');
+        const carouselPrev = document.getElementById('carouselPrev');
+        const carouselNext = document.getElementById('carouselNext');
+        const carouselContainer = document.getElementById('carouselContainer');
+        const btnMineImator = document.getElementById('btnMineImator');
+        const downloadButtonContainer = document.getElementById('downloadButtonContainer');
+        const miModalOverlay = document.getElementById('miModalOverlay');
+        const miModalClose = document.getElementById('miModalClose');
+        const zoomIndicator = document.getElementById('zoomIndicator');
+        const galleryActions = document.getElementById('galleryActions');
+        const btnDownloadImage = document.getElementById('btnDownloadImage');
+        const btnCopyImage = document.getElementById('btnCopyImage');
+        
+        let currentSlide = 0;
+        let currentProject = null;
+        let currentVideoEl = null;
+        let currentZoom = 1;
+        let currentPanX = 0;
+        let currentPanY = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let panStartX = 0;
+        let panStartY = 0;
+        let currentImageEl = null;
+        
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        function openModal(project) {
+            currentProject = project;
+            currentSlide = 0;
+            currentZoom = 1;
+            currentPanX = 0;
+            currentPanY = 0;
+            if (currentVideoEl) { currentVideoEl.pause(); currentVideoEl = null; }
+            
+            const name = typeof project.name === 'object' ? (project.name[currentLang] || project.name.ru || project.id) : project.name;
+            const description = typeof project.description === 'object' ? (project.description[currentLang] || project.description.ru || '') : project.description;
+            
+            document.getElementById('modalTitle').textContent = name;
+            document.getElementById('modalDescription').textContent = description;
+            document.getElementById('modalType').textContent = project.type === 'animation' ? t('type_animation') : t('type_render');
+            document.getElementById('modalWeight').textContent = project.weight;
+            document.getElementById('modalDate').textContent = formatDate(project.date);
+            
+            downloadButtonContainer.innerHTML = '';
+            if (project.noDownload) {
+                const tooltipWrapper = document.createElement('div');
+                tooltipWrapper.className = 'tooltip-wrapper';
+                tooltipWrapper.innerHTML = `
+                    <div class="tooltip">${t('unavailable_tooltip')}</div>
+                    <button class="mc-btn mc-btn-disabled" disabled>
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                        ${t('unavailable')}
+                    </button>
+                `;
+                downloadButtonContainer.appendChild(tooltipWrapper);
+            } else {
+                const downloadBtn = document.createElement('a');
+                downloadBtn.href = `/projects/${project.id}/download.zip`;
+                downloadBtn.target = '_blank';
+                downloadBtn.className = 'mc-btn';
+                downloadBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>${t('download_project')}`;
+                downloadButtonContainer.appendChild(downloadBtn);
+            }
+            
+            carouselTrack.innerHTML = '';
+            carouselDots.innerHTML = '';
+            const hasMultiple = project.gallery && project.gallery.length > 1;
+            carouselPrev.style.display = hasMultiple ? 'flex' : 'none';
+            carouselNext.style.display = hasMultiple ? 'flex' : 'none';
+            carouselDots.style.display = hasMultiple ? 'flex' : 'none';
+            
+            const hasImages = project.gallery && project.gallery.some(item => item.type === 'image');
+            galleryActions.style.display = hasImages ? 'flex' : 'none';
+            
+            if (project.gallery) {
+                project.gallery.forEach((item, index) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    const bgTop = document.createElement('div');
+                    bgTop.className = 'carousel-slide-bg-top';
+                    bgTop.style.backgroundImage = `url("${item.src}")`;
+                    slide.appendChild(bgTop);
+                    const bgBottom = document.createElement('div');
+                    bgBottom.className = 'carousel-slide-bg-bottom';
+                    bgBottom.style.backgroundImage = `url("${item.src}")`;
+                    slide.appendChild(bgBottom);
+                    
+                    if (item.type === 'video') {
+                        const videoContainer = document.createElement('div');
+                        videoContainer.className = 'video-container';
+                        const video = document.createElement('video');
+                        video.src = item.src;
+                        video.preload = 'metadata';
+                        video.loop = true;
+                        video.playsInline = true;
+                        video.style.display = 'none';
+                        if (index === 0) currentVideoEl = video;
+                        const thumbnail = document.createElement('div');
+                        thumbnail.className = 'video-thumbnail';
+                        thumbnail.innerHTML = `<img src="${item.src}" alt="${name} preview"><div class="video-play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>`;
+                        thumbnail.onclick = () => {
+                            thumbnail.style.opacity = '0';
+                            setTimeout(() => thumbnail.style.display = 'none', 300);
+                            video.style.display = 'block';
+                            video.controls = false;
+                            video.play().catch(() => {});
+                            setupVideoControls(video, videoContainer);
+                        };
+                        const loader = document.createElement('div');
+                        loader.className = 'video-loader';
+                        const controls = document.createElement('div');
+                        controls.className = 'video-controls';
+                        controls.innerHTML = `
+                            <button class="video-btn video-play-btn" title="Play/Pause">
+                                <svg viewBox="0 0 24 24" class="play-icon"><path d="M8 5v14l11-7z"/></svg>
+                                <svg viewBox="0 0 24 24" class="pause-icon" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                            </button>
+                            <div class="video-progress-container">
+                                <div class="video-progress-buffer"></div>
+                                <div class="video-progress-fill"></div>
+                            </div>
+                            <span class="video-time">0:00 / 0:00</span>
+                            <button class="video-btn video-loop-btn" title="Loop">
+                                <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+                            </button>
+                            <button class="video-btn video-screenshot-btn" title="Screenshot">
+                                <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                            </button>
+                            <div class="volume-control">
+                                <button class="video-btn video-mute-btn" title="Volume">
+                                    <svg viewBox="0 0 24 24" class="volume-high-icon"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                                    <svg viewBox="0 0 24 24" class="volume-low-icon" style="display:none"><path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/></svg>
+                                    <svg viewBox="0 0 24 24" class="volume-mute-icon" style="display:none"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                                </button>
+                                <div class="volume-slider-container">
+                                    <input type="range" class="volume-slider" min="0" max="100" value="100" orient="vertical">
+                                </div>
+                            </div>`;
+                        video.addEventListener('loadeddata', () => loader.classList.remove('active'));
+                        video.addEventListener('waiting', () => loader.classList.add('active'));
+                        video.addEventListener('canplay', () => loader.classList.remove('active'));
+                        video.addEventListener('click', () => { if (video.paused) video.play(); else video.pause(); });
+                        videoContainer.appendChild(video);
+                        videoContainer.appendChild(thumbnail);
+                        videoContainer.appendChild(loader);
+                        videoContainer.appendChild(controls);
+                        slide.appendChild(videoContainer);
+                    } else {
+                        const img = document.createElement('img');
+                        img.src = item.src;
+                        img.alt = `${name} - view ${index + 1}`;
+                        img.className = 'gallery-image';
+                        img.draggable = false;
+                        img.addEventListener('mousedown', handleImageMouseDown);
+                        img.addEventListener('dblclick', handleImageDoubleClick);
+                        currentImageEl = img;
+                        slide.appendChild(img);
+                    }
+                    carouselTrack.appendChild(slide);
+                    if (hasMultiple) {
+                        const dot = document.createElement('button');
+                        dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
+                        dot.onclick = () => goToSlide(index);
+                        carouselDots.appendChild(dot);
+                    }
+                });
+            }
+            
+            updateCarousel();
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function setupVideoControls(video, container) {
+            const playBtn = container.querySelector('.video-play-btn');
+            const pauseIcon = playBtn.querySelector('.pause-icon');
+            const playIcon = playBtn.querySelector('.play-icon');
+            const progressContainer = container.querySelector('.video-progress-container');
+            const progressFill = container.querySelector('.video-progress-fill');
+            const bufferFill = container.querySelector('.video-progress-buffer');
+            const timeDisplay = container.querySelector('.video-time');
+            const muteBtn = container.querySelector('.video-mute-btn');
+            const volumeHighIcon = muteBtn.querySelector('.volume-high-icon');
+            const volumeLowIcon = muteBtn.querySelector('.volume-low-icon');
+            const volumeMuteIcon = muteBtn.querySelector('.volume-mute-icon');
+            const volumeSlider = container.querySelector('.volume-slider');
+            const controls = container.querySelector('.video-controls');
+            const loopBtn = container.querySelector('.video-loop-btn');
+            const screenshotBtn = container.querySelector('.video-screenshot-btn');
+            let lastVolume = 1;
+            let loopEnabled = true;
+            video.loop = true;
+            
+            function updateVolumeIcon(vol) {
+                volumeHighIcon.style.display = 'none';
+                volumeLowIcon.style.display = 'none';
+                volumeMuteIcon.style.display = 'none';
+                if (vol === 0 || video.muted) volumeMuteIcon.style.display = 'block';
+                else if (vol < 0.5) volumeLowIcon.style.display = 'block';
+                else volumeHighIcon.style.display = 'block';
+            }
+            
+            playBtn.onclick = (e) => { e.stopPropagation(); if (video.paused) video.play(); else video.pause(); };
+            video.addEventListener('play', () => { playIcon.style.display = 'none'; pauseIcon.style.display = 'block'; });
+            video.addEventListener('pause', () => { playIcon.style.display = 'block'; pauseIcon.style.display = 'none'; });
+            video.addEventListener('timeupdate', () => {
+                const percent = (video.currentTime / video.duration) * 100;
+                progressFill.style.width = percent + '%';
+                timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+            });
+            video.addEventListener('progress', () => {
+                if (video.buffered.length > 0) {
+                    const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+                    if (video.duration > 0) bufferFill.style.width = (bufferedEnd / video.duration) * 100 + '%';
+                }
+            });
+            let isSeeking = false;
+            function seekTo(e) {
+                const rect = progressContainer.getBoundingClientRect();
+                const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                video.currentTime = percent * video.duration;
+                progressFill.style.width = (percent * 100) + '%';
+            }
+            progressContainer.addEventListener('mousedown', (e) => { isSeeking = true; seekTo(e); });
+            document.addEventListener('mousemove', (e) => { if (isSeeking) seekTo(e); });
+            document.addEventListener('mouseup', () => { isSeeking = false; });
+            muteBtn.onclick = (e) => {
+                e.stopPropagation();
+                if (video.muted || video.volume === 0) {
+                    video.muted = false;
+                    video.volume = lastVolume || 0.5;
+                    volumeSlider.value = video.volume * 100;
+                } else {
+                    lastVolume = video.volume;
+                    video.muted = true;
+                    video.volume = 0;
+                    volumeSlider.value = 0;
+                }
+                updateVolumeIcon(video.volume);
+            };
+            volumeSlider.addEventListener('input', (e) => {
+                e.stopPropagation();
+                const vol = e.target.value / 100;
+                video.volume = vol;
+                video.muted = vol === 0;
+                if (vol > 0) lastVolume = vol;
+                updateVolumeIcon(vol);
+            });
+            volumeSlider.addEventListener('mousedown', (e) => e.stopPropagation());
+            volumeSlider.addEventListener('click', (e) => e.stopPropagation());
+            video.addEventListener('ended', () => { playIcon.style.display = 'block'; pauseIcon.style.display = 'none'; });
+            updateVolumeIcon(video.volume);
+            
+            loopBtn.onclick = (e) => {
+                e.stopPropagation();
+                loopEnabled = !loopEnabled;
+                video.loop = loopEnabled;
+                loopBtn.classList.toggle('active-loop', loopEnabled);
+                showToast(loopEnabled ? t('toast_loop_on') : t('toast_loop_off'), 'success');
+            };
+            loopBtn.classList.add('active-loop');
+            
+            screenshotBtn.onclick = (e) => {
+                e.stopPropagation();
+                try {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0);
+                    canvas.toBlob(blob => {
+                        if (blob) {
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `screenshot_${Date.now()}.png`;
+                            a.click();
+                            URL.revokeObjectURL(url);
+                            showToast(t('toast_screenshot'), 'success');
+                        }
+                    }, 'image/png');
+                } catch (err) {
+                    showToast(t('toast_copy_error'), 'error');
+                }
+            };
+            
+            controls.classList.add('active');
+            clearTimeout(container._hideTimeout);
+            container._hideTimeout = setTimeout(() => { if (!video.paused) controls.classList.remove('active'); }, 3000);
+            container.addEventListener('mousemove', () => {
+                controls.classList.add('active');
+                clearTimeout(container._hideTimeout);
+                container._hideTimeout = setTimeout(() => { if (!video.paused) controls.classList.remove('active'); }, 3000);
+            });
+        }
+        
+        function resetZoom() {
+            currentZoom = 1;
+            currentPanX = 0;
+            currentPanY = 0;
+            applyTransform();
+            zoomIndicator.classList.remove('visible');
+        }
+        
+        function applyTransform() {
+            if (!currentImageEl) return;
+            currentImageEl.style.transform = `translate(${currentPanX}px, ${currentPanY}px) scale(${currentZoom})`;
+            if (currentZoom > 1) {
+                currentImageEl.classList.add('zoomed');
+                carouselContainer.classList.add('zoomed');
+            } else {
+                currentImageEl.classList.remove('zoomed');
+                carouselContainer.classList.remove('zoomed');
+            }
+        }
+        
+        function showZoomIndicator() {
+            zoomIndicator.textContent = Math.round(currentZoom * 100) + '%';
+            zoomIndicator.classList.add('visible');
+            clearTimeout(zoomIndicator._hideTimeout);
+            zoomIndicator._hideTimeout = setTimeout(() => {
+                zoomIndicator.classList.remove('visible');
+            }, 1000);
+        }
+        
+        function handleImageDoubleClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (currentZoom > 1) {
+                resetZoom();
+            } else {
+                currentZoom = 2.5;
+                currentPanX = 0;
+                currentPanY = 0;
+                applyTransform();
+                showZoomIndicator();
+            }
+        }
+        
+        function handleImageMouseDown(e) {
+            if (currentZoom <= 1) return;
+            e.preventDefault();
+            isDragging = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            panStartX = currentPanX;
+            panStartY = currentPanY;
+            currentImageEl.classList.add('dragging');
+            carouselContainer.classList.add('dragging');
+        }
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging || !currentImageEl) return;
+            const dx = e.clientX - dragStartX;
+            const dy = e.clientY - dragStartY;
+            currentPanX = panStartX + dx;
+            currentPanY = panStartY + dy;
+            applyTransform();
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (isDragging && currentImageEl) {
+                isDragging = false;
+                currentImageEl.classList.remove('dragging');
+                carouselContainer.classList.remove('dragging');
+            }
+        });
+        
+        carouselContainer.addEventListener('wheel', (e) => {
+            if (!currentImageEl || currentImageEl.tagName !== 'IMG') return;
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            currentZoom = Math.max(1, Math.min(5, currentZoom + delta));
+            if (currentZoom === 1) {
+                currentPanX = 0;
+                currentPanY = 0;
+            }
+            applyTransform();
+            showZoomIndicator();
+        }, { passive: false });
+        
+        btnDownloadImage.addEventListener('click', async () => {
+            if (!currentProject || !currentProject.gallery) return;
+            const item = currentProject.gallery[currentSlide];
+            if (!item || item.type !== 'image') return;
+            
+            try {
+                const response = await fetch(item.src);
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${currentProject.id}_${Date.now()}.png`;
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast(t('toast_downloaded'), 'success');
+            } catch (err) {
+                showToast(t('toast_copy_error'), 'error');
+            }
+        });
+        
+        btnCopyImage.addEventListener('click', async () => {
+            if (!currentProject || !currentProject.gallery) return;
+            const item = currentProject.gallery[currentSlide];
+            if (!item || item.type !== 'image') return;
+            
+            try {
+                const response = await fetch(item.src);
+                const blob = await response.blob();
+                await navigator.clipboard.write([
+                    new ClipboardItem({ [blob.type]: blob })
+                ]);
+                showToast(t('toast_copied'), 'success');
+            } catch (err) {
+                showToast(t('toast_copy_error'), 'error');
+            }
+        });
+        
+        function closeModal() {
+            if (currentVideoEl) { currentVideoEl.pause(); currentVideoEl = null; }
+            resetZoom();
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function openMIModal() { miModalOverlay.classList.add('active'); }
+        function closeMIModal() { miModalOverlay.classList.remove('active'); }
+        
+        function goToSlide(index) {
+            if (currentVideoEl) { currentVideoEl.pause(); currentVideoEl = null; }
+            resetZoom();
+            currentSlide = index;
+            updateCarousel();
+            const slides = carouselTrack.querySelectorAll('.carousel-slide');
+            if (slides[index]) {
+                const video = slides[index].querySelector('video');
+                if (video) currentVideoEl = video;
+                const img = slides[index].querySelector('img.gallery-image');
+                if (img) currentImageEl = img;
+            }
+        }
+        
+        function nextSlide() { goToSlide((currentSlide + 1) % (currentProject.gallery ? currentProject.gallery.length : 1)); }
+        function prevSlide() { goToSlide((currentSlide - 1 + (currentProject.gallery ? currentProject.gallery.length : 1)) % (currentProject.gallery ? currentProject.gallery.length : 1)); }
+        
+        function updateCarousel() {
+            carouselTrack.classList.add('no-transition');
+            carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    carouselTrack.classList.remove('no-transition');
+                });
+            });
+            const dots = carouselDots.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => dot.classList.toggle('active', index === currentSlide));
+        }
+        
+        modalClose.onclick = closeModal;
+        carouselNext.onclick = nextSlide;
+        carouselPrev.onclick = prevSlide;
+        btnMineImator.onclick = openMIModal;
+        miModalClose.onclick = closeMIModal;
+        modalOverlay.onclick = (e) => { if (e.target === modalOverlay) closeModal(); };
+        miModalOverlay.onclick = (e) => { if (e.target === miModalOverlay) closeMIModal(); };
+        
+        // Language switcher
+        const langBtn = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+        
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('open');
+            langBtn.classList.toggle('open');
+        });
+        
+        document.querySelectorAll('.lang-option').forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                setLang(opt.dataset.lang);
+            });
+        });
+        
+        document.addEventListener('click', () => {
+            langDropdown.classList.remove('open');
+            langBtn.classList.remove('open');
+            sortDropdownMenu.classList.remove('open');
+            sortTrigger.classList.remove('open');
+        });
+        
+        // Sort dropdown
+        const sortDropdown = document.getElementById('sortDropdown');
+        const sortTrigger = document.getElementById('sortTrigger');
+        const sortDropdownMenu = document.getElementById('sortDropdownMenu');
+        const sortTriggerText = document.getElementById('sortTriggerText');
+        
+        sortTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sortDropdownMenu.classList.toggle('open');
+            sortTrigger.classList.toggle('open');
+        });
+        
+        document.querySelectorAll('.sort-option').forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const newSort = opt.dataset.sort;
+                if (newSort === currentSort) return;
+                
+                currentSort = newSort;
+                
+                document.querySelectorAll('.sort-option').forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
+                
+                const key = opt.getAttribute('data-i18n');
+                if (key) {
+                    sortTriggerText.textContent = t(key);
+                }
+                
+                sortDropdownMenu.classList.remove('open');
+                sortTrigger.classList.remove('open');
+                
+                currentPage = 1;
+                renderProjects();
+            });
+        });
+        
+        // Filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                currentPage = 1;
+                renderProjects();
+            });
+        });
+        
+        // Search
+        const searchInput = document.getElementById('searchInput');
+        const searchClear = document.getElementById('searchClear');
+        let searchTimeout;
+        
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim();
+            searchClear.classList.toggle('visible', searchQuery.length > 0);
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentPage = 1;
+                renderProjects();
+            }, 250);
+        });
+        
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            searchQuery = '';
+            searchClear.classList.remove('visible');
+            currentPage = 1;
+            renderProjects();
+            searchInput.focus();
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (miModalOverlay.classList.contains('active')) {
+                if (e.key === 'Escape') closeMIModal();
+                return;
+            }
+            if (modalOverlay.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                } else if (e.key === 'ArrowRight') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                }
+                return;
+            }
+            if (e.key === 'Escape' && document.activeElement === searchInput) {
+                searchInput.blur();
+            }
+        });
+        
+        // Init
+        updateTranslations();
+        loadProjects();
+    </script>
+</body>
+</html>
