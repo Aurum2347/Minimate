@@ -9,24 +9,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Generate Manifest
         run: |
-          echo "[" > projects/manifest.json
+          # Create proper JSON array
+          echo '[' > projects/manifest.json
           first=true
           for dir in projects/*/; do
             dirname=$(basename "$dir")
-            if [ "$dirname" != "manifest.json" ] && [ -d "$dir" ]; then
+            if [ -d "$dir" ] && [ "$dirname" != "manifest.json" ]; then
               if [ "$first" = true ]; then
                 first=false
               else
-                echo "," >> projects/manifest.json
+                echo ',' >> projects/manifest.json
               fi
               echo "  \"$dirname\"" >> projects/manifest.json
             fi
           done
-          echo "]" >> projects/manifest.json
+          echo ']' >> projects/manifest.json
       
       - name: Commit Manifest
         run: |
