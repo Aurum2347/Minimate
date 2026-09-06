@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minimate</title>
-    <base href="/Minimate/">
     <style>
         @font-face {
             font-family: 'MinecraftTitle';
@@ -2710,7 +2709,7 @@
                     tagHtml = `<span class="project-card-tag"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>${t('filter_unavailable')}</span>`;
                 }
                 
-                const previewUrl = `/projects/${project.id}/preview.png`;
+                const previewUrl = `/Minimate/projects/${project.id}/preview.png`;
                 
                 card.innerHTML = `
                     ${badges}
@@ -2866,7 +2865,7 @@
                 downloadButtonContainer.appendChild(tooltipWrapper);
             } else {
                 const downloadBtn = document.createElement('a');
-                downloadBtn.href = `/projects/${project.id}/download.zip`;
+                downloadBtn.href = `Minimate/projects/${project.id}/download.zip`;
                 downloadBtn.target = '_blank';
                 downloadBtn.className = 'mc-btn';
                 downloadBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>${t('download_project')}`;
