@@ -2900,7 +2900,10 @@
                         const videoContainer = document.createElement('div');
                         videoContainer.className = 'video-container';
                         const video = document.createElement('video');
-                        video.src = item.src;
+                        // Добавляем basePath к src если его там нет
+                        video.src = item.src.startsWith('/') && !item.src.startsWith('/Minimate/') 
+                            ? `/Minimate${item.src}` 
+                            : item.src;
                         video.preload = 'metadata';
                         video.loop = true;
                         video.playsInline = true;
@@ -2956,17 +2959,21 @@
                         videoContainer.appendChild(loader);
                         videoContainer.appendChild(controls);
                         slide.appendChild(videoContainer);
-                    } else {
-                        const img = document.createElement('img');
-                        img.src = item.src;
-                        img.alt = `${name} - view ${index + 1}`;
-                        img.className = 'gallery-image';
-                        img.draggable = false;
-                        img.addEventListener('mousedown', handleImageMouseDown);
-                        img.addEventListener('dblclick', handleImageDoubleClick);
-                        currentImageEl = img;
-                        slide.appendChild(img);
-                    }
+                        } else {
+                            const img = document.createElement('img');
+                            let imgSrc = item.src;
+                            if (imgSrc.startsWith('/') && !imgSrc.startsWith('/Minimate/')) {
+                                imgSrc = `/Minimate${imgSrc}`;
+                            }
+                            img.src = imgSrc;
+                            img.alt = `${name} - view ${index + 1}`;
+                            img.className = 'gallery-image';
+                            img.draggable = false;
+                            img.addEventListener('mousedown', handleImageMouseDown);
+                            img.addEventListener('dblclick', handleImageDoubleClick);
+                            currentImageEl = img;
+                            slide.appendChild(img);
+                        }
                     carouselTrack.appendChild(slide);
                     if (hasMultiple) {
                         const dot = document.createElement('button');
