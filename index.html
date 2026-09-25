@@ -69,6 +69,11 @@
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            
+            /* === ДОБАВИТЬ ЭТИ 3 СТРОКИ === */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         
         ::-webkit-scrollbar { width: 10px; }
@@ -191,6 +196,19 @@
             box-shadow: inset 0 0 0 1px rgba(42, 171, 238, 0.25), 0 6px 0 rgba(0,0,0,0.3), 0 0 20px rgba(42, 171, 238, 0.25);
         }
         
+        /* Уменьшенная кнопка */
+        .mc-btn-small {
+            width: auto;
+            padding: 8px 14px;
+            font-size: 12px;
+            min-width: 0;
+        }
+
+        /* Отступ для кнопки Telegram в шапке */
+        .header-right .mc-btn-tg {
+            margin-left: 8px;
+        }
+
         .mc-btn-secondary {
             padding: 10px 16px;
             font-size: 12px;
@@ -515,6 +533,9 @@
             max-width: 1240px;
             margin-left: auto;
             margin-right: auto;
+            
+            /* === ДОБАВИТЬ ЭТУ СТРОКУ === */
+            flex: 1;
         }
         
         /* Section Header */
@@ -2098,7 +2119,8 @@
                 </div>
             </div>
             
-            <a href="https://t.me/aurums2347" target="_blank" class="mc-btn mc-btn-small mc-btn-tg">
+                <a href="https://t.me/aurums2347" target="_blank" 
+                class="mc-btn mc-btn-small mc-btn-compact mc-btn-tg">
                 <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
                 Telegram
             </a>
