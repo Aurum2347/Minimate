@@ -69,8 +69,6 @@
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            
-            /* === ДОБАВИТЬ ЭТИ 3 СТРОКИ === */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -198,13 +196,13 @@
         
         /* Уменьшенная кнопка */
         .mc-btn-small {
-            width: auto;
-            padding: 8px 14px;
-            font-size: 12px;
+            width: auto !important;
+            padding: 8px 14px !important;
+            font-size: 12px !important;
             min-width: 0;
         }
 
-        /* Отступ для кнопки Telegram в шапке */
+        /* Отступ для кнопки Telegram */
         .header-right .mc-btn-tg {
             margin-left: 8px;
         }
@@ -533,8 +531,6 @@
             max-width: 1240px;
             margin-left: auto;
             margin-right: auto;
-            
-            /* === ДОБАВИТЬ ЭТУ СТРОКУ === */
             flex: 1;
         }
         
@@ -953,8 +949,13 @@
         .empty-state {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             color: var(--text-secondary);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         .empty-state-icon {
