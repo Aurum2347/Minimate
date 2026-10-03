@@ -1,0 +1,15 @@
+{
+  "name": {
+    "ru": "Дождливый день",
+    "en": "A rainy day"
+  },
+  "description": {
+    "ru": "Очередной бесплатный рендер за подписку из ТикТока. Милый персонаж с розовыми волосами в дождливом лесу.",
+    "en": "Another free render for a TikTok sub! Cute pink-haired character in the rainy forest."
+  },
+  "type": "render",
+  "date": "2026-09-29",
+  "weight": "908",
+  "noDownload": false,
+  "isVideo": false
+}
