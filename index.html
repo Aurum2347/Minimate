@@ -1243,6 +1243,7 @@
             overflow: hidden;
             background: #000;
             user-select: none;
+            -webkit-user-select: none;
         }
         .carousel-slide-bg-top,
         .carousel-slide-bg-bottom {
@@ -3374,7 +3375,13 @@
         let panStartX = 0;
         let panStartY = 0;
         let currentImageEl = null;
-        let touchState = { mode: 'none', startX: 0, startY: 0, startDist: 0, startZoom: 1, panStartX: 0, panStartY: 0 };
+        const activePointers = new Map();
+        let panPointerId = null;
+        let pinchStartDist = 0;
+        let pinchStartZoom = 1;
+        let swipeMode = false;
+        let swipeStartX = 0;
+        let swipeStartY = 0;
         function formatTime(seconds) {
             if (isNaN(seconds)) return '0:00';
             const mins = Math.floor(seconds / 60);
@@ -3514,6 +3521,10 @@
             currentZoom = 1;
             currentPanX = 0;
             currentPanY = 0;
+            isDragging = false;
+            panPointerId = null;
+            activePointers.clear();
+            swipeMode = false;
             if (currentVideoEl) { currentVideoEl.pause(); currentVideoEl = null; }
             const name = typeof project.name === 'object' ? (project.name[currentLang] || project.name.ru || project.id) : project.name;
             const description = typeof project.description === 'object' ? (project.description[currentLang] || project.description.ru || '') : project.description;
@@ -3648,7 +3659,6 @@
                         img.className = 'gallery-image';
                         img.draggable = false;
                         img.dataset.src = imgSrc;
-                        img.addEventListener('mousedown', handleImageMouseDown);
                         img.addEventListener('dblclick', handleImageDoubleClick);
                         const slideLoader = document.createElement('div');
                         slideLoader.className = 'carousel-slide-loader';
@@ -3805,65 +3815,57 @@
                 playZoomIn();
             }
         }
-        function handleImageMouseDown(e) {
-            if (currentZoom <= 1) return;
-            e.preventDefault();
-            currentImageEl = e.currentTarget;
+        function getPointerDist() {
+            const pts = Array.from(activePointers.values());
+            return Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+        }
+        function startPan(pointerId, x, y) {
+            const slide = carouselTrack.children[currentSlide];
+            const img = slide ? slide.querySelector('img.gallery-image') : null;
+            if (img) currentImageEl = img;
+            if (!currentImageEl) return;
+            panPointerId = pointerId;
             isDragging = true;
-            dragStartX = e.clientX;
-            dragStartY = e.clientY;
+            dragStartX = x;
+            dragStartY = y;
             panStartX = currentPanX;
             panStartY = currentPanY;
             currentImageEl.classList.add('dragging');
             carouselContainer.classList.add('dragging');
         }
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging || !currentImageEl) return;
-            const dx = e.clientX - dragStartX;
-            const dy = e.clientY - dragStartY;
-            const bounds = getPanBounds();
-            currentPanX = applyRubber(panStartX + dx, bounds.maxX);
-            currentPanY = applyRubber(panStartY + dy, bounds.maxY);
-            applyTransform();
-        });
-        document.addEventListener('mouseup', () => {
-            if (isDragging && currentImageEl) {
-                isDragging = false;
-                currentImageEl.classList.remove('dragging');
-                carouselContainer.classList.remove('dragging');
-                snapBack();
-            }
-        });
-        function getTouchDist(touches) {
-            const dx = touches[0].clientX - touches[1].clientX;
-            const dy = touches[0].clientY - touches[1].clientY;
-            return Math.hypot(dx, dy);
+        function endPan() {
+            if (panPointerId === null) return;
+            panPointerId = null;
+            isDragging = false;
+            if (currentImageEl) currentImageEl.classList.remove('dragging');
+            carouselContainer.classList.remove('dragging');
+            snapBack();
         }
-        carouselContainer.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 2) {
-                touchState.mode = 'pinch';
-                touchState.startDist = getTouchDist(e.touches);
-                touchState.startZoom = currentZoom;
-            } else if (e.touches.length === 1) {
-                const t0 = e.touches[0];
-                touchState.startX = t0.clientX;
-                touchState.startY = t0.clientY;
-                if (currentZoom > 1 && currentImageEl) {
-                    touchState.mode = 'pan';
-                    touchState.panStartX = currentPanX;
-                    touchState.panStartY = currentPanY;
-                    currentImageEl.classList.add('dragging');
-                } else {
-                    touchState.mode = 'swipe';
+        carouselContainer.addEventListener('pointerdown', (e) => {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            try { carouselContainer.setPointerCapture(e.pointerId); } catch (err) {}
+            if (activePointers.size === 2) {
+                endPan();
+                swipeMode = false;
+                pinchStartDist = getPointerDist();
+                pinchStartZoom = currentZoom;
+            } else if (activePointers.size === 1) {
+                if (currentZoom > 1) {
+                    startPan(e.pointerId, e.clientX, e.clientY);
+                } else if (e.pointerType !== 'mouse') {
+                    swipeMode = true;
+                    swipeStartX = e.clientX;
+                    swipeStartY = e.clientY;
                 }
             }
-        }, { passive: true });
-        carouselContainer.addEventListener('touchmove', (e) => {
-            if (touchState.mode === 'none') return;
-            e.preventDefault();
-            if (touchState.mode === 'pinch' && e.touches.length === 2) {
-                const dist = getTouchDist(e.touches);
-                currentZoom = Math.max(1, Math.min(5, touchState.startZoom * (dist / touchState.startDist)));
+        });
+        carouselContainer.addEventListener('pointermove', (e) => {
+            if (!activePointers.has(e.pointerId)) return;
+            activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            if (activePointers.size === 2 && pinchStartDist > 0) {
+                const dist = getPointerDist();
+                currentZoom = Math.max(1, Math.min(5, pinchStartZoom * (dist / pinchStartDist)));
                 if (currentZoom === 1) {
                     currentPanX = 0;
                     currentPanY = 0;
@@ -3872,43 +3874,48 @@
                 }
                 applyTransform();
                 showZoomIndicator();
-            } else if (touchState.mode === 'pan' && e.touches.length === 1) {
-                const t0 = e.touches[0];
+            } else if (isDragging && e.pointerId === panPointerId) {
+                const dx = e.clientX - dragStartX;
+                const dy = e.clientY - dragStartY;
                 const bounds = getPanBounds();
-                currentPanX = applyRubber(touchState.panStartX + (t0.clientX - touchState.startX), bounds.maxX);
-                currentPanY = applyRubber(touchState.panStartY + (t0.clientY - touchState.startY), bounds.maxY);
+                currentPanX = applyRubber(panStartX + dx, bounds.maxX);
+                currentPanY = applyRubber(panStartY + dy, bounds.maxY);
                 applyTransform();
             }
-        }, { passive: false });
-        carouselContainer.addEventListener('touchend', (e) => {
-            if (touchState.mode === 'pan') {
-                if (currentImageEl) currentImageEl.classList.remove('dragging');
-                snapBack();
-            } else if (touchState.mode === 'swipe' && e.changedTouches.length === 1) {
-                const t0 = e.changedTouches[0];
-                const dx = t0.clientX - touchState.startX;
-                const dy = t0.clientY - touchState.startY;
+        });
+        function handlePointerEnd(e) {
+            if (!activePointers.has(e.pointerId)) return;
+            activePointers.delete(e.pointerId);
+            if (activePointers.size < 2) pinchStartDist = 0;
+            if (e.pointerId === panPointerId) {
+                endPan();
+            }
+            if (swipeMode && activePointers.size === 0) {
+                const dx = e.clientX - swipeStartX;
+                const dy = e.clientY - swipeStartY;
+                swipeMode = false;
                 if (dy > 90 && Math.abs(dy) > Math.abs(dx) * 1.5) {
                     closeModal();
-                } else if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+                    return;
+                }
+                if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
                     if (dx < 0) nextSlide();
                     else prevSlide();
+                    return;
                 }
             }
-            if (e.touches.length === 0) {
-                touchState.mode = 'none';
-            } else if (e.touches.length === 1) {
-                const t0 = e.touches[0];
-                touchState.startX = t0.clientX;
-                touchState.startY = t0.clientY;
-                touchState.panStartX = currentPanX;
-                touchState.panStartY = currentPanY;
-                touchState.mode = currentZoom > 1 ? 'pan' : 'swipe';
-                if (touchState.mode === 'pan' && currentImageEl) currentImageEl.classList.add('dragging');
-            } else {
-                touchState.mode = 'none';
+            if (activePointers.size === 1 && currentZoom > 1) {
+                const remainingId = Array.from(activePointers.keys())[0];
+                const pt = activePointers.get(remainingId);
+                startPan(remainingId, pt.x, pt.y);
             }
-        });
+            if (activePointers.size === 0) {
+                swipeMode = false;
+                isDragging = false;
+            }
+        }
+        carouselContainer.addEventListener('pointerup', handlePointerEnd);
+        carouselContainer.addEventListener('pointercancel', handlePointerEnd);
         carouselContainer.addEventListener('wheel', (e) => {
             if (!currentImageEl || currentImageEl.tagName !== 'IMG') return;
             e.preventDefault();
@@ -3949,6 +3956,9 @@
         });
         function closeModal() {
             if (currentVideoEl) { currentVideoEl.pause(); currentVideoEl = null; }
+            endPan();
+            activePointers.clear();
+            swipeMode = false;
             resetZoom();
             modalOverlay.classList.remove('active');
             document.body.style.overflow = '';
@@ -3985,6 +3995,7 @@
         function goToSlide(index) {
             if (index === currentSlide) return;
             if (currentVideoEl) { currentVideoEl.pause(); currentVideoEl = null; }
+            endPan();
             resetZoom();
             currentSlide = index;
             updateCarousel();
