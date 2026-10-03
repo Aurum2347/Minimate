@@ -1,18 +1,22 @@
 [
   {
     "type": "image",
-    "src": "/projects/rainyday/gallery/1.png"
+    "src": "/projects/rainyday/gallery/1.png",
+    "hash": "307ee6cf3584f161"
   },
   {
     "type": "image",
-    "src": "/projects/rainyday/gallery/2.png"
+    "src": "/projects/rainyday/gallery/2.png",
+    "hash": "9435dcbff1c347cf"
   },
   {
     "type": "image",
-    "src": "/projects/rainyday/gallery/3.png"
+    "src": "/projects/rainyday/gallery/3.png",
+    "hash": "158818ae114533ae"
   },
   {
     "type": "image",
-    "src": "/projects/rainyday/gallery/4.png"
+    "src": "/projects/rainyday/gallery/4.png",
+    "hash": "4cd11d96045ee368"
   }
 ]

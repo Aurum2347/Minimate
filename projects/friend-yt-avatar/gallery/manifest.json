@@ -1,14 +1,17 @@
 [
   {
     "type": "image",
-    "src": "/projects/friend-yt-avatar/gallery/apostol1.png"
+    "src": "/projects/friend-yt-avatar/gallery/1.png",
+    "hash": "5306a53e929bdd50"
   },
   {
     "type": "image",
-    "src": "/projects/friend-yt-avatar/gallery/1.png"
+    "src": "/projects/friend-yt-avatar/gallery/2.png",
+    "hash": "0a763c4120501785"
   },
   {
     "type": "image",
-    "src": "/projects/friend-yt-avatar/gallery/2.png"
+    "src": "/projects/friend-yt-avatar/gallery/apostol1.png",
+    "hash": "df051a5097bd23d5"
   }
 ]

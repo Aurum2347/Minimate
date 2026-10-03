@@ -1,10 +1,12 @@
 [
   {
     "type": "image",
-    "src": "/projects/friend-skin-render/gallery/1.png"
+    "src": "/projects/friend-skin-render/gallery/1.png",
+    "hash": "1f71e9c16fc86f43"
   },
   {
     "type": "image",
-    "src": "/projects/friend-skin-render/gallery/2.png"
+    "src": "/projects/friend-skin-render/gallery/2.png",
+    "hash": "e7f60653bac5aa67"
   }
 ]

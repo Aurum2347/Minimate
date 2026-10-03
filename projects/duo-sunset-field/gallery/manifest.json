@@ -1,10 +1,12 @@
 [
   {
     "type": "image",
-    "src": "/projects/duo-sunset-field/gallery/1.png"
+    "src": "/projects/duo-sunset-field/gallery/1.png",
+    "hash": "35e695c8e3f438d0"
   },
   {
     "type": "image",
-    "src": "/projects/duo-sunset-field/gallery/2.png"
+    "src": "/projects/duo-sunset-field/gallery/2.png",
+    "hash": "cbab5514122a9e49"
   }
 ]

@@ -1,6 +1,17 @@
 [
   {
     "type": "image",
-    "src": "/projects/never-again-remake/gallery/1.png"
+    "src": "/projects/never-again-remake/gallery/1.png",
+    "hash": "5fb726220fa10187"
+  },
+  {
+    "type": "image",
+    "src": "/projects/never-again-remake/gallery/effect1.png",
+    "hash": "5a6371bdeff957bd"
+  },
+  {
+    "type": "image",
+    "src": "/projects/never-again-remake/gallery/effect2.png",
+    "hash": "89eea474140908a8"
   }
 ]

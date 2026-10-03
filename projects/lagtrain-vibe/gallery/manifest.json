@@ -1,34 +1,42 @@
 [
   {
     "type": "video",
-    "src": "/projects/lagtrain-vibe/gallery/LagTrainAURUM1.mp4"
+    "src": "/projects/lagtrain-vibe/gallery/LagTrainAURUM1.mp4",
+    "hash": "599590d2679094a5"
   },
   {
     "type": "video",
-    "src": "/projects/lagtrain-vibe/gallery/LagTrainNOOBIE1.mp4"
+    "src": "/projects/lagtrain-vibe/gallery/LagTrainNOOBIE1.mp4",
+    "hash": "b4b4fbcca5949eb0"
   },
   {
     "type": "video",
-    "src": "/projects/lagtrain-vibe/gallery/LagTrainNOOBIE2.mp4"
+    "src": "/projects/lagtrain-vibe/gallery/LagTrainNOOBIE2.mp4",
+    "hash": "4f88166bcbd28d8a"
   },
   {
     "type": "video",
-    "src": "/projects/lagtrain-vibe/gallery/LagTrainOLD.mp4"
+    "src": "/projects/lagtrain-vibe/gallery/LagTrainOLD.mp4",
+    "hash": "f09f66eb355f14c7"
   },
   {
     "type": "video",
-    "src": "/projects/lagtrain-vibe/gallery/LagTrain_AURUM.mp4"
+    "src": "/projects/lagtrain-vibe/gallery/LagTrain_AURUM.mp4",
+    "hash": "eb3dad8f86d08c76"
   },
   {
     "type": "video",
-    "src": "/projects/lagtrain-vibe/gallery/LagTrain_NOOBIE.mp4"
+    "src": "/projects/lagtrain-vibe/gallery/LagTrain_NOOBIE.mp4",
+    "hash": "2ad358fd2e337ede"
   },
   {
     "type": "video",
-    "src": "/projects/lagtrain-vibe/gallery/LagTrain_NOOBIE2.mp4"
+    "src": "/projects/lagtrain-vibe/gallery/LagTrain_NOOBIE2.mp4",
+    "hash": "89cda9dea550dbaf"
   },
   {
     "type": "video",
-    "src": "/projects/lagtrain-vibe/gallery/LagTrain_NOOBIE3.mp4"
+    "src": "/projects/lagtrain-vibe/gallery/LagTrain_NOOBIE3.mp4",
+    "hash": "31127dff4203ab90"
   }
 ]

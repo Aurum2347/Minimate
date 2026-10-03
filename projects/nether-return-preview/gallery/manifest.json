@@ -1,10 +1,17 @@
 [
   {
     "type": "image",
-    "src": "/projects/nether-return-preview/gallery/1.png"
+    "src": "/projects/nether-return-preview/gallery/1.png",
+    "hash": "1529de201f08051f"
   },
   {
     "type": "image",
-    "src": "/projects/nether-return-preview/gallery/2.png"
+    "src": "/projects/nether-return-preview/gallery/1_1.png",
+    "hash": "de32f6ce3feaa55e"
+  },
+  {
+    "type": "image",
+    "src": "/projects/nether-return-preview/gallery/2.png",
+    "hash": "9b12e0bee6373a74"
   }
 ]

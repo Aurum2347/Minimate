@@ -1,18 +1,22 @@
 [
   {
     "type": "image",
-    "src": "/projects/dirt-head-night-render/gallery/1.png"
+    "src": "/projects/dirt-head-night-render/gallery/1.png",
+    "hash": "f0377be8200f9c8a"
   },
   {
     "type": "image",
-    "src": "/projects/dirt-head-night-render/gallery/2.png"
+    "src": "/projects/dirt-head-night-render/gallery/2.png",
+    "hash": "e0cfb6e401b88d9e"
   },
   {
     "type": "image",
-    "src": "/projects/dirt-head-night-render/gallery/3.png"
+    "src": "/projects/dirt-head-night-render/gallery/3.png",
+    "hash": "84ddab7881757332"
   },
   {
     "type": "image",
-    "src": "/projects/dirt-head-night-render/gallery/4.png"
+    "src": "/projects/dirt-head-night-render/gallery/4.png",
+    "hash": "5aad9cc65870a499"
   }
 ]
