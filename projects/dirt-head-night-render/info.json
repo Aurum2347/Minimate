@@ -1,0 +1,16 @@
+{
+  "name": {
+    "ru": "Парень с головой из земли",
+    "en": "Dirt-Head Guy"
+  },
+  "description": {
+    "ru": "Ночной рендер парня, у которого вместо головы обычный блок земли. Стоит на холме под луной и звёздами.",
+    "en": "A night render of a guy with a regular dirt block for a head. Standing on a hill under the moon and stars."
+  },
+  "type": "render",
+  "date": "2026-08-08",
+  "weight": "14.5 MB",
+  "noDownload": false,
+  "isVideo": false,
+  "autoWeight": true
+}

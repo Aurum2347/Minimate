@@ -1,0 +1,16 @@
+{
+  "name": {
+    "ru": "Никогда снова (Ремейк)",
+    "en": "Never Again (Remake)"
+  },
+  "description": {
+    "ru": "Ремейк моего старого рендера. Тёмный силуэт моего персонажа со светящимися глазами и мечом на фоне повторяющейся надписи «Never again»",
+    "en": "A remake of my old render. A dark silhouette of my character with glowing eyes and a sword against a background of repeating \"Never again\" text."
+  },
+  "type": "render",
+  "date": "2026-04-20",
+  "weight": "4.1 MB",
+  "noDownload": true,
+  "isVideo": false,
+  "autoWeight": true
+}

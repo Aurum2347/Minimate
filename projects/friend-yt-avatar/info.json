@@ -1,0 +1,16 @@
+{
+  "name": {
+    "ru": "Аватарка для друга",
+    "en": "Friend's YT Avatar"
+  },
+  "description": {
+    "ru": "Аватарка для YouTube-канала друга. Персонаж в красной куртке держит светящуюся зачарованную книгу.",
+    "en": "Avatar for a friend's YouTube channel. A character in a red jacket holding a glowing enchanted book."
+  },
+  "type": "render",
+  "date": "2026-05-02",
+  "weight": "2.9 MB",
+  "noDownload": false,
+  "isVideo": false,
+  "autoWeight": true
+}

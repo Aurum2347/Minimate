@@ -1,0 +1,16 @@
+{
+  "name": {
+    "ru": "Лягушка на закате",
+    "en": "Frog at Sunset"
+  },
+  "description": {
+    "ru": "Второй бесплатный рендер по заказу из ТикТока. Персонаж-лягушка стоит в золотом поле на фоне красивого заката. Заказчик остался доволен!",
+    "en": "Second free render from a TikTok order. A frog character standing in a golden field against a beautiful sunset. The client was happy with the result!"
+  },
+  "type": "render",
+  "date": "2026-09-30",
+  "weight": "1.2 MB",
+  "noDownload": true,
+  "isVideo": false,
+  "autoWeight": true
+}

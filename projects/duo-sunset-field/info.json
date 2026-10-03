@@ -1,0 +1,16 @@
+{
+  "name": {
+    "ru": "Дуэт на закате",
+    "en": "Duo at Sunset"
+  },
+  "description": {
+    "ru": "Третий бесплатный рендер по заказу из ТикТока. Чёрная утка в шляпе и водяной персонаж танцуют вместе в золотом поле на фоне заката.",
+    "en": "Third free render from a TikTok order. A black duck in a hat and a water character dancing together in a golden field at sunset."
+  },
+  "type": "render",
+  "date": "2026-10-03",
+  "weight": "33.9 MB",
+  "noDownload": false,
+  "isVideo": false,
+  "autoWeight": true
+}

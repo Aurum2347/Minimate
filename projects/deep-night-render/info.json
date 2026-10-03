@@ -1,0 +1,16 @@
+{
+  "name": {
+    "ru": "Глубокая ночь",
+    "en": "Deep Night"
+  },
+  "description": {
+    "ru": "Стив стоит на краю огромной пещеры с факелом в руке, глядя на квадратную луну. Эпичный ночной рендер с красивым видом на подземелье.",
+    "en": "Steve stands on the edge of a massive cave holding a torch, looking up at the square moon. An epic night render with a stunning view of the underground."
+  },
+  "type": "render",
+  "date": "2026-08-01",
+  "weight": "13 MB",
+  "noDownload": false,
+  "isVideo": false,
+  "autoWeight": true
+}

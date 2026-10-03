@@ -1,0 +1,16 @@
+{
+  "name": {
+    "ru": "Lagtrain",
+    "en": "Lagtrain"
+  },
+  "description": {
+    "ru": "Просто залетел на тренд с Lagtrain. Анимация под этот трек, чтобы передать атмосферу.",
+    "en": "Just hopped on the Lagtrain trend. A simple animation to capture the vibe of this track."
+  },
+  "type": "render",
+  "date": "2026-09-02",
+  "weight": "4.5 MB",
+  "noDownload": false,
+  "isVideo": true,
+  "autoWeight": true
+}

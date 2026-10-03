@@ -1,0 +1,16 @@
+{
+  "name": {
+    "ru": "Aishite Aishite Aishite",
+    "en": "Aishite Aishite Aishite"
+  },
+  "description": {
+    "ru": "Анимация под трек Aishite Aishite Aishite. Мрачная атмосфера с красными молниями и текстом песни на экране.",
+    "en": "Animation set to the track Aishite Aishite Aishite. Dark atmosphere with red lightning and song lyrics on screen."
+  },
+  "type": "render",
+  "date": "2026-06-12",
+  "weight": "4.2 MB",
+  "noDownload": false,
+  "isVideo": true,
+  "autoWeight": true
+}
