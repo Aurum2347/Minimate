@@ -61,6 +61,7 @@
             --border-color: #2a2a2a;
             --border-light: #3a3a3a;
             --grid-min: 674px;
+            --header-h: 60px;
         }
         html { scroll-behavior: smooth; }
         body {
@@ -384,6 +385,36 @@
             justify-content: flex-end;
             gap: 12px;
         }
+        .icon-btn {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 2px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #1a1a1a;
+            border-right-color: #1a1a1a;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 3px 0 rgba(0,0,0,0.3);
+            padding: 0;
+            flex-shrink: 0;
+        }
+        .icon-btn:hover {
+            background: #2a2a2a;
+        }
+        .icon-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        .icon-btn.muted {
+            color: var(--text-secondary);
+        }
         .lang-switcher {
             position: relative;
         }
@@ -487,7 +518,7 @@
             100% { opacity: 1; transform: translateY(0); }
         }
         .main-content {
-            margin-top: 60px;
+            margin-top: var(--header-h, 60px);
             padding: 48px 40px 60px;
             max-width: 1240px;
             width: 100%;
@@ -506,6 +537,8 @@
             text-shadow: 3px 3px 0 #000;
             letter-spacing: 2px;
             margin-bottom: 8px;
+            line-height: 1.15;
+            word-break: break-word;
         }
         .section-subtitle {
             color: var(--text-secondary);
@@ -1111,13 +1144,13 @@
             display: grid;
             grid-template-columns: 1.5fr 1fr;
             position: relative;
-            transform: scale(0.92);
+            transform: scale(0.92) translateY(24px);
             opacity: 0;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
             box-shadow: 0 0 0 1px #000, 0 20px 60px rgba(0,0,0,0.8);
         }
         .modal-overlay.active .modal {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
             opacity: 1;
         }
         .modal-close {
@@ -1179,12 +1212,17 @@
             min-height: 480px;
             overflow: hidden;
         }
+        .modal-carousel:fullscreen {
+            min-height: 100vh;
+            width: 100%;
+        }
         .carousel-container {
             position: relative;
             width: 100%;
             height: 100%;
             overflow: hidden;
             cursor: grab;
+            touch-action: none;
         }
         .carousel-container.dragging { cursor: grabbing; }
         .carousel-container.zoomed { cursor: grab; }
@@ -1230,8 +1268,29 @@
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: center center;
         }
+        .carousel-container.zoomed .carousel-slide img {
+            transition: transform 0.15s ease-out;
+        }
+        .carousel-slide img.dragging {
+            cursor: grabbing;
+            transition: none !important;
+        }
         .carousel-slide img.zoomed { cursor: grab; }
         .carousel-slide img.zoomed.dragging { cursor: grabbing; }
+        .carousel-slide-loader {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #101010;
+            z-index: 2;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .carousel-slide-loader.loaded {
+            opacity: 0;
+        }
         .gallery-actions {
             position: absolute;
             bottom: 60px;
@@ -1290,9 +1349,9 @@
         }
         .zoom-indicator {
             position: absolute;
-            top: 16px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-20px);
+            top: 12px;
+            right: 12px;
+            transform: translateY(-8px);
             background: rgba(0,0,0,0.8);
             border: 2px solid rgba(255,255,255,0.15);
             border-radius: 4px;
@@ -1307,7 +1366,7 @@
         }
         .zoom-indicator.visible {
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
+            transform: translateY(0);
         }
         .video-container {
             position: relative;
@@ -1647,6 +1706,54 @@
             border-left-color: var(--mc-green-light);
         }
         .carousel-dot:hover:not(.active) { background: #777; }
+        .carousel-thumbs {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 5;
+            padding: 6px;
+            background: rgba(0,0,0,0.7);
+            border: 2px solid #000;
+            border-top-color: #444;
+            border-left-color: #444;
+            border-bottom-color: #111;
+            border-right-color: #111;
+            border-radius: 2px;
+            max-width: calc(100% - 100px);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .carousel-thumbs::-webkit-scrollbar { display: none; }
+        .carousel-thumb {
+            width: 52px;
+            height: 34px;
+            flex-shrink: 0;
+            border: 2px solid #000;
+            cursor: pointer;
+            opacity: 0.55;
+            transition: all 0.15s;
+            padding: 0;
+            background: #222;
+            overflow: hidden;
+        }
+        .carousel-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+        .carousel-thumb.active {
+            opacity: 1;
+            border-top-color: var(--mc-green-light);
+            border-left-color: var(--mc-green-light);
+            border-bottom-color: var(--mc-green-dark);
+            border-right-color: var(--mc-green-dark);
+        }
+        .carousel-thumb:hover:not(.active) { opacity: 0.85; }
         .modal-content {
             padding: 40px 32px 32px;
             display: flex;
@@ -1741,14 +1848,14 @@
             max-width: 480px;
             width: 100%;
             position: relative;
-            transform: scale(0.92);
+            transform: scale(0.92) translateY(24px);
             opacity: 0;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
             box-shadow: 0 0 0 1px #000, 0 20px 60px rgba(0,0,0,0.8);
             overflow: hidden;
         }
         .modal-overlay.active .mi-modal {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
             opacity: 1;
         }
         .mi-modal-gif {
@@ -1812,14 +1919,14 @@
             max-width: 440px;
             width: 100%;
             position: relative;
-            transform: scale(0.92);
+            transform: scale(0.92) translateY(24px);
             opacity: 0;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
             box-shadow: 0 0 0 1px #000, 0 20px 60px rgba(0,0,0,0.8);
             overflow: hidden;
         }
         .modal-overlay.active .version-modal {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
             opacity: 1;
         }
         .version-modal-content {
@@ -1938,6 +2045,38 @@
             border-left-color: var(--mc-gray-light);
             border-bottom-color: var(--mc-gray-dark);
             border-right-color: var(--mc-gray-dark);
+        }
+        .meme-modal {
+            background: var(--bg-modal);
+            border: 3px solid #000;
+            border-top-color: #3a3a3a;
+            border-left-color: #3a3a3a;
+            border-bottom-color: #0a0a0a;
+            border-right-color: #0a0a0a;
+            border-radius: 4px;
+            max-width: min(90vw, 720px);
+            width: 100%;
+            position: relative;
+            transform: scale(0.92) translateY(24px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+            box-shadow: 0 0 0 1px #000, 0 20px 60px rgba(0,0,0,0.8);
+            overflow: hidden;
+            padding: 56px 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active .meme-modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        .meme-modal img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            image-rendering: pixelated;
+            display: block;
         }
         .toast-container {
             position: fixed;
@@ -2084,7 +2223,10 @@
             .filters { justify-content: flex-start; }
             .sort-container { width: 100%; }
             .sort-dropdown { flex: 1; }
-            .sort-trigger { width: 100%; min-width: 0; }
+            .sort-trigger {
+                width: 100%;
+                min-width: 0;
+            }
             .sort-dropdown-menu {
                 right: 0;
                 left: 0;
@@ -2122,6 +2264,10 @@
                 padding: 6px 10px;
                 font-size: 11px;
             }
+            .icon-btn {
+                width: 30px;
+                height: 30px;
+            }
             .mc-btn-small {
                 padding: 6px 10px !important;
                 font-size: 11px !important;
@@ -2149,7 +2295,10 @@
                 padding: 6px 10px;
             }
             .sort-label { font-size: 10px; }
-            .sort-trigger { font-size: 11px; padding: 8px 28px 8px 10px; }
+            .sort-trigger {
+                font-size: 11px;
+                padding: 8px 28px 8px 10px;
+            }
             .results-info { font-size: 11px; }
             .projects-grid {
                 gap: 16px;
@@ -2182,7 +2331,10 @@
             .modal-overlay { padding: 12px; }
             .modal-carousel { min-height: 220px; }
             .modal-content { padding: 20px 14px 16px; }
-            .modal-title { font-size: 20px; margin-bottom: 14px; }
+            .modal-title {
+                font-size: 20px;
+                margin-bottom: 14px;
+            }
             .modal-description {
                 font-size: 13px;
                 margin-bottom: 18px;
@@ -2205,6 +2357,14 @@
             .carousel-dots {
                 bottom: 10px;
                 padding: 4px 8px;
+            }
+            .carousel-thumbs {
+                bottom: 8px;
+                max-width: calc(100% - 70px);
+            }
+            .carousel-thumb {
+                width: 40px;
+                height: 28px;
             }
             .gallery-action-btn {
                 width: 34px;
@@ -2248,6 +2408,7 @@
             }
             .version-name { font-size: 14px; }
             .version-date { font-size: 10px; }
+            .meme-modal { padding: 48px 12px 12px; }
             .footer {
                 padding: 20px 16px;
                 font-size: 11px;
@@ -2277,6 +2438,7 @@
             </div>
         </div>
         <div class="header-right">
+            <button class="icon-btn" id="soundToggle" title="Sound"></button>
             <div class="lang-switcher">
                 <button class="lang-btn" id="langBtn">
                     <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
@@ -2370,6 +2532,7 @@
                     <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
                 </button>
                 <div class="carousel-dots" id="carouselDots" style="display: none;"></div>
+                <div class="carousel-thumbs" id="carouselThumbs" style="display: none;"></div>
                 <div class="zoom-indicator" id="zoomIndicator">100%</div>
                 <div class="gallery-actions" id="galleryActions" style="display: none;">
                     <button class="gallery-action-btn" id="btnDownloadImage" title="Скачать">
@@ -2486,6 +2649,14 @@
             </div>
         </div>
     </div>
+    <div class="modal-overlay" id="memeOverlay">
+        <div class="meme-modal">
+            <button class="modal-close" id="memeClose">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+            <img src="assets/meme.png" alt="Secret meme">
+        </div>
+    </div>
     <div class="toast-container" id="toastContainer"></div>
     <script>
         const translations = {
@@ -2541,7 +2712,9 @@
                 version_name_100: 'Версия 1.0.0',
                 version_latest: 'Последняя версия',
                 version_stable: 'Стабильная версия',
-                back: 'Назад'
+                back: 'Назад',
+                sound_on: 'Звук включён',
+                sound_off: 'Звук выключен'
             },
             en: {
                 projects_title: 'My Projects',
@@ -2595,7 +2768,9 @@
                 version_name_100: 'Version 1.0.0',
                 version_latest: 'Latest version',
                 version_stable: 'Stable version',
-                back: 'Back'
+                back: 'Back',
+                sound_on: 'Sound enabled',
+                sound_off: 'Sound disabled'
             }
         };
         let currentLang = 'ru';
@@ -2606,12 +2781,16 @@
         let currentPage = 1;
         const ITEMS_PER_PAGE = 4;
         let basePath = '';
+        const PLACEHOLDER_SVG = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22225%22%3E%3Crect fill=%22%231f1f1f%22 width=%22400%22 height=%22225%22/%3E%3Ctext fill=%22%23666%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3ENo Preview%3C/text%3E%3C/svg%3E';
         function t(key, params = {}) {
             let text = translations[currentLang][key] || key;
             Object.keys(params).forEach(p => {
                 text = text.replace(`{${p}}`, params[p]);
             });
             return text;
+        }
+        function normalizeSrc(src) {
+            return src.startsWith('/') && !src.startsWith('/Minimate/') ? `/Minimate${src}` : src;
         }
         function updateTranslations() {
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -2693,6 +2872,77 @@
                     preloader.style.display = 'none';
                 }, 500);
             }
+        }
+        function updateHeaderHeight() {
+            const header = document.querySelector('.header');
+            if (header) {
+                document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+            }
+        }
+        let audioCtx = null;
+        let soundEnabled = true;
+        try {
+            soundEnabled = localStorage.getItem('minimate-sound') !== 'off';
+        } catch (e) {
+            soundEnabled = true;
+        }
+        function ensureAudio() {
+            if (!audioCtx) {
+                const AudioClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioClass) audioCtx = new AudioClass();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
+        function playClick() {
+            if (!soundEnabled) return;
+            ensureAudio();
+            if (!audioCtx) return;
+            const time = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(220, time);
+            osc.frequency.exponentialRampToValueAtTime(110, time + 0.08);
+            gain.gain.setValueAtTime(0.06, time);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.09);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(time);
+            osc.stop(time + 0.1);
+        }
+        function playOpen() {
+            if (!soundEnabled) return;
+            ensureAudio();
+            if (!audioCtx) return;
+            const time = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(330, time);
+            osc.frequency.exponentialRampToValueAtTime(660, time + 0.1);
+            gain.gain.setValueAtTime(0.05, time);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.12);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(time);
+            osc.stop(time + 0.13);
+        }
+        function playClose() {
+            if (!soundEnabled) return;
+            ensureAudio();
+            if (!audioCtx) return;
+            const time = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(440, time);
+            osc.frequency.exponentialRampToValueAtTime(220, time + 0.1);
+            gain.gain.setValueAtTime(0.05, time);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.12);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(time);
+            osc.stop(time + 0.13);
         }
         async function loadProjects() {
             try {
@@ -2958,7 +3208,7 @@
                 card.innerHTML = `
                     ${badges}
                     <div class="image-loading-overlay"></div>
-                    <img src="${previewUrl}" alt="${name}" class="project-card-image" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22225%22%3E%3Crect fill=%22%231f1f1f%22 width=%22400%22 height=%22225%22/%3E%3Ctext fill=%22%23666%22 font-family=%22sans-serif%22 font-size=%2218%22 x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22%3ENo Preview%3C/text%3E%3C/svg%3E'">
+                    <img src="${previewUrl}" alt="${name}" class="project-card-image" loading="lazy" onerror="this.src='${PLACEHOLDER_SVG}'">
                     <div class="project-card-content">
                         <h3 class="project-card-title">${name}</h3>
                         <div class="project-card-meta">
@@ -2975,6 +3225,13 @@
                 img.addEventListener('load', () => {
                     loadingOverlay.classList.add('loaded');
                 });
+                card.addEventListener('mouseenter', () => {
+                    if (!project.gallery) return;
+                    project.gallery.slice(0, 2).forEach(item => {
+                        const pre = new Image();
+                        pre.src = normalizeSrc(item.src);
+                    });
+                }, { once: true });
                 grid.appendChild(card);
                 if (index === 1 && currentPage < totalPages) {
                     const placeholder = document.createElement('div');
@@ -3040,6 +3297,7 @@
         const modalClose = document.getElementById('modalClose');
         const carouselTrack = document.getElementById('carouselTrack');
         const carouselDots = document.getElementById('carouselDots');
+        const carouselThumbs = document.getElementById('carouselThumbs');
         const carouselPrev = document.getElementById('carouselPrev');
         const carouselNext = document.getElementById('carouselNext');
         const carouselContainer = document.getElementById('carouselContainer');
@@ -3055,6 +3313,9 @@
         const versionModalOverlay = document.getElementById('versionModalOverlay');
         const versionModalClose = document.getElementById('versionModalClose');
         const versionBackBtn = document.getElementById('versionBackBtn');
+        const memeOverlay = document.getElementById('memeOverlay');
+        const memeClose = document.getElementById('memeClose');
+        const soundToggle = document.getElementById('soundToggle');
         let currentSlide = 0;
         let currentProject = null;
         let currentVideoEl = null;
@@ -3067,11 +3328,125 @@
         let panStartX = 0;
         let panStartY = 0;
         let currentImageEl = null;
+        let touchState = { mode: 'none', startX: 0, startY: 0, startDist: 0, startZoom: 1, panStartX: 0, panStartY: 0 };
         function formatTime(seconds) {
             if (isNaN(seconds)) return '0:00';
             const mins = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
             return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        function getPanBounds() {
+            if (!currentImageEl) return { maxX: 0, maxY: 0 };
+            const w = currentImageEl.offsetWidth * currentZoom;
+            const h = currentImageEl.offsetHeight * currentZoom;
+            const cw = carouselContainer.clientWidth;
+            const ch = carouselContainer.clientHeight;
+            return {
+                maxX: Math.max(0, (w - cw) / 2),
+                maxY: Math.max(0, (h - ch) / 2)
+            };
+        }
+        function applyRubber(value, max) {
+            if (value > max) return max + (value - max) * 0.35;
+            if (value < -max) return -max + (value + max) * 0.35;
+            return value;
+        }
+        function clampPanHard() {
+            const b = getPanBounds();
+            currentPanX = Math.max(-b.maxX, Math.min(b.maxX, currentPanX));
+            currentPanY = Math.max(-b.maxY, Math.min(b.maxY, currentPanY));
+        }
+        function snapBack() {
+            const b = getPanBounds();
+            const tx = Math.max(-b.maxX, Math.min(b.maxX, currentPanX));
+            const ty = Math.max(-b.maxY, Math.min(b.maxY, currentPanY));
+            if (tx !== currentPanX || ty !== currentPanY) {
+                currentPanX = tx;
+                currentPanY = ty;
+                if (currentImageEl) {
+                    currentImageEl.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    applyTransform();
+                    setTimeout(() => {
+                        if (currentImageEl) currentImageEl.style.transition = '';
+                    }, 350);
+                }
+            }
+        }
+        function applyTransform() {
+            if (!currentImageEl) return;
+            currentImageEl.style.transform = `translate(${currentPanX}px, ${currentPanY}px) scale(${currentZoom})`;
+            if (currentZoom > 1) {
+                currentImageEl.classList.add('zoomed');
+                carouselContainer.classList.add('zoomed');
+            } else {
+                currentImageEl.classList.remove('zoomed');
+                carouselContainer.classList.remove('zoomed');
+            }
+        }
+        function showZoomIndicator() {
+            zoomIndicator.textContent = Math.round(currentZoom * 100) + '%';
+            zoomIndicator.classList.add('visible');
+            clearTimeout(zoomIndicator._hideTimeout);
+            zoomIndicator._hideTimeout = setTimeout(() => {
+                zoomIndicator.classList.remove('visible');
+            }, 1000);
+        }
+        function zoomBy(delta) {
+            currentZoom = Math.max(1, Math.min(5, currentZoom + delta));
+            if (currentZoom === 1) {
+                currentPanX = 0;
+                currentPanY = 0;
+            } else {
+                clampPanHard();
+            }
+            applyTransform();
+            showZoomIndicator();
+        }
+        function resetZoom() {
+            currentZoom = 1;
+            currentPanX = 0;
+            currentPanY = 0;
+            applyTransform();
+            zoomIndicator.classList.remove('visible');
+        }
+        function toggleFullscreen() {
+            try {
+                const el = document.querySelector('.modal-carousel');
+                if (!document.fullscreenElement) {
+                    if (el.requestFullscreen) el.requestFullscreen();
+                    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+                } else {
+                    if (document.exitFullscreen) document.exitFullscreen();
+                    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                }
+            } catch (e) {}
+        }
+        function ensureSlidesLoaded(center) {
+            if (!currentProject || !currentProject.gallery) return;
+            const len = currentProject.gallery.length;
+            for (let offset = -1; offset <= 1; offset++) {
+                const idx = (center + offset + len) % len;
+                const slide = carouselTrack.children[idx];
+                if (!slide) continue;
+                const img = slide.querySelector('img.gallery-image');
+                if (img && img.dataset.src && !img.getAttribute('src')) {
+                    img.src = img.dataset.src;
+                }
+                slide.querySelectorAll('.carousel-slide-bg-top, .carousel-slide-bg-bottom').forEach(bg => {
+                    if (bg.dataset.bg && !bg.style.backgroundImage) {
+                        bg.style.backgroundImage = `url("${bg.dataset.bg}")`;
+                    }
+                });
+                const slideLoader = slide.querySelector('.carousel-slide-loader');
+                if (img && slideLoader) {
+                    if (img.complete && img.naturalWidth > 0) {
+                        slideLoader.classList.add('loaded');
+                    } else {
+                        img.addEventListener('load', () => slideLoader.classList.add('loaded'), { once: true });
+                        img.addEventListener('error', () => slideLoader.classList.add('loaded'), { once: true });
+                    }
+                }
+            }
         }
         function openModal(project) {
             currentProject = project;
@@ -3109,10 +3484,29 @@
             }
             carouselTrack.innerHTML = '';
             carouselDots.innerHTML = '';
+            carouselThumbs.innerHTML = '';
             const hasMultiple = project.gallery && project.gallery.length > 1;
+            const useThumbs = project.gallery && project.gallery.length > 3;
             carouselPrev.style.display = hasMultiple ? 'flex' : 'none';
             carouselNext.style.display = hasMultiple ? 'flex' : 'none';
-            carouselDots.style.display = hasMultiple ? 'flex' : 'none';
+            if (useThumbs) {
+                carouselDots.style.display = 'none';
+                carouselThumbs.style.display = 'flex';
+                project.gallery.forEach((item, index) => {
+                    const thumb = document.createElement('button');
+                    thumb.className = 'carousel-thumb' + (index === 0 ? ' active' : '');
+                    const timg = document.createElement('img');
+                    timg.alt = '';
+                    timg.loading = 'lazy';
+                    timg.src = normalizeSrc(item.src);
+                    thumb.appendChild(timg);
+                    thumb.onclick = () => goToSlide(index);
+                    carouselThumbs.appendChild(thumb);
+                });
+            } else {
+                carouselThumbs.style.display = 'none';
+                carouselDots.style.display = hasMultiple ? 'flex' : 'none';
+            }
             const hasImages = project.gallery && project.gallery.some(item => item.type === 'image');
             galleryActions.style.display = hasImages ? 'flex' : 'none';
             if (project.gallery) {
@@ -3121,19 +3515,17 @@
                     slide.className = 'carousel-slide';
                     const bgTop = document.createElement('div');
                     bgTop.className = 'carousel-slide-bg-top';
-                    bgTop.style.backgroundImage = `url("${item.src}")`;
+                    bgTop.dataset.bg = normalizeSrc(item.src);
                     slide.appendChild(bgTop);
                     const bgBottom = document.createElement('div');
                     bgBottom.className = 'carousel-slide-bg-bottom';
-                    bgBottom.style.backgroundImage = `url("${item.src}")`;
+                    bgBottom.dataset.bg = normalizeSrc(item.src);
                     slide.appendChild(bgBottom);
                     if (item.type === 'video') {
                         const videoContainer = document.createElement('div');
                         videoContainer.className = 'video-container';
                         const video = document.createElement('video');
-                        video.src = item.src.startsWith('/') && !item.src.startsWith('/Minimate/')
-                            ? `/Minimate${item.src}`
-                            : item.src;
+                        video.src = normalizeSrc(item.src);
                         video.preload = 'metadata';
                         video.loop = true;
                         video.playsInline = true;
@@ -3141,7 +3533,7 @@
                         if (index === 0) currentVideoEl = video;
                         const thumbnail = document.createElement('div');
                         thumbnail.className = 'video-thumbnail';
-                        thumbnail.innerHTML = `<img src="${item.src}" alt="${name} preview"><div class="video-play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>`;
+                        thumbnail.innerHTML = `<img src="${normalizeSrc(item.src)}" alt="${name} preview"><div class="video-play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>`;
                         thumbnail.onclick = () => {
                             thumbnail.style.opacity = '0';
                             setTimeout(() => thumbnail.style.display = 'none', 300);
@@ -3191,21 +3583,21 @@
                         slide.appendChild(videoContainer);
                     } else {
                         const img = document.createElement('img');
-                        let imgSrc = item.src;
-                        if (imgSrc.startsWith('/') && !imgSrc.startsWith('/Minimate/')) {
-                            imgSrc = `/Minimate${imgSrc}`;
-                        }
-                        img.src = imgSrc;
+                        const imgSrc = normalizeSrc(item.src);
                         img.alt = `${name} - view ${index + 1}`;
                         img.className = 'gallery-image';
                         img.draggable = false;
+                        img.dataset.src = imgSrc;
                         img.addEventListener('mousedown', handleImageMouseDown);
                         img.addEventListener('dblclick', handleImageDoubleClick);
-                        currentImageEl = img;
+                        const slideLoader = document.createElement('div');
+                        slideLoader.className = 'carousel-slide-loader';
+                        slideLoader.appendChild(createLoadingAnimation());
                         slide.appendChild(img);
+                        slide.appendChild(slideLoader);
                     }
                     carouselTrack.appendChild(slide);
-                    if (hasMultiple) {
+                    if (hasMultiple && !useThumbs) {
                         const dot = document.createElement('button');
                         dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
                         dot.onclick = () => goToSlide(index);
@@ -3214,8 +3606,10 @@
                 });
             }
             updateCarousel();
+            ensureSlidesLoaded(0);
             modalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
+            playOpen();
         }
         function setupVideoControls(video, container) {
             const playBtn = container.querySelector('.video-play-btn');
@@ -3334,32 +3728,6 @@
                 container._hideTimeout = setTimeout(() => { if (!video.paused) controls.classList.remove('active'); }, 3000);
             });
         }
-        function resetZoom() {
-            currentZoom = 1;
-            currentPanX = 0;
-            currentPanY = 0;
-            applyTransform();
-            zoomIndicator.classList.remove('visible');
-        }
-        function applyTransform() {
-            if (!currentImageEl) return;
-            currentImageEl.style.transform = `translate(${currentPanX}px, ${currentPanY}px) scale(${currentZoom})`;
-            if (currentZoom > 1) {
-                currentImageEl.classList.add('zoomed');
-                carouselContainer.classList.add('zoomed');
-            } else {
-                currentImageEl.classList.remove('zoomed');
-                carouselContainer.classList.remove('zoomed');
-            }
-        }
-        function showZoomIndicator() {
-            zoomIndicator.textContent = Math.round(currentZoom * 100) + '%';
-            zoomIndicator.classList.add('visible');
-            clearTimeout(zoomIndicator._hideTimeout);
-            zoomIndicator._hideTimeout = setTimeout(() => {
-                zoomIndicator.classList.remove('visible');
-            }, 1000);
-        }
         function handleImageDoubleClick(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -3388,8 +3756,9 @@
             if (!isDragging || !currentImageEl) return;
             const dx = e.clientX - dragStartX;
             const dy = e.clientY - dragStartY;
-            currentPanX = panStartX + dx;
-            currentPanY = panStartY + dy;
+            const bounds = getPanBounds();
+            currentPanX = applyRubber(panStartX + dx, bounds.maxX);
+            currentPanY = applyRubber(panStartY + dy, bounds.maxY);
             applyTransform();
         });
         document.addEventListener('mouseup', () => {
@@ -3397,26 +3766,95 @@
                 isDragging = false;
                 currentImageEl.classList.remove('dragging');
                 carouselContainer.classList.remove('dragging');
+                snapBack();
+            }
+        });
+        function getTouchDist(touches) {
+            const dx = touches[0].clientX - touches[1].clientX;
+            const dy = touches[0].clientY - touches[1].clientY;
+            return Math.hypot(dx, dy);
+        }
+        carouselContainer.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                touchState.mode = 'pinch';
+                touchState.startDist = getTouchDist(e.touches);
+                touchState.startZoom = currentZoom;
+            } else if (e.touches.length === 1) {
+                const t0 = e.touches[0];
+                touchState.startX = t0.clientX;
+                touchState.startY = t0.clientY;
+                if (currentZoom > 1 && currentImageEl) {
+                    touchState.mode = 'pan';
+                    touchState.panStartX = currentPanX;
+                    touchState.panStartY = currentPanY;
+                    currentImageEl.classList.add('dragging');
+                } else {
+                    touchState.mode = 'swipe';
+                }
+            }
+        }, { passive: true });
+        carouselContainer.addEventListener('touchmove', (e) => {
+            if (touchState.mode === 'none') return;
+            e.preventDefault();
+            if (touchState.mode === 'pinch' && e.touches.length === 2) {
+                const dist = getTouchDist(e.touches);
+                currentZoom = Math.max(1, Math.min(5, touchState.startZoom * (dist / touchState.startDist)));
+                if (currentZoom === 1) {
+                    currentPanX = 0;
+                    currentPanY = 0;
+                } else {
+                    clampPanHard();
+                }
+                applyTransform();
+                showZoomIndicator();
+            } else if (touchState.mode === 'pan' && e.touches.length === 1) {
+                const t0 = e.touches[0];
+                const bounds = getPanBounds();
+                currentPanX = applyRubber(touchState.panStartX + (t0.clientX - touchState.startX), bounds.maxX);
+                currentPanY = applyRubber(touchState.panStartY + (t0.clientY - touchState.startY), bounds.maxY);
+                applyTransform();
+            }
+        }, { passive: false });
+        carouselContainer.addEventListener('touchend', (e) => {
+            if (touchState.mode === 'pan') {
+                if (currentImageEl) currentImageEl.classList.remove('dragging');
+                snapBack();
+            } else if (touchState.mode === 'swipe' && e.changedTouches.length === 1) {
+                const t0 = e.changedTouches[0];
+                const dx = t0.clientX - touchState.startX;
+                const dy = t0.clientY - touchState.startY;
+                if (dy > 90 && Math.abs(dy) > Math.abs(dx) * 1.5) {
+                    closeModal();
+                } else if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+                    if (dx < 0) nextSlide();
+                    else prevSlide();
+                }
+            }
+            if (e.touches.length === 0) {
+                touchState.mode = 'none';
+            } else if (e.touches.length === 1) {
+                const t0 = e.touches[0];
+                touchState.startX = t0.clientX;
+                touchState.startY = t0.clientY;
+                touchState.panStartX = currentPanX;
+                touchState.panStartY = currentPanY;
+                touchState.mode = currentZoom > 1 ? 'pan' : 'swipe';
+                if (touchState.mode === 'pan' && currentImageEl) currentImageEl.classList.add('dragging');
+            } else {
+                touchState.mode = 'none';
             }
         });
         carouselContainer.addEventListener('wheel', (e) => {
             if (!currentImageEl || currentImageEl.tagName !== 'IMG') return;
             e.preventDefault();
-            const delta = e.deltaY > 0 ? -0.1 : 0.1;
-            currentZoom = Math.max(1, Math.min(5, currentZoom + delta));
-            if (currentZoom === 1) {
-                currentPanX = 0;
-                currentPanY = 0;
-            }
-            applyTransform();
-            showZoomIndicator();
+            zoomBy(e.deltaY > 0 ? -0.1 : 0.1);
         }, { passive: false });
         btnDownloadImage.addEventListener('click', async () => {
             if (!currentProject || !currentProject.gallery) return;
             const item = currentProject.gallery[currentSlide];
             if (!item || item.type !== 'image') return;
             try {
-                const response = await fetch(item.src);
+                const response = await fetch(normalizeSrc(item.src));
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -3434,7 +3872,7 @@
             const item = currentProject.gallery[currentSlide];
             if (!item || item.type !== 'image') return;
             try {
-                const response = await fetch(item.src);
+                const response = await fetch(normalizeSrc(item.src));
                 const blob = await response.blob();
                 await navigator.clipboard.write([
                     new ClipboardItem({ [blob.type]: blob })
@@ -3449,11 +3887,36 @@
             resetZoom();
             modalOverlay.classList.remove('active');
             document.body.style.overflow = '';
+            playClose();
         }
-        function openMIModal() { miModalOverlay.classList.add('active'); }
-        function closeMIModal() { miModalOverlay.classList.remove('active'); }
-        function openVersionModal() { versionModalOverlay.classList.add('active'); }
-        function closeVersionModal() { versionModalOverlay.classList.remove('active'); }
+        function openMIModal() {
+            miModalOverlay.classList.add('active');
+            playOpen();
+        }
+        function closeMIModal() {
+            miModalOverlay.classList.remove('active');
+            playClose();
+        }
+        function openVersionModal() {
+            versionModalOverlay.classList.add('active');
+            playOpen();
+        }
+        function closeVersionModal() {
+            versionModalOverlay.classList.remove('active');
+            playClose();
+        }
+        function openMemeModal() {
+            memeOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            playOpen();
+        }
+        function closeMemeModal() {
+            memeOverlay.classList.remove('active');
+            if (!modalOverlay.classList.contains('active') && !miModalOverlay.classList.contains('active') && !versionModalOverlay.classList.contains('active')) {
+                document.body.style.overflow = '';
+            }
+            playClose();
+        }
         function goToSlide(index) {
             if (currentVideoEl) { currentVideoEl.pause(); currentVideoEl = null; }
             resetZoom();
@@ -3466,6 +3929,7 @@
                 const img = slides[index].querySelector('img.gallery-image');
                 if (img) currentImageEl = img;
             }
+            ensureSlidesLoaded(index);
         }
         function nextSlide() { goToSlide((currentSlide + 1) % (currentProject.gallery ? currentProject.gallery.length : 1)); }
         function prevSlide() { goToSlide((currentSlide - 1 + (currentProject.gallery ? currentProject.gallery.length : 1)) % (currentProject.gallery ? currentProject.gallery.length : 1)); }
@@ -3479,6 +3943,13 @@
             });
             const dots = carouselDots.querySelectorAll('.carousel-dot');
             dots.forEach((dot, index) => dot.classList.toggle('active', index === currentSlide));
+            const thumbs = carouselThumbs.querySelectorAll('.carousel-thumb');
+            thumbs.forEach((thumb, index) => {
+                thumb.classList.toggle('active', index === currentSlide);
+                if (index === currentSlide) {
+                    thumb.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+                }
+            });
         }
         modalClose.onclick = closeModal;
         carouselNext.onclick = nextSlide;
@@ -3491,9 +3962,32 @@
             closeVersionModal();
             openMIModal();
         };
+        memeClose.onclick = closeMemeModal;
         modalOverlay.onclick = (e) => { if (e.target === modalOverlay) closeModal(); };
         miModalOverlay.onclick = (e) => { if (e.target === miModalOverlay) closeMIModal(); };
         versionModalOverlay.onclick = (e) => { if (e.target === versionModalOverlay) closeVersionModal(); };
+        memeOverlay.onclick = (e) => { if (e.target === memeOverlay) closeMemeModal(); };
+        const SOUND_ON_SVG = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+        const SOUND_OFF_SVG = '<svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>';
+        function updateSoundIcon() {
+            soundToggle.innerHTML = soundEnabled ? SOUND_ON_SVG : SOUND_OFF_SVG;
+            soundToggle.classList.toggle('muted', !soundEnabled);
+        }
+        soundToggle.onclick = () => {
+            soundEnabled = !soundEnabled;
+            try {
+                localStorage.setItem('minimate-sound', soundEnabled ? 'on' : 'off');
+            } catch (e) {}
+            updateSoundIcon();
+            if (soundEnabled) playClick();
+            showToast(soundEnabled ? t('sound_on') : t('sound_off'), 'success');
+        };
+        updateSoundIcon();
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.mc-btn, .filter-btn, .page-btn, .lang-btn, .lang-option, .sort-trigger, .sort-option, .carousel-btn, .carousel-dot, .carousel-thumb, .gallery-action-btn, .video-btn, .modal-close, .version-btn, .icon-btn, .search-clear')) {
+                playClick();
+            }
+        }, true);
         const langBtn = document.getElementById('langBtn');
         const langDropdown = document.getElementById('langDropdown');
         langBtn.addEventListener('click', (e) => {
@@ -3569,7 +4063,27 @@
             transitionGrid();
             searchInput.focus();
         });
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
         document.addEventListener('keydown', (e) => {
+            const activeTag = document.activeElement ? document.activeElement.tagName : '';
+            const typing = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
+            if (!typing) {
+                const konamiKey = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+                if (konamiKey === konamiSequence[konamiIndex]) {
+                    konamiIndex++;
+                    if (konamiIndex === konamiSequence.length) {
+                        konamiIndex = 0;
+                        openMemeModal();
+                    }
+                } else {
+                    konamiIndex = konamiKey === konamiSequence[0] ? 1 : 0;
+                }
+            }
+            if (memeOverlay.classList.contains('active')) {
+                if (e.key === 'Escape') closeMemeModal();
+                return;
+            }
             if (versionModalOverlay.classList.contains('active')) {
                 if (e.key === 'Escape') closeVersionModal();
                 return;
@@ -3585,13 +4099,39 @@
                     nextSlide();
                 } else if (e.key === 'ArrowLeft') {
                     prevSlide();
+                } else if (e.key === '+' || e.key === '=') {
+                    zoomBy(0.25);
+                } else if (e.key === '-' || e.key === '_') {
+                    zoomBy(-0.25);
+                } else if (e.key === '0') {
+                    resetZoom();
+                    showZoomIndicator();
+                } else if (e.key === 'f' || e.key === 'F' || e.key === 'а' || e.key === 'А') {
+                    toggleFullscreen();
+                } else if (e.key === ' ') {
+                    if (activeTag === 'BUTTON') return;
+                    if (currentVideoEl && currentVideoEl.style.display !== 'none') {
+                        e.preventDefault();
+                        if (currentVideoEl.paused) currentVideoEl.play();
+                        else currentVideoEl.pause();
+                    }
                 }
                 return;
             }
-            if (e.key === 'Escape' && document.activeElement === searchInput) {
-                searchInput.blur();
+            if (typing) {
+                if (e.key === 'Escape') document.activeElement.blur();
+                return;
+            }
+            if (e.key === 'ArrowRight') {
+                goToPage(currentPage + 1);
+            } else if (e.key === 'ArrowLeft') {
+                goToPage(currentPage - 1);
             }
         });
+        window.addEventListener('resize', updateHeaderHeight);
+        window.addEventListener('load', updateHeaderHeight);
+        updateHeaderHeight();
+        setTimeout(updateHeaderHeight, 300);
         updateTranslations();
         loadProjects();
     </script>
