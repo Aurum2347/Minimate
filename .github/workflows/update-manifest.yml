@@ -2,47 +2,194 @@ name: Update Projects Manifest
 
 on:
   push:
+    branches:
+      - main
+      - master
     paths:
       - 'projects/**'
+      - '!projects/manifest.json'
+      - '!projects/**/gallery/manifest.json'
+  workflow_dispatch:  # Ручной запуск из вкладки Actions
+
+# Предотвращаем параллельные запуски одного и того же workflow
+concurrency:
+  group: update-manifest
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Защита от бесконечного цикла: не запускаем, если коммит от бота
+    if: github.actor != 'github-actions[bot]'
+    
+    permissions:
+      contents: write
+    
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Generate Manifest
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Нужно для сравнения с предыдущим коммитом
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate manifests
+        id: generate
+        shell: python
         run: |
-          # Collect project directories
-          projects=()
-          for dir in projects/*/; do
-            dirname=$(basename "$dir")
-            if [ -d "$dir" ]; then
-              projects+=("\"$dirname\"")
-            fi
-          done
-          
-          # Create proper JSON with correct formatting
-          if [ ${#projects[@]} -eq 0 ]; then
-            echo '[]' > projects/manifest.json
-          else
-            echo '[' > projects/manifest.json
-            for i in "${!projects[@]}"; do
-              if [ $i -eq $((${#projects[@]} - 1)) ]; then
-                echo "  ${projects[$i]}" >> projects/manifest.json
-              else
-                echo "  ${projects[$i]}," >> projects/manifest.json
-              fi
-            done
-            echo ']' >> projects/manifest.json
-          fi
-          
-          cat projects/manifest.json
-      
-      - name: Commit and Push Manifest
+          import os
+          import json
+          import hashlib
+          import sys
+          from pathlib import Path
+
+          PROJECTS_DIR = Path('projects')
+          GALLERY_FILES = {'.png', '.jpg', '.jpeg', '.webp', '.mp4', '.webm'}
+          errors = []
+          warnings = []
+
+          def sha256_file(path: Path) -> str:
+              h = hashlib.sha256()
+              with open(path, 'rb') as f:
+                  for chunk in iter(lambda: f.read(8192), b''):
+                      h.update(chunk)
+              return h.hexdigest()[:16]
+
+          def build_gallery_manifest(project_dir: Path) -> list:
+              gallery_dir = project_dir / 'gallery'
+              if not gallery_dir.is_dir():
+                  return []
+              items = []
+              for f in sorted(gallery_dir.iterdir()):
+                  if f.is_file() and f.suffix.lower() in GALLERY_FILES:
+                      file_type = 'video' if f.suffix.lower() in {'.mp4', '.webm'} else 'image'
+                      rel_path = f"/projects/{project_dir.name}/gallery/{f.name}"
+                      items.append({
+                          'type': file_type,
+                          'src': rel_path,
+                          'hash': sha256_file(f)
+                      })
+              return items
+
+          project_ids = []
+          projects_meta = []
+
+          if PROJECTS_DIR.is_dir():
+              for project_dir in sorted(PROJECTS_DIR.iterdir()):
+                  if not project_dir.is_dir() or project_dir.name.startswith('.'):
+                      continue
+
+                  info_path = project_dir / 'info.json'
+                  preview_path = project_dir / 'preview.png'
+
+                  # Валидация info.json
+                  if not info_path.is_file():
+                      errors.append(f"❌ {project_dir.name}: info.json не найден")
+                      continue
+
+                  try:
+                      info = json.loads(info_path.read_text(encoding='utf-8'))
+                  except json.JSONDecodeError as e:
+                      errors.append(f"❌ {project_dir.name}: info.json невалидный JSON: {e}")
+                      continue
+
+                  required_fields = ['name', 'type', 'date', 'weight']
+                  missing = [f for f in required_fields if f not in info]
+                  if missing:
+                      errors.append(f"❌ {project_dir.name}: в info.json нет полей: {', '.join(missing)}")
+                      continue
+
+                  if info.get('type') not in ('render', 'animation'):
+                      warnings.append(f"⚠️ {project_dir.name}: type='{info.get('type')}' (ожидается render/animation)")
+
+                  if not preview_path.is_file():
+                      warnings.append(f"⚠️ {project_dir.name}: preview.png не найден")
+
+                  # Генерируем gallery manifest
+                  gallery_items = build_gallery_manifest(project_dir)
+                  if gallery_items:
+                      gallery_manifest_path = project_dir / 'gallery' / 'manifest.json'
+                      gallery_manifest_path.write_text(
+                          json.dumps(gallery_items, ensure_ascii=False, indent=2),
+                          encoding='utf-8'
+                      )
+
+                  # Хеш всего проекта для кэширования
+                  project_hash_input = (
+                      info_path.read_bytes() +
+                      b''.join(json.dumps(it).encode() for it in gallery_items)
+                  )
+                  project_hash = hashlib.sha256(project_hash_input).hexdigest()[:16]
+
+                  project_ids.append(project_dir.name)
+                  projects_meta.append({
+                      'id': project_dir.name,
+                      'hash': project_hash,
+                      'type': info.get('type'),
+                      'galleryCount': len(gallery_items)
+                  })
+
+          # Сохраняем главный manifest
+          PROJECTS_DIR.mkdir(exist_ok=True)
+          (PROJECTS_DIR / 'manifest.json').write_text(
+              json.dumps(project_ids, ensure_ascii=False, indent=2),
+              encoding='utf-8'
+          )
+
+          # Метаданные для фронтенда (опционально, можно игнорировать)
+          (PROJECTS_DIR / '.manifest-meta.json').write_text(
+              json.dumps({
+                  'generatedAt': os.popen('date -u +%Y-%m-%dT%H:%M:%SZ').read().strip(),
+                  'commit': os.environ.get('GITHUB_SHA', 'unknown')[:8],
+                  'projects': projects_meta
+              }, ensure_ascii=False, indent=2),
+              encoding='utf-8'
+          )
+
+          # Выводим отчёт
+          print(f"✅ Собрано проектов: {len(project_ids)}")
+          for w in warnings:
+              print(w)
+          for e in errors:
+              print(e)
+
+          # Устанавливаем output для следующего шага
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"count={len(project_ids)}\n")
+              f.write(f"errors={len(errors)}\n")
+              f.write(f"warnings={len(warnings)}\n")
+
+          if errors:
+              sys.exit(1)
+
+      - name: Commit and push changes
+        env:
+          PROJECT_COUNT: ${{ steps.generate.outputs.count }}
+          WARN_COUNT: ${{ steps.generate.outputs.warnings }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
           git add projects/manifest.json
-          git diff --cached --quiet || git commit -m "chore: update projects manifest"
+          git add projects/.manifest-meta.json
+          git add 'projects/*/gallery/manifest.json' || true
+          
+          # Проверяем, есть ли реальные изменения
+          if git diff --cached --quiet; then
+            echo "ℹ️ Manifest не изменился, коммит не нужен"
+            exit 0
+          fi
+          
+          # Формируем сообщение
+          MSG="chore: update projects manifest ($PROJECT_COUNT projects)"
+          if [ "$WARN_COUNT" -gt 0 ]; then
+            MSG="$MSG [⚠️ $WARN_COUNT warnings]"
+          fi
+          
+          git commit -m "$MSG"
           git push
+          
+          echo "✅ Закоммичено и запушено"
