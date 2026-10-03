@@ -2831,6 +2831,7 @@
             });
             document.getElementById('langDropdown').classList.remove('open');
             document.getElementById('langBtn').classList.remove('open');
+            playToggle();
         }
         function formatDate(dateStr) {
             const now = new Date();
@@ -2847,6 +2848,113 @@
             const m = currentLang === 'ru' ? months : monthsEn;
             return `${date.getDate()} ${m[date.getMonth()]} ${date.getFullYear()}`;
         }
+        let audioCtx = null;
+        let soundEnabled = true;
+        try {
+            soundEnabled = localStorage.getItem('minimate-sound') !== 'off';
+        } catch (e) {
+            soundEnabled = true;
+        }
+        function ensureAudio() {
+            if (!audioCtx) {
+                const AudioClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioClass) audioCtx = new AudioClass();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
+        function playTone(opts) {
+            if (!soundEnabled) return;
+            ensureAudio();
+            if (!audioCtx) return;
+            const from = opts.from !== undefined ? opts.from : 440;
+            const to = opts.to !== undefined ? opts.to : from;
+            const duration = opts.duration !== undefined ? opts.duration : 0.1;
+            const type = opts.type !== undefined ? opts.type : 'square';
+            const volume = opts.volume !== undefined ? opts.volume : 0.05;
+            const delay = opts.delay !== undefined ? opts.delay : 0;
+            const t0 = audioCtx.currentTime + delay;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(from, t0);
+            if (to !== from) osc.frequency.exponentialRampToValueAtTime(to, t0 + duration);
+            gain.gain.setValueAtTime(volume, t0);
+            gain.gain.exponentialRampToValueAtTime(0.001, t0 + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t0);
+            osc.stop(t0 + duration + 0.02);
+        }
+        function playNoise(opts) {
+            if (!soundEnabled) return;
+            ensureAudio();
+            if (!audioCtx) return;
+            const duration = opts.duration !== undefined ? opts.duration : 0.15;
+            const volume = opts.volume !== undefined ? opts.volume : 0.03;
+            const from = opts.from !== undefined ? opts.from : 800;
+            const to = opts.to !== undefined ? opts.to : 1600;
+            const delay = opts.delay !== undefined ? opts.delay : 0;
+            const t0 = audioCtx.currentTime + delay;
+            const frames = Math.floor(audioCtx.sampleRate * duration);
+            const buffer = audioCtx.createBuffer(1, frames, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < frames; i++) data[i] = Math.random() * 2 - 1;
+            const src = audioCtx.createBufferSource();
+            src.buffer = buffer;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(from, t0);
+            filter.frequency.exponentialRampToValueAtTime(to, t0 + duration);
+            filter.Q.value = 1;
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(volume, t0);
+            gain.gain.exponentialRampToValueAtTime(0.001, t0 + duration);
+            src.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            src.start(t0);
+            src.stop(t0 + duration + 0.02);
+        }
+        function playClick() {
+            playTone({ from: 220, to: 110, duration: 0.08, type: 'square', volume: 0.05 });
+        }
+        function playToggle() {
+            playTone({ from: 330, to: 440, duration: 0.07, type: 'square', volume: 0.045 });
+            playTone({ from: 660, to: 660, duration: 0.05, type: 'square', volume: 0.03, delay: 0.06 });
+        }
+        function playOpen() {
+            playTone({ from: 300, to: 600, duration: 0.12, type: 'triangle', volume: 0.06 });
+            playNoise({ duration: 0.12, volume: 0.02, from: 600, to: 1400 });
+        }
+        function playClose() {
+            playTone({ from: 500, to: 240, duration: 0.12, type: 'triangle', volume: 0.06 });
+            playNoise({ duration: 0.12, volume: 0.02, from: 1400, to: 500 });
+        }
+        function playPage() {
+            playNoise({ duration: 0.18, volume: 0.035, from: 400, to: 1200 });
+            playTone({ from: 180, to: 240, duration: 0.1, type: 'square', volume: 0.04, delay: 0.02 });
+        }
+        function playSlide() {
+            playNoise({ duration: 0.14, volume: 0.03, from: 900, to: 1800 });
+        }
+        function playZoomIn() {
+            playTone({ from: 420, to: 840, duration: 0.07, type: 'sine', volume: 0.05 });
+        }
+        function playZoomOut() {
+            playTone({ from: 840, to: 420, duration: 0.07, type: 'sine', volume: 0.05 });
+        }
+        function playSuccess() {
+            playTone({ from: 660, to: 660, duration: 0.09, type: 'sine', volume: 0.05 });
+            playTone({ from: 880, to: 880, duration: 0.12, type: 'sine', volume: 0.05, delay: 0.09 });
+        }
+        function playError() {
+            playTone({ from: 160, to: 110, duration: 0.18, type: 'sawtooth', volume: 0.05 });
+        }
+        function playSecret() {
+            [523, 659, 784, 1046].forEach((f, i) => {
+                playTone({ from: f, to: f, duration: 0.1, type: 'square', volume: 0.045, delay: i * 0.09 });
+            });
+        }
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
@@ -2856,6 +2964,8 @@
                 : '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>';
             toast.innerHTML = `${icon}<span>${message}</span>`;
             container.appendChild(toast);
+            if (type === 'success') playSuccess();
+            else playError();
             requestAnimationFrame(() => {
                 toast.classList.add('visible');
             });
@@ -2878,71 +2988,6 @@
             if (header) {
                 document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
             }
-        }
-        let audioCtx = null;
-        let soundEnabled = true;
-        try {
-            soundEnabled = localStorage.getItem('minimate-sound') !== 'off';
-        } catch (e) {
-            soundEnabled = true;
-        }
-        function ensureAudio() {
-            if (!audioCtx) {
-                const AudioClass = window.AudioContext || window.webkitAudioContext;
-                if (AudioClass) audioCtx = new AudioClass();
-            }
-            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-        }
-        function playClick() {
-            if (!soundEnabled) return;
-            ensureAudio();
-            if (!audioCtx) return;
-            const time = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(220, time);
-            osc.frequency.exponentialRampToValueAtTime(110, time + 0.08);
-            gain.gain.setValueAtTime(0.06, time);
-            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.09);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(time);
-            osc.stop(time + 0.1);
-        }
-        function playOpen() {
-            if (!soundEnabled) return;
-            ensureAudio();
-            if (!audioCtx) return;
-            const time = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(330, time);
-            osc.frequency.exponentialRampToValueAtTime(660, time + 0.1);
-            gain.gain.setValueAtTime(0.05, time);
-            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.12);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(time);
-            osc.stop(time + 0.13);
-        }
-        function playClose() {
-            if (!soundEnabled) return;
-            ensureAudio();
-            if (!audioCtx) return;
-            const time = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(440, time);
-            osc.frequency.exponentialRampToValueAtTime(220, time + 0.1);
-            gain.gain.setValueAtTime(0.05, time);
-            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.12);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(time);
-            osc.stop(time + 0.13);
         }
         async function loadProjects() {
             try {
@@ -3290,6 +3335,7 @@
             const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
             if (page < 1 || page > totalPages || page === currentPage) return;
             currentPage = page;
+            playPage();
             transitionGrid();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -3334,6 +3380,18 @@
             const mins = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
             return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        function syncCurrentMedia() {
+            const slides = carouselTrack.querySelectorAll('.carousel-slide');
+            const slide = slides[currentSlide];
+            currentVideoEl = null;
+            currentImageEl = null;
+            if (slide) {
+                const video = slide.querySelector('video');
+                if (video) currentVideoEl = video;
+                const img = slide.querySelector('img.gallery-image');
+                if (img) currentImageEl = img;
+            }
         }
         function getPanBounds() {
             if (!currentImageEl) return { maxX: 0, maxY: 0 };
@@ -3401,6 +3459,8 @@
             }
             applyTransform();
             showZoomIndicator();
+            if (delta > 0) playZoomIn();
+            else playZoomOut();
         }
         function resetZoom() {
             currentZoom = 1;
@@ -3530,11 +3590,11 @@
                         video.loop = true;
                         video.playsInline = true;
                         video.style.display = 'none';
-                        if (index === 0) currentVideoEl = video;
                         const thumbnail = document.createElement('div');
                         thumbnail.className = 'video-thumbnail';
                         thumbnail.innerHTML = `<img src="${normalizeSrc(item.src)}" alt="${name} preview"><div class="video-play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>`;
                         thumbnail.onclick = () => {
+                            playClick();
                             thumbnail.style.opacity = '0';
                             setTimeout(() => thumbnail.style.display = 'none', 300);
                             video.style.display = 'block';
@@ -3606,6 +3666,7 @@
                 });
             }
             updateCarousel();
+            syncCurrentMedia();
             ensureSlidesLoaded(0);
             modalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -3731,19 +3792,23 @@
         function handleImageDoubleClick(e) {
             e.preventDefault();
             e.stopPropagation();
+            currentImageEl = e.currentTarget;
             if (currentZoom > 1) {
                 resetZoom();
+                playZoomOut();
             } else {
                 currentZoom = 2.5;
                 currentPanX = 0;
                 currentPanY = 0;
                 applyTransform();
                 showZoomIndicator();
+                playZoomIn();
             }
         }
         function handleImageMouseDown(e) {
             if (currentZoom <= 1) return;
             e.preventDefault();
+            currentImageEl = e.currentTarget;
             isDragging = true;
             dragStartX = e.clientX;
             dragStartY = e.clientY;
@@ -3908,7 +3973,7 @@
         function openMemeModal() {
             memeOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
-            playOpen();
+            playSecret();
         }
         function closeMemeModal() {
             memeOverlay.classList.remove('active');
@@ -3918,18 +3983,14 @@
             playClose();
         }
         function goToSlide(index) {
+            if (index === currentSlide) return;
             if (currentVideoEl) { currentVideoEl.pause(); currentVideoEl = null; }
             resetZoom();
             currentSlide = index;
             updateCarousel();
-            const slides = carouselTrack.querySelectorAll('.carousel-slide');
-            if (slides[index]) {
-                const video = slides[index].querySelector('video');
-                if (video) currentVideoEl = video;
-                const img = slides[index].querySelector('img.gallery-image');
-                if (img) currentImageEl = img;
-            }
+            syncCurrentMedia();
             ensureSlidesLoaded(index);
+            playSlide();
         }
         function nextSlide() { goToSlide((currentSlide + 1) % (currentProject.gallery ? currentProject.gallery.length : 1)); }
         function prevSlide() { goToSlide((currentSlide - 1 + (currentProject.gallery ? currentProject.gallery.length : 1)) % (currentProject.gallery ? currentProject.gallery.length : 1)); }
@@ -3979,12 +4040,11 @@
                 localStorage.setItem('minimate-sound', soundEnabled ? 'on' : 'off');
             } catch (e) {}
             updateSoundIcon();
-            if (soundEnabled) playClick();
             showToast(soundEnabled ? t('sound_on') : t('sound_off'), 'success');
         };
         updateSoundIcon();
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.mc-btn, .filter-btn, .page-btn, .lang-btn, .lang-option, .sort-trigger, .sort-option, .carousel-btn, .carousel-dot, .carousel-thumb, .gallery-action-btn, .video-btn, .modal-close, .version-btn, .icon-btn, .search-clear')) {
+            if (e.target.closest('.mc-btn, .lang-btn, .sort-trigger, .gallery-action-btn, .video-btn, .icon-btn, .search-clear, .version-btn')) {
                 playClick();
             }
         }, true);
@@ -4031,6 +4091,7 @@
                 sortDropdownMenu.classList.remove('open');
                 sortTrigger.classList.remove('open');
                 currentPage = 1;
+                playToggle();
                 transitionGrid();
             });
         });
@@ -4040,6 +4101,7 @@
                 btn.classList.add('active');
                 currentFilter = btn.dataset.filter;
                 currentPage = 1;
+                playToggle();
                 transitionGrid();
             });
         });
@@ -4106,12 +4168,14 @@
                 } else if (e.key === '0') {
                     resetZoom();
                     showZoomIndicator();
+                    playZoomOut();
                 } else if (e.key === 'f' || e.key === 'F' || e.key === 'а' || e.key === 'А') {
                     toggleFullscreen();
                 } else if (e.key === ' ') {
                     if (activeTag === 'BUTTON') return;
                     if (currentVideoEl && currentVideoEl.style.display !== 'none') {
                         e.preventDefault();
+                        playClick();
                         if (currentVideoEl.paused) currentVideoEl.play();
                         else currentVideoEl.pause();
                     }
