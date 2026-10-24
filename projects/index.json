@@ -1,6 +1,974 @@
 {
- "generatedAt": "2026-10-24T21:22:01Z",
+ "generatedAt": "2026-10-24T22:48:17Z",
  "projects": [
+  {
+   "id": "bread-evening",
+   "name": {
+    "ru": "Хлебный вечер",
+    "en": "Bread Evening"
+   },
+   "description": {
+    "ru": "Атмосферный ночной рендер. Персонаж с головой-блоком земли, в советской фуражке и классическом пальто с красными нашивками, стоит на фоне горных склонов. Он улыбается, держит в руке золотистый хлеб, а над ним светит луна и падают звезды.",
+    "en": "An atmospheric night render. A character with a dirt block for a head, wearing a Soviet peaked cap and a classic coat with red patches, stands against the backdrop of mountain slopes. He smiles, holds a golden loaf of bread in his hand, while the moon shines and stars fall above him."
+   },
+   "type": "render",
+   "date": "2026-08-08",
+   "weight": "1.4 MB",
+   "hasVideo": false,
+   "preview": "projects/bread-evening/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/bread-evening/gallery/арт.png",
+     "view": "projects/bread-evening/_m/арт.webp",
+     "thumb": "projects/bread-evening/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "campfire-cave-rest",
+   "name": {
+    "ru": "Привал у костра",
+    "en": "Campfire Rest"
+   },
+   "description": {
+    "ru": "Атмосферный рендер в пещере. Персонаж в алмазном шлеме и темной одежде сидит у яркого костра, рядом с ним лежат фонарь и кирка. Теплый свет огня освещает каменные стены и листву на фоне.",
+    "en": "An atmospheric render inside a cave. A character wearing a diamond helmet and dark clothing sits by a bright campfire, with a lantern and a pickaxe lying nearby. The warm firelight illuminates the stone walls and foliage in the background."
+   },
+   "type": "render",
+   "date": "2025-12-28",
+   "weight": "1.4 MB",
+   "hasVideo": false,
+   "preview": "projects/campfire-cave-rest/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/campfire-cave-rest/gallery/арт2.png",
+     "view": "projects/campfire-cave-rest/_m/арт2.webp",
+     "thumb": "projects/campfire-cave-rest/_m/арт2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/campfire-cave-rest/gallery/арт.png",
+     "view": "projects/campfire-cave-rest/_m/арт.webp",
+     "thumb": "projects/campfire-cave-rest/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "chef-cooking-chicken",
+   "name": {
+    "ru": "Шеф-повар",
+    "en": "The Chef"
+   },
+   "description": {
+    "ru": "Шуточный рендер с моим персонажем в роли повара. Герой в белом колпаке и фартуке заносит топор над курицей, лежащей на деревянной доске. Сцена является отсылкой к известному интернет-мему.",
+    "en": "A humorous render featuring my character as a chef. The hero in a white hat and apron raises an axe over a chicken lying on a wooden cutting board. The scene is a reference to a well-known internet meme."
+   },
+   "type": "render",
+   "date": "2025-06-28",
+   "weight": "1.8 MB",
+   "hasVideo": false,
+   "preview": "projects/chef-cooking-chicken/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/chef-cooking-chicken/gallery/арт (4).png",
+     "view": "projects/chef-cooking-chicken/_m/арт (4).webp",
+     "thumb": "projects/chef-cooking-chicken/_m/арт (4).thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/chef-cooking-chicken/gallery/istockphoto-488502263-170667a.jpg",
+     "view": "projects/chef-cooking-chicken/_m/istockphoto-488502263-170667a.webp",
+     "thumb": "projects/chef-cooking-chicken/_m/istockphoto-488502263-170667a.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "dark-meeting",
+   "name": {
+    "ru": "Мрачная встреча",
+    "en": "Dark Meeting"
+   },
+   "description": {
+    "ru": "Атмосферный рендер с двумя персонажами в темном пространстве. Слева стоит фигура в зеленом камуфляже, а справа - парень в стильной черно-белой одежде с золотыми акцентами. В воздухе кружатся белые частицы, создавая ощущение холода и напряжения.",
+    "en": "An atmospheric render featuring two characters in a dark space. On the left stands a figure in green camouflage, and on the right - a guy in stylish black and white clothing with gold accents. White particles float in the air, creating a sense of cold and tension."
+   },
+   "type": "render",
+   "date": "2026-10-21",
+   "weight": "839.2 KB",
+   "hasVideo": false,
+   "preview": "projects/dark-meeting/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/dark-meeting/gallery/4.png",
+     "view": "projects/dark-meeting/_m/4.webp",
+     "thumb": "projects/dark-meeting/_m/4.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/dark-meeting/gallery/3.png",
+     "view": "projects/dark-meeting/_m/3.webp",
+     "thumb": "projects/dark-meeting/_m/3.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/dark-meeting/gallery/2.png",
+     "view": "projects/dark-meeting/_m/2.webp",
+     "thumb": "projects/dark-meeting/_m/2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/dark-meeting/gallery/1.png",
+     "view": "projects/dark-meeting/_m/1.webp",
+     "thumb": "projects/dark-meeting/_m/1.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "dark-purple-avatar",
+   "name": {
+    "ru": "Темный профиль",
+    "en": "Dark Profile"
+   },
+   "description": {
+    "ru": "Стильная аватарка в темных тонах. Крупный портрет персонажа с черными волосами в черной одежде на фоне фиолетовой плитки.",
+    "en": "A stylish dark-toned avatar. A close-up portrait of a character with black hair in black clothing against a purple tiled background."
+   },
+   "type": "render",
+   "date": "2026-10-15",
+   "weight": "364.9 KB",
+   "hasVideo": false,
+   "preview": "projects/dark-purple-avatar/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/dark-purple-avatar/gallery/арт.png",
+     "view": "projects/dark-purple-avatar/_m/арт.webp",
+     "thumb": "projects/dark-purple-avatar/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "deep-night",
+   "name": {
+    "ru": "Deep Night",
+    "en": "Глубокая ночь"
+   },
+   "description": {
+    "ru": "Атмосферный ночной рендер. Стив стоит на вершине скалы в глубокой пещере, освещая пространство факелом. Над ним сияет квадратная луна и рассыпаны звезды, создавая контраст со темными каменными стенами.",
+    "en": "An atmospheric night render. Steve stands on top of a cliff in a deep cave, illuminating the space with a torch. Above him shines a square moon and scattered stars, creating a contrast with the dark stone walls."
+   },
+   "type": "render",
+   "date": "2026-08-01",
+   "weight": "1.4 MB",
+   "hasVideo": false,
+   "preview": "projects/deep-night/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/deep-night/gallery/арт2.png",
+     "view": "projects/deep-night/_m/арт2.webp",
+     "thumb": "projects/deep-night/_m/арт2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/deep-night/gallery/арт.png",
+     "view": "projects/deep-night/_m/арт.webp",
+     "thumb": "projects/deep-night/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "desert-showdown",
+   "name": {
+    "ru": "Пустынная дуэль",
+    "en": "Desert Showdown"
+   },
+   "description": {
+    "ru": "Динамичный рендер с моим персонажем. Герой в шляпе и плаще наводит револьвер на противника верхом на лошади. Действие происходит на фоне песчаных холмов и голубого неба с облаками.",
+    "en": "A dynamic render featuring my character. The hero in a hat and coat aims a revolver at an opponent on horseback. The action takes place against the backdrop of sandy hills and a blue sky with clouds."
+   },
+   "type": "render",
+   "date": "2024-08-18",
+   "weight": "1.6 MB",
+   "hasVideo": false,
+   "preview": "projects/desert-showdown/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/desert-showdown/gallery/арт (53).png",
+     "view": "projects/desert-showdown/_m/арт (53).webp",
+     "thumb": "projects/desert-showdown/_m/арт (53).thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "diamond-holder-set",
+   "name": {
+    "ru": "Сияние алмаза",
+    "en": "Diamond Glow"
+   },
+   "description": {
+    "ru": "Набор из баннера и аватарки. Персонаж в темной одежде с красными глазами. На аватарке он держит сияющий алмаз, а на широком баннере раскинул руки на фоне яркого оранжево-желтого заката с парящими кубами.",
+    "en": "A banner and avatar set. A character in dark clothing with red eyes. In the avatar, he holds a glowing diamond, while in the wide banner, he spreads his arms against a bright orange-yellow sunset with floating cubes."
+   },
+   "type": "render",
+   "date": "2026-10-21",
+   "weight": "899.7 KB",
+   "hasVideo": false,
+   "preview": "projects/diamond-holder-set/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/diamond-holder-set/gallery/tt14.png",
+     "view": "projects/diamond-holder-set/_m/tt14.webp",
+     "thumb": "projects/diamond-holder-set/_m/tt14.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/diamond-holder-set/gallery/банер.png",
+     "view": "projects/diamond-holder-set/_m/банер.webp",
+     "thumb": "projects/diamond-holder-set/_m/банер.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "dock-rest",
+   "name": {
+    "ru": "Отдых у причала",
+    "en": "Rest by the Dock"
+   },
+   "description": {
+    "ru": "Атмосферный рендер. Персонаж с черными волосами и в фиолетовой рубашке лежит на деревянном причале, держа в руке трезубец. Уютный вечерний свет от фонаря и спокойная вода создают расслабляющую обстановку.",
+    "en": "An atmospheric render. A character with black hair and a purple shirt lies on a wooden dock, holding a trident. Cozy evening lantern light and calm water create a relaxing atmosphere."
+   },
+   "type": "render",
+   "date": "2026-10-11",
+   "weight": "1.8 MB",
+   "hasVideo": false,
+   "preview": "projects/dock-rest/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/dock-rest/gallery/New Project.png",
+     "view": "projects/dock-rest/_m/New Project.webp",
+     "thumb": "projects/dock-rest/_m/New Project.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "face-your-fear",
+   "name": {
+    "ru": "Взгляни в глаза",
+    "en": "Face Your Fear"
+   },
+   "description": {
+    "ru": "Крупный план с мрачной атмосферой. Мой персонаж стоит лицом к лицу с новым пугающим мобом - Скрипуном (Cracking).",
+    "en": "A close-up with a dark atmosphere. My character stands face to face with a new terrifying mob - Cracking."
+   },
+   "type": "render",
+   "date": "2024-12-17",
+   "weight": "538.5 KB",
+   "hasVideo": false,
+   "preview": "projects/face-your-fear/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/face-your-fear/gallery/Арт (41).png",
+     "view": "projects/face-your-fear/_m/Арт (41).webp",
+     "thumb": "projects/face-your-fear/_m/Арт (41).thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "friend-skin-render",
+   "name": {
+    "ru": "Рендер для друга",
+    "en": "Friend's Skin Render"
+   },
+   "description": {
+    "ru": "Шуточный крупноплановый рендер скина знакомого. Персонаж с черным лицом в очках и бирюзовыми светящимися глазами стоит на фоне красочного пиксельного неба.",
+    "en": "A humorous close-up render of a friend's skin. The character features a black face, glasses, and glowing turquoise eyes, set against a colorful pixelated sky."
+   },
+   "type": "render",
+   "date": "2026-09-08",
+   "weight": "982.5 KB",
+   "hasVideo": false,
+   "preview": "projects/friend-skin-render/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/friend-skin-render/gallery/арт2.png",
+     "view": "projects/friend-skin-render/_m/арт2.webp",
+     "thumb": "projects/friend-skin-render/_m/арт2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/friend-skin-render/gallery/арт.png",
+     "view": "projects/friend-skin-render/_m/арт.webp",
+     "thumb": "projects/friend-skin-render/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "friends-night-out",
+   "name": {
+    "ru": "Я и мои друзья",
+    "en": "Me and My Friends"
+   },
+   "description": {
+    "ru": "Ночной групповой рендер. Четверо персонажей стоят плечом к плечу на вершине блока земли. Один из них освещает округу фонарем, а над ними в темном звездном небе сияет квадратная луна.",
+    "en": "A nighttime group render. Four characters stand shoulder to shoulder on top of a dirt block. One of them illuminates the surroundings with a lantern, while a square moon shines above them in the dark starry sky."
+   },
+   "type": "render",
+   "date": "2026-01-26",
+   "weight": "1.1 MB",
+   "hasVideo": false,
+   "preview": "projects/friends-night-out/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/friends-night-out/gallery/арт3.png",
+     "view": "projects/friends-night-out/_m/арт3.webp",
+     "thumb": "projects/friends-night-out/_m/арт3.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/friends-night-out/gallery/арт2.png",
+     "view": "projects/friends-night-out/_m/арт2.webp",
+     "thumb": "projects/friends-night-out/_m/арт2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/friends-night-out/gallery/арт.png",
+     "view": "projects/friends-night-out/_m/арт.webp",
+     "thumb": "projects/friends-night-out/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "frog-adventure",
+   "name": {
+    "ru": "Жабье приключение",
+    "en": "Frog Adventure"
+   },
+   "description": {
+    "ru": "Два эпизода из путешествия отважного жаба. Сначала он наслаждается закатом в бескрайнем золотом поле, а после наступления темноты взбирается на вершину скалы у входа в таинственную пещеру, освещенную светом луны. Небольшая история о пути и исследованиях.",
+    "en": "Two episodes from the journey of a brave frog. First, he enjoys the sunset in an endless golden field, and after nightfall, he climbs to the top of a cliff at the entrance to a mysterious cave illuminated by moonlight. A short story about travel and exploration."
+   },
+   "type": "render",
+   "date": "2026-09-30",
+   "weight": "1.2 MB",
+   "hasVideo": false,
+   "preview": "projects/frog-adventure/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/frog-adventure/gallery/арт.png",
+     "view": "projects/frog-adventure/_m/арт.webp",
+     "thumb": "projects/frog-adventure/_m/арт.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/frog-adventure/gallery/1.png",
+     "view": "projects/frog-adventure/_m/1.webp",
+     "thumb": "projects/frog-adventure/_m/1.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "golden-field-friends",
+   "name": {
+    "ru": "Друзья на закате",
+    "en": "Friends at Sunset"
+   },
+   "description": {
+    "ru": "Теплый и уютный момент встречи двух необычных персонажей посреди бескрайнего золотого поля.",
+    "en": "A warm and cozy moment of meeting between two unique characters in the middle of an endless golden field."
+   },
+   "type": "render",
+   "date": "2026-09-30",
+   "weight": "1.7 MB",
+   "hasVideo": false,
+   "preview": "projects/golden-field-friends/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/golden-field-friends/gallery/арт3.png",
+     "view": "projects/golden-field-friends/_m/арт3.webp",
+     "thumb": "projects/golden-field-friends/_m/арт3.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "green-suit-guy",
+   "name": {
+    "ru": "Зеленый стиль",
+    "en": "Green Style"
+   },
+   "description": {
+    "ru": "Серия рендеров персонажа в модном зеленом костюме с неоновыми элементами. Работа включает крупный портрет и полноростовые позы с инструментами в руках на фоне стильной зеленой шахматки.",
+    "en": "A series of renders featuring a character in a stylish green suit with neon accents. The work includes a close-up portrait and full-body poses holding tools against a stylish green checkerboard background."
+   },
+   "type": "render",
+   "date": "2026-10-15",
+   "weight": "2.3 MB",
+   "hasVideo": false,
+   "preview": "projects/green-suit-guy/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/green-suit-guy/gallery/3.png",
+     "view": "projects/green-suit-guy/_m/3.webp",
+     "thumb": "projects/green-suit-guy/_m/3.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/green-suit-guy/gallery/1.png",
+     "view": "projects/green-suit-guy/_m/1.webp",
+     "thumb": "projects/green-suit-guy/_m/1.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/green-suit-guy/gallery/2.png",
+     "view": "projects/green-suit-guy/_m/2.webp",
+     "thumb": "projects/green-suit-guy/_m/2.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "high-stakes-gambler",
+   "name": {
+    "ru": "Козырь в рукаве",
+    "en": "Ace in the Sleeve"
+   },
+   "description": {
+    "ru": "Стильный рендер с моим персонажем. Главный герой в черном пальто и цилиндре с яркой синей неоновой подсветкой. В одной руке он держит золотую трость, а в другой - веер из игральных карт, пока вокруг парят красные масти.",
+    "en": "A stylish render featuring my character. The protagonist wears a black coat and top hat with bright blue neon lighting. He holds a golden cane in one hand and a fan of playing cards in the other, while red suits float around him."
+   },
+   "type": "render",
+   "date": "2024-09-24",
+   "weight": "1.5 MB",
+   "hasVideo": false,
+   "preview": "projects/high-stakes-gambler/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/high-stakes-gambler/gallery/арт (47).png",
+     "view": "projects/high-stakes-gambler/_m/арт (47).webp",
+     "thumb": "projects/high-stakes-gambler/_m/арт (47).thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "kotyara-don-quixote",
+   "name": {
+    "ru": "Котяра (Дон Кихот)",
+    "en": "Kotyara (Don Quixote)"
+   },
+   "description": {
+    "ru": "Ренедер по Котяре, выполненный как отсылка к Дон Кихоту из игры Limbus Company. Персонаж стоит с длинным красным копьем в руках на фоне мрачного багрового фона, а рядом расположена аватарка для сравнения.",
+    "en": "A render of the character Kotyara, created as a reference to Don Quixote from the game Limbus Company. The character stands holding a long red spear against a dark crimson background, with an avatar placed nearby for comparison."
+   },
+   "type": "render",
+   "date": "2025-12-13",
+   "weight": "544.7 KB",
+   "hasVideo": false,
+   "preview": "projects/kotyara-don-quixote/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/kotyara-don-quixote/gallery/арт.png",
+     "view": "projects/kotyara-don-quixote/_m/арт.webp",
+     "thumb": "projects/kotyara-don-quixote/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "kotyara-youtube-banner",
+   "name": {
+    "ru": "Котяра на складе",
+    "en": "Kotyara in the Warehouse"
+   },
+   "description": {
+    "ru": "Баннер для YouTube-канала друга. Персонаж в зеленой куртке стоит в уютном деревянном складе, освещенном фонарями. На втором кадре он показан со спины с киркой в руке.",
+    "en": "A YouTube channel banner for a friend. A character in a green jacket stands in a cozy wooden warehouse illuminated by lanterns. The second shot shows him from behind holding a pickaxe."
+   },
+   "type": "render",
+   "date": "2025-12-06",
+   "weight": "1.4 MB",
+   "hasVideo": false,
+   "preview": "projects/kotyara-youtube-banner/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/kotyara-youtube-banner/gallery/арт2.png",
+     "view": "projects/kotyara-youtube-banner/_m/арт2.webp",
+     "thumb": "projects/kotyara-youtube-banner/_m/арт2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/kotyara-youtube-banner/gallery/арт3.png",
+     "view": "projects/kotyara-youtube-banner/_m/арт3.webp",
+     "thumb": "projects/kotyara-youtube-banner/_m/арт3.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/kotyara-youtube-banner/gallery/арт5.png",
+     "view": "projects/kotyara-youtube-banner/_m/арт5.webp",
+     "thumb": "projects/kotyara-youtube-banner/_m/арт5.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "magic-book-avatar",
+   "name": {
+    "ru": "Магическая книга",
+    "en": "Magic Book"
+   },
+   "description": {
+    "ru": "Стильная 3D-аватарка. Персонаж с фиолетовыми волосами и в красной куртке держит в руке светящуюся магическую книгу с фиолетовыми частицами.",
+    "en": "A stylish 3D avatar. A character with purple hair and a red jacket holds a glowing magic book with purple particles in his hand."
+   },
+   "type": "render",
+   "date": "2026-05-02",
+   "weight": "779.4 KB",
+   "hasVideo": false,
+   "preview": "projects/magic-book-avatar/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/magic-book-avatar/gallery/арт.png",
+     "view": "projects/magic-book-avatar/_m/арт.webp",
+     "thumb": "projects/magic-book-avatar/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "maretu-reference",
+   "name": {
+    "ru": "Черно-белый дуэт",
+    "en": "Black and White Duet"
+   },
+   "description": {
+    "ru": "Стилизованный монохромный рендер с двумя персонажами, вооруженными мечами. Работа выполнена в мрачной, графичной эстетике с искаженным фоном, отсылая к визуальному стилю музыкальных клипов.",
+    "en": "A stylized monochrome render featuring two characters armed with swords. The artwork is executed in a dark, graphic aesthetic with a distorted background, referencing the visual style of music videos."
+   },
+   "type": "render",
+   "date": "2026-10-18",
+   "weight": "1 MB",
+   "hasVideo": false,
+   "preview": "projects/maretu-reference/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/maretu-reference/gallery/арт.png",
+     "view": "projects/maretu-reference/_m/арт.webp",
+     "thumb": "projects/maretu-reference/_m/арт.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/maretu-reference/gallery/фон.png",
+     "view": "projects/maretu-reference/_m/фон.webp",
+     "thumb": "projects/maretu-reference/_m/фон.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "mouse-girl-leaves",
+   "name": {
+    "ru": "Мышиный взгляд",
+    "en": "Mouse Girl Gaze"
+   },
+   "description": {
+    "ru": "Динамичный рендер девушки-мыши с рыжими волосами. Крупный план с вытянутыми вперед руками и парящими вокруг зелеными листьями на фоне голубого неба.",
+    "en": "A dynamic render of a red-haired mouse girl. A close-up shot with hands reaching forward and green leaves floating around against a blue sky."
+   },
+   "type": "render",
+   "date": "2026-10-12",
+   "weight": "1.2 MB",
+   "hasVideo": false,
+   "preview": "projects/mouse-girl-leaves/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/mouse-girl-leaves/gallery/арт.png",
+     "view": "projects/mouse-girl-leaves/_m/арт.webp",
+     "thumb": "projects/mouse-girl-leaves/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "night-city-swordsman",
+   "name": {
+    "ru": "Ночной страж",
+    "en": "Night City Guardian"
+   },
+   "description": {
+    "ru": "Атмосферный ночной рендер. Персонаж в темной одежде и кепке стоит на улице города с мечом в руке. Яркие фонари и светящиеся окна зданий создают контраст с мрачным ночным небом.",
+    "en": "An atmospheric nighttime render. A character in dark clothing and a cap stands on a city street holding a sword. Bright streetlights and glowing building windows create a contrast with the gloomy night sky."
+   },
+   "type": "render",
+   "date": "2026-10-17",
+   "weight": "1.9 MB",
+   "hasVideo": false,
+   "preview": "projects/night-city-swordsman/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/night-city-swordsman/gallery/tt11.png",
+     "view": "projects/night-city-swordsman/_m/tt11.webp",
+     "thumb": "projects/night-city-swordsman/_m/tt11.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "oneshot-niko-render",
+   "name": {
+    "ru": "OneShot",
+    "en": "OneShot"
+   },
+   "description": {
+    "ru": "Атмосферный рендер по мотивам игры OneShot. Справа изображен Нико, держащий светящуюся лампочку. На заднем плане раскинулся ночной город с яркими розовыми окнами небоскребов.",
+    "en": "An atmospheric render inspired by the game OneShot. On the right, Niko is depicted holding a glowing lightbulb. In the background, a night city stretches out with bright pink skyscraper windows."
+   },
+   "type": "render",
+   "date": "2025-10-12",
+   "weight": "1.1 MB",
+   "hasVideo": false,
+   "preview": "projects/oneshot-niko-render/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/oneshot-niko-render/gallery/арт2.png",
+     "view": "projects/oneshot-niko-render/_m/арт2.webp",
+     "thumb": "projects/oneshot-niko-render/_m/арт2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/oneshot-niko-render/gallery/1.png",
+     "view": "projects/oneshot-niko-render/_m/1.webp",
+     "thumb": "projects/oneshot-niko-render/_m/1.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "paradise-character-cards",
+   "name": {
+    "ru": "Paradise: Карточки персонажей",
+    "en": "Paradise: Character Cards"
+   },
+   "description": {
+    "ru": "Серия карточек участников проекта Paradise. Mael1a — девушка с трезубцем под водой; Slamp1 — любитель грибов, становящийся умнее; Sterov — безумный учёный, поглощаемый неизвестной субстанцией; Trembl — программист; Fedotmix — весельчак и шутник.",
+    "en": "A series of character cards for the Paradise project. Mael1a — an underwater girl with a trident; Slamp1 — a mushroom eater getting smarter; Sterov — a mad scientist consumed by a strange substance; Trembl — a programmer; Fedotmix — a joker and prankster."
+   },
+   "type": "render",
+   "date": "2025-10-18",
+   "weight": "689.6 KB",
+   "hasVideo": false,
+   "preview": "projects/paradise-character-cards/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/paradise-character-cards/gallery/арт_4.png",
+     "view": "projects/paradise-character-cards/_m/арт_4.webp",
+     "thumb": "projects/paradise-character-cards/_m/арт_4.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/paradise-character-cards/gallery/арт_4.png",
+     "view": "projects/paradise-character-cards/_m/арт_4.webp",
+     "thumb": "projects/paradise-character-cards/_m/арт_4.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/paradise-character-cards/gallery/арт_4.png",
+     "view": "projects/paradise-character-cards/_m/арт_4.webp",
+     "thumb": "projects/paradise-character-cards/_m/арт_4.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/paradise-character-cards/gallery/арт_4.png",
+     "view": "projects/paradise-character-cards/_m/арт_4.webp",
+     "thumb": "projects/paradise-character-cards/_m/арт_4.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/paradise-character-cards/gallery/арт_4.png",
+     "view": "projects/paradise-character-cards/_m/арт_4.webp",
+     "thumb": "projects/paradise-character-cards/_m/арт_4.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/paradise-character-cards/gallery/арт.png",
+     "view": "projects/paradise-character-cards/_m/арт.webp",
+     "thumb": "projects/paradise-character-cards/_m/арт.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/paradise-character-cards/gallery/арт_1.png",
+     "view": "projects/paradise-character-cards/_m/арт_1.webp",
+     "thumb": "projects/paradise-character-cards/_m/арт_1.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/paradise-character-cards/gallery/арт_2.png",
+     "view": "projects/paradise-character-cards/_m/арт_2.webp",
+     "thumb": "projects/paradise-character-cards/_m/арт_2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/paradise-character-cards/gallery/арт_3.png",
+     "view": "projects/paradise-character-cards/_m/арт_3.webp",
+     "thumb": "projects/paradise-character-cards/_m/арт_3.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "pipng-avatar",
+   "name": {
+    "ru": "Голова в неоне",
+    "en": "Neon Head"
+   },
+   "description": {
+    "ru": "Минималистичная 3D-аватарка для профиля. Крупный план кубической головы персонажа в темных тонах с яркой светлой полосой на лице, на фиолетовом градиентном фоне.",
+    "en": "A minimalist 3D profile avatar. A close-up of a cubic character's head in dark tones with a bright light stripe on the face, set against a purple gradient background."
+   },
+   "type": "render",
+   "date": "2026-10-18",
+   "weight": "528 KB",
+   "hasVideo": false,
+   "preview": "projects/pipng-avatar/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/pipng-avatar/gallery/арт2.png",
+     "view": "projects/pipng-avatar/_m/арт2.webp",
+     "thumb": "projects/pipng-avatar/_m/арт2.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "pipng-campfire",
+   "name": {
+    "ru": "Ночной костёр с pipng",
+    "en": "Night Campfire with pipng"
+   },
+   "description": {
+    "ru": "Персонаж отдыхает у яркого костра на фоне ночного леса. Над горизонтом расцветают масштабные фейерверки, а рядом лежит снаряжение для выживания.",
+    "en": "A character rests by a bright campfire against the backdrop of a night forest. Massive fireworks bloom above the horizon, with survival gear lying nearby."
+   },
+   "type": "render",
+   "date": "2026-10-12",
+   "weight": "2.3 MB",
+   "hasVideo": false,
+   "preview": "projects/pipng-campfire/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/pipng-campfire/gallery/арт2.png",
+     "view": "projects/pipng-campfire/_m/арт2.webp",
+     "thumb": "projects/pipng-campfire/_m/арт2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/pipng-campfire/gallery/арт.png",
+     "view": "projects/pipng-campfire/_m/арт.webp",
+     "thumb": "projects/pipng-campfire/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "pipng-intro-render",
+   "name": {
+    "ru": "Золотой горизонт",
+    "en": "Golden Horizon"
+   },
+   "description": {
+    "ru": "Светлый вступительный рендер. Персонаж с темными волосами стоит в бескрайнем золотом поле на фоне яркого заката, раскинув руки навстречу свету.",
+    "en": "A bright intro render. A character with dark hair stands in an endless golden field against a bright sunset, spreading arms towards the light."
+   },
+   "type": "render",
+   "date": "2026-10-23",
+   "weight": "1.3 MB",
+   "hasVideo": false,
+   "preview": "projects/pipng-intro-render/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/pipng-intro-render/gallery/арт1.png",
+     "view": "projects/pipng-intro-render/_m/арт1.webp",
+     "thumb": "projects/pipng-intro-render/_m/арт1.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "purple-checker-banner",
+   "name": {
+    "ru": "Фиолетовый неон",
+    "en": "Purple Neon"
+   },
+   "description": {
+    "ru": "Яркий баннер для профиля. Персонаж с фиолетовыми волосами в белой рубашке и галстуке держит светящийся синий меч на фоне фиолетово-белой шахматной клетки.",
+    "en": "A bright profile banner. A character with purple hair, wearing a white shirt and tie, holds a glowing blue sword against a purple and white checkerboard background."
+   },
+   "type": "render",
+   "date": "2026-10-13",
+   "weight": "1.1 MB",
+   "hasVideo": false,
+   "preview": "projects/purple-checker-banner/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/purple-checker-banner/gallery/арт123.png",
+     "view": "projects/purple-checker-banner/_m/арт123.webp",
+     "thumb": "projects/purple-checker-banner/_m/арт123.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "purple-guy-avatar",
+   "name": {
+    "ru": "Фиолетовый неон",
+    "en": "Purple Neon"
+   },
+   "description": {
+    "ru": "Яркая 3D-аватарка для профиля. Персонаж с фиолетовыми волосами в белой рубашке с черным галстуком держит темный меч на фоне насыщенного фиолетового неба.",
+    "en": "A bright 3D profile avatar. A character with purple hair, wearing a white shirt and a black tie, holds a dark sword against a vivid purple sky background."
+   },
+   "type": "render",
+   "date": "2026-10-18",
+   "weight": "931.2 KB",
+   "hasVideo": false,
+   "preview": "projects/purple-guy-avatar/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/purple-guy-avatar/gallery/арт.png",
+     "view": "projects/purple-guy-avatar/_m/арт.webp",
+     "thumb": "projects/purple-guy-avatar/_m/арт.thumb.webp"
+    }
+   ]
+  },
   {
    "id": "rainyday",
    "name": {
@@ -12,13 +980,13 @@
     "en": "A quiet rainy evening."
    },
    "type": "render",
-   "date": "2026-10-25",
+   "date": "2026-09-29",
    "weight": "900.6 KB",
    "hasVideo": false,
    "preview": "projects/rainyday/_m/preview.webp",
    "download": {
     "kind": "none",
-    "reason": "disabled"
+    "reason": "lost"
    },
    "gallery": [
     {
@@ -26,6 +994,446 @@
      "src": "projects/rainyday/gallery/арт.png",
      "view": "projects/rainyday/_m/арт.webp",
      "thumb": "projects/rainyday/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "red-guy-meme",
+   "name": {
+    "ru": "Какой то мем",
+    "en": "Some meme"
+   },
+   "description": {
+    "ru": "Абстрактный шуточный рендер. Динамичная сцена с персонажем в красном костюме, выполненная в стиле популярных интернет-мемов.",
+    "en": "An abstract humorous render. A dynamic scene featuring a character in a red suit, made in the style of popular internet memes."
+   },
+   "type": "render",
+   "date": "2026-10-22",
+   "weight": "1.2 MB",
+   "hasVideo": false,
+   "preview": "projects/red-guy-meme/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/red-guy-meme/gallery/арт2.png",
+     "view": "projects/red-guy-meme/_m/арт2.webp",
+     "thumb": "projects/red-guy-meme/_m/арт2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/red-guy-meme/gallery/images (11).jpg",
+     "view": "projects/red-guy-meme/_m/images (11).webp",
+     "thumb": "projects/red-guy-meme/_m/images (11).thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "red-shadow-remake",
+   "name": {
+    "ru": "Красная тень (Ремейк)",
+    "en": "Red Shadow (Remake)"
+   },
+   "description": {
+    "ru": "Обновленная версия старого рендера. Мрачный силуэт персонажа со светящимися глазами и мечом в руках выделяется на фоне темного пространства с красной подсветкой и эффектами глитча.",
+    "en": "An updated version of an old render. A dark silhouette of a character with glowing eyes and a sword stands out against a dark space with red lighting and glitch effects."
+   },
+   "type": "render",
+   "date": "2026-04-20",
+   "weight": "460.9 KB",
+   "hasVideo": false,
+   "preview": "projects/red-shadow-remake/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/red-shadow-remake/gallery/арт.png",
+     "view": "projects/red-shadow-remake/_m/арт.webp",
+     "thumb": "projects/red-shadow-remake/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "singleplayer",
+   "name": {
+    "ru": "Одиночный мир",
+    "en": "SinglePlayer"
+   },
+   "description": {
+    "ru": "Атмосферный рендер в одиночной игре. Персонаж в красно-коричневой куртке с белыми волосами и светящимися голубыми глазами стоит в золотом поле на закате, держа в руке книгу.",
+    "en": "An atmospheric single-player render. A character in a red-brown jacket with white hair and glowing blue eyes stands in a golden field at sunset, holding a book in his hand."
+   },
+   "type": "render",
+   "date": "2026-05-23",
+   "weight": "1.2 MB",
+   "hasVideo": false,
+   "preview": "projects/singleplayer/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/singleplayer/gallery/арт.png",
+     "view": "projects/singleplayer/_m/арт.webp",
+     "thumb": "projects/singleplayer/_m/арт.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/singleplayer/gallery/арт2.png",
+     "view": "projects/singleplayer/_m/арт2.webp",
+     "thumb": "projects/singleplayer/_m/арт2.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "something-liminal",
+   "name": {
+    "ru": "Что то на Лиминальном",
+    "en": "Something Liminal"
+   },
+   "description": {
+    "ru": "Атмосферный рендер в стиле лиминального пространства. Светящийся разноцветный персонаж с эффектом глитча и размытия стоит в темном коридоре. Работа передает ощущение сюрреализма и цифрового искажения.",
+    "en": "An atmospheric render in the liminal space style. A glowing multicolored character with a glitch and blur effect stands in a dark corridor. The artwork conveys a sense of surrealism and digital distortion."
+   },
+   "type": "render",
+   "date": "2026-04-16",
+   "weight": "959.3 KB",
+   "hasVideo": false,
+   "preview": "projects/something-liminal/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/something-liminal/gallery/арт.png",
+     "view": "projects/something-liminal/_m/арт.webp",
+     "thumb": "projects/something-liminal/_m/арт.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/something-liminal/gallery/арт2.png",
+     "view": "projects/something-liminal/_m/арт2.webp",
+     "thumb": "projects/something-liminal/_m/арт2.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "starfall",
+   "name": {
+    "ru": "Звездопад",
+    "en": "Starfall"
+   },
+   "description": {
+    "ru": "Атмосферный ночной рендер. Одинокий персонаж сидит у яркого костра на фоне живописного пейзажа, любуясь падающими звездами в темном небе. Рядом с огнем воткнут меч.",
+    "en": "An atmospheric night render. A lone character sits by a bright campfire against a scenic landscape, admiring shooting stars in the dark sky. A sword is stuck in the ground next to the fire."
+   },
+   "type": "render",
+   "date": "2026-03-21",
+   "weight": "4.5 MB",
+   "hasVideo": false,
+   "preview": "projects/starfall/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/starfall/gallery/арт2.png",
+     "view": "projects/starfall/_m/арт2.webp",
+     "thumb": "projects/starfall/_m/арт2.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/starfall/gallery/арт.png",
+     "view": "projects/starfall/_m/арт.webp",
+     "thumb": "projects/starfall/_m/арт.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/starfall/gallery/арт3.png",
+     "view": "projects/starfall/_m/арт3.webp",
+     "thumb": "projects/starfall/_m/арт3.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "steve-test-render",
+   "name": {
+    "ru": "Тестовый рендер Стива",
+    "en": "Steve Test Render"
+   },
+   "description": {
+    "ru": "Тестовый рендер Стива с фиолетовыми глазами. Персонаж стоит в темноте, освещенный лучом света, в то время как вокруг него парят полупрозрачные кубы.",
+    "en": "A test render of Steve with purple eyes. The character stands in the dark, illuminated by a beam of light, while translucent cubes float around him."
+   },
+   "type": "render",
+   "date": "2026-06-17",
+   "weight": "355.6 KB",
+   "hasVideo": false,
+   "preview": "projects/steve-test-render/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/steve-test-render/gallery/learn1.png",
+     "view": "projects/steve-test-render/_m/learn1.webp",
+     "thumb": "projects/steve-test-render/_m/learn1.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "sugar-rush",
+   "name": {
+    "ru": "Сахарный приход",
+    "en": "Sugar Rush"
+   },
+   "description": {
+    "ru": "Крупный план персонажа, который держит в руках светящийся кусок сахара. Яркая теплая подсветка и туман создают атмосферу легкого помешательства и измененного восприятия.",
+    "en": "A close-up of a character holding a glowing piece of sugar. Bright warm lighting and fog create an atmosphere of slight madness and altered perception."
+   },
+   "type": "render",
+   "date": "2026-10-10",
+   "weight": "1.6 MB",
+   "hasVideo": false,
+   "preview": "projects/sugar-rush/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/sugar-rush/gallery/арт1.png",
+     "view": "projects/sugar-rush/_m/арт1.webp",
+     "thumb": "projects/sugar-rush/_m/арт1.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/sugar-rush/gallery/3.png",
+     "view": "projects/sugar-rush/_m/3.webp",
+     "thumb": "projects/sugar-rush/_m/3.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/sugar-rush/gallery/арт2.png",
+     "view": "projects/sugar-rush/_m/арт2.webp",
+     "thumb": "projects/sugar-rush/_m/арт2.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "suncore-end-opening",
+   "name": {
+    "ru": "Открытие Энда",
+    "en": "End Opening"
+   },
+   "description": {
+    "ru": "Одна из превьюшек для проекта Suncore. Персонажи парят в темном пространстве на фоне портала Края. Над сценой расположен крупный объемный текст «ОТКРЫТИЕ ЭНДА».",
+    "en": "One of the previews for the Suncore project. Characters float in a dark space against the backdrop of an End portal. A large 3D text reading \"END OPENING\" is placed above the scene."
+   },
+   "type": "render",
+   "date": "2025-01-25",
+   "weight": "5.6 MB",
+   "hasVideo": false,
+   "preview": "projects/suncore-end-opening/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/suncore-end-opening/gallery/арт (32).png",
+     "view": "projects/suncore-end-opening/_m/арт (32).webp",
+     "thumb": "projects/suncore-end-opening/_m/арт (32).thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "suncore-preview",
+   "name": {
+    "ru": "Suncore",
+    "en": "Suncore"
+   },
+   "description": {
+    "ru": "Одна из старых превьюшек для закрытого проекта Suncore. Динамичная сцена с множеством персонажей, парящих в воздухе, на фоне взрыва и облаков пыли.",
+    "en": "One of the old previews for the closed project Suncore. A dynamic scene with multiple characters floating in the air against the backdrop of an explosion and dust clouds."
+   },
+   "type": "render",
+   "date": "2025-01-08",
+   "weight": "5.4 MB",
+   "hasVideo": false,
+   "preview": "projects/suncore-preview/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/suncore-preview/gallery/арт (36).png",
+     "view": "projects/suncore-preview/_m/арт (36).webp",
+     "thumb": "projects/suncore-preview/_m/арт (36).thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "teal-hair-sunset",
+   "name": {
+    "ru": "Закат в золотом поле",
+    "en": "Sunset in the Golden Field"
+   },
+   "description": {
+    "ru": "Светлый и воздушный рендер. Девушка с бирюзовыми волосами и рожками стоит посреди бескрайнего золотого поля на фоне яркого заката. В воздухе парят белые кубические частицы, подчеркивающие легкость композиции.",
+    "en": "A bright and airy render. A girl with turquoise hair and horns stands in the middle of an endless golden field against a bright sunset. White cubic particles float in the air, emphasizing the lightness of the composition."
+   },
+   "type": "render",
+   "date": "2026-10-22",
+   "weight": "1.3 MB",
+   "hasVideo": false,
+   "preview": "projects/teal-hair-sunset/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/teal-hair-sunset/gallery/арт.png",
+     "view": "projects/teal-hair-sunset/_m/арт.webp",
+     "thumb": "projects/teal-hair-sunset/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "through-patches-of-violet",
+   "name": {
+    "ru": "Through patches of violet",
+    "en": "Through patches of violet"
+   },
+   "description": {
+    "ru": "Атмосферный рендер с эффектом глитча. Слева изображен эндермен, а справа - персонаж-человек, отсылающий к Limbus Company. Они стоят в зеленом коридоре на фоне яркого портала.",
+    "en": "An atmospheric render with a glitch effect. On the left is an Enderman, and on the right - a human character referencing Limbus Company. They stand in a green corridor against a bright portal background."
+   },
+   "type": "render",
+   "date": "2025-10-12",
+   "weight": "3 MB",
+   "hasVideo": false,
+   "preview": "projects/through-patches-of-violet/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/through-patches-of-violet/gallery/арт2.png",
+     "view": "projects/through-patches-of-violet/_m/арт2.webp",
+     "thumb": "projects/through-patches-of-violet/_m/арт2.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "warden-city-mael1a",
+   "name": {
+    "ru": "Город Вардена",
+    "en": "Warden City"
+   },
+   "description": {
+    "ru": "Мрачный рендер в стиле Deep Dark. Персонаж Mael1a с киркой в руке показан на фоне древнего города под эффектом сильного глитча и неоново-бирюзовой подсветки.",
+    "en": "A dark render in the Deep Dark style. The character Mael1a with a pickaxe is shown against the backdrop of an ancient city, featuring a strong glitch effect and neon-turquoise lighting."
+   },
+   "type": "render",
+   "date": "2025-11-27",
+   "weight": "1.4 MB",
+   "hasVideo": false,
+   "preview": "projects/warden-city-mael1a/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/warden-city-mael1a/gallery/арт.png",
+     "view": "projects/warden-city-mael1a/_m/арт.webp",
+     "thumb": "projects/warden-city-mael1a/_m/арт.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "winter-snow-banner",
+   "name": {
+    "ru": "Зимний стрит",
+    "en": "Winter Street"
+   },
+   "description": {
+    "ru": "Баннер для профиля. Персонаж в черной толстовке с белым узором стоит на заснеженной улице. За спиной видны яркие уличные постройки в новогоднем стиле, а в руке он держит смартфон.",
+    "en": "A profile banner. A character in a black hoodie with a white pattern stands on a snowy street. Bright festive street buildings are visible in the background, and he is holding a smartphone in his hand."
+   },
+   "type": "render",
+   "date": "2026-10-14",
+   "weight": "3.8 MB",
+   "hasVideo": false,
+   "preview": "projects/winter-snow-banner/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/winter-snow-banner/gallery/1.png",
+     "view": "projects/winter-snow-banner/_m/1.webp",
+     "thumb": "projects/winter-snow-banner/_m/1.thumb.webp"
+    }
+   ]
+  },
+  {
+   "id": "you-can-do-anything",
+   "name": {
+    "ru": "Ты можешь всё!",
+    "en": "You Can Do Anything!"
+   },
+   "description": {
+    "ru": "Рендер с моим персонажем. Он держит в руках объемное светящееся лого программы Mine-imator, а рядом расположена панель с инструментами. Фон дополняют 3D-оси и надпись «Ты можешь всё!».",
+    "en": "A render featuring my character. He is holding a large glowing Mine-imator logo, with a tool panel placed next to him. The background is complemented by 3D axes and the text \"You can do everything!\"."
+   },
+   "type": "render",
+   "date": "2026-01-02",
+   "weight": "995 KB",
+   "hasVideo": false,
+   "preview": "projects/you-can-do-anything/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "lost"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/you-can-do-anything/gallery/арт.png",
+     "view": "projects/you-can-do-anything/_m/арт.webp",
+     "thumb": "projects/you-can-do-anything/_m/арт.thumb.webp"
+    },
+    {
+     "type": "image",
+     "src": "projects/you-can-do-anything/gallery/арт2.png",
+     "view": "projects/you-can-do-anything/_m/арт2.webp",
+     "thumb": "projects/you-can-do-anything/_m/арт2.thumb.webp"
     }
    ]
   }
