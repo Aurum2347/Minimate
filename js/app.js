@@ -24,9 +24,6 @@ const translations = {
         disabled_tooltip: 'Скачивание исходников временно отключено. Скоро вернётся!',
         video_error: 'Не удалось воспроизвести видео',
         video_open: 'Открыть файл',
-        hero_works: 'работ',
-        hero_renders: 'рендеров',
-        hero_animations: 'анимаций',
         spotlight_label: 'Случайная работа',
         spotlight_open: 'Смотреть',
         spotlight_shuffle: 'Другая',
@@ -91,9 +88,6 @@ const translations = {
         disabled_tooltip: 'Source downloads are temporarily disabled. Back soon!',
         video_error: 'Could not play this video',
         video_open: 'Open file',
-        hero_works: 'works',
-        hero_renders: 'renders',
-        hero_animations: 'animations',
         spotlight_label: 'Random work',
         spotlight_open: 'View',
         spotlight_shuffle: 'Another',
@@ -187,7 +181,6 @@ function setLang(lang) {
         currentLang = lang;
         updateTranslations();
         renderProjects();
-        renderHero();
         content.classList.remove('lang-transitioning');
     }, 150);
     document.querySelectorAll('.lang-option').forEach(opt => {
@@ -370,7 +363,6 @@ async function loadProjects() {
             return;
         }
         renderProjects();
-        renderHero();
         hidePreloader();
     } catch (e) {
         console.error(e);
@@ -651,61 +643,12 @@ function updateParallax() {
         const progress = (r.top + r.height / 2 - vh / 2) / vh;
         el.style.setProperty('--scroll', Math.max(-1, Math.min(1, progress)).toFixed(3));
     });
-    const hero = document.getElementById('hero');
-    if (hero) hero.style.setProperty('--scroll', Math.min(1, window.scrollY / hero.offsetHeight).toFixed(3));
 }
 window.addEventListener('scroll', () => {
     if (parallaxQueued) return;
     parallaxQueued = true;
     requestAnimationFrame(updateParallax);
 }, { passive: true });
-const SPLASHES = {
-    ru: ['Сделано в Mine-imator!', 'Не Blender!', '100% квадратное!', 'Также попробуйте Blender!', 'Рендерится...', 'Без вирусов!', 'Кубы — это стиль!', 'Теперь с YouTube!', 'Lagtrain!', 'Пиксель к пикселю!'],
-    en: ['Made in Mine-imator!', 'Not Blender!', '100% blocky!', 'Also try Blender!', 'Rendering...', 'No viruses!', 'Cubes are a lifestyle!', 'Now with YouTube!', 'Lagtrain!', 'Pixel perfect!']
-};
-let splashIndex = Math.floor(Math.random() * SPLASHES.ru.length);
-function renderHero() {
-    const splash = document.getElementById('heroSplash');
-    if (splash) splash.textContent = SPLASHES[currentLang][splashIndex];
-    const stats = document.getElementById('heroStats');
-    if (stats && allProjects.length) {
-        const renders = allProjects.filter(p => p.type !== 'animation').length;
-        const items = [
-            [allProjects.length, t('hero_works')],
-            [renders, t('hero_renders')],
-            [allProjects.length - renders, t('hero_animations')]
-        ];
-        stats.innerHTML = items.map(([n, label]) =>
-            `<div class="hero-stat"><span class="hero-stat-num" data-n="${n}">0</span><span class="hero-stat-label">${label}</span></div>`
-        ).join('');
-        stats.querySelectorAll('.hero-stat-num').forEach(el => {
-            const target = +el.dataset.n;
-            const start = performance.now();
-            const step = (now) => {
-                const k = Math.min(1, (now - start) / 900);
-                el.textContent = Math.round(target * (1 - Math.pow(1 - k, 3)));
-                if (k < 1) requestAnimationFrame(step);
-            };
-            requestAnimationFrame(step);
-            setTimeout(() => { el.textContent = target; }, 1100);
-        });
-    }
-    const pano = document.getElementById('heroPanorama');
-    if (pano && allProjects.length && !pano.style.backgroundImage) {
-        const pick = allProjects[Math.floor(Math.random() * allProjects.length)];
-        const img = new Image();
-        img.onload = () => {
-            pano.style.backgroundImage = `url('${img.src}')`;
-            pano.classList.add('loaded');
-        };
-        img.src = bigImage(pick);
-    }
-}
-document.getElementById('heroSplash').addEventListener('click', () => {
-    splashIndex = (splashIndex + 1 + Math.floor(Math.random() * (SPLASHES.ru.length - 1))) % SPLASHES.ru.length;
-    playToggle();
-    renderHero();
-});
 function renderPagination(totalPages) {
     const pagination = document.getElementById('pagination');
     pagination.innerHTML = '';
