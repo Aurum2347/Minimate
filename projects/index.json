@@ -1,0 +1,33 @@
+{
+ "generatedAt": "2026-10-24T21:22:01Z",
+ "projects": [
+  {
+   "id": "rainyday",
+   "name": {
+    "ru": "Дождливый день",
+    "en": "A rainy day"
+   },
+   "description": {
+    "ru": "Тихий дождливый вечер.",
+    "en": "A quiet rainy evening."
+   },
+   "type": "render",
+   "date": "2026-10-25",
+   "weight": "900.6 KB",
+   "hasVideo": false,
+   "preview": "projects/rainyday/_m/preview.webp",
+   "download": {
+    "kind": "none",
+    "reason": "disabled"
+   },
+   "gallery": [
+    {
+     "type": "image",
+     "src": "projects/rainyday/gallery/арт.png",
+     "view": "projects/rainyday/_m/арт.webp",
+     "thumb": "projects/rainyday/_m/арт.thumb.webp"
+    }
+   ]
+  }
+ ]
+}
